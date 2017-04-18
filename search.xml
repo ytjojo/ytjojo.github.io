@@ -9,17 +9,12 @@
 <blockquote>
 <p>作为一个程序员，一直想写点技术文章，一来记录下自己的工作学习心得体会，二是遇到棘手问题或者深层理论可以理清楚思路头绪，记录下来方便以后查找，三是锻炼自己表达和整理能力，四分享给同行业需要的人，帮别人解决共同问题，如果内容比较精髓，可以增加自己的影响力。总之好处多多。但是去哪写是个问题，大部分人选择简书，CSDN，cnblogs，LOFTER，在这些平台写博客方便，但是自定义功能太差，界面千篇一律不够极客，所以我选择了自建。自建的方式有WordPress、Jekyll和Octopress，但是配置什么的比较麻烦，最后选择了HEXO</p>
 </blockquote>
-<p>###简介<br>hexo出自台湾大学生<a href="https://twitter.com/tommy351" target="_blank" rel="external">tommy351</a>之手，是一个基于Node.js的静态博客程序，其编译上百篇文字只需要几秒。hexo生成的静态网页可以直接放到GitHub Pages，BAE，SAE等平台上。官方中文文档在<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">这里</a></p>
-<p>###环境准备</p>
-<p>###安装Node.js</p>
-<p>到Node.js的<a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>下载对应平台的最新版本，有两个可选项，<strong>Recommended for most User</strong> 和 <strong>Latest Features</strong>,我下载的是<strong>Recommended for most User</strong> V6.10.2LTS    版本。一路安装，自定义安装的话注意配置环境变量。<a href="http://www.cnblogs.com/zhouyu2017/p/6485265.html" target="_blank" rel="external">配置教程看这里</a></p>
-<p>###安装Hexo</p>
-<p>打开命令行，键入命令</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>hexo出自台湾大学生<a href="https://twitter.com/tommy351" target="_blank" rel="external">tommy351</a>之手，是一个基于Node.js的静态博客程序，其编译上百篇文字只需要几秒。hexo生成的静态网页可以直接放到GitHub Pages，BAE，SAE等平台上。官方中文文档在<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">这里</a></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>到Node.js的<a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>下载对应平台的最新版本，有两个可选项，<strong>Recommended for most User</strong> 和 <strong>Latest Features</strong>,我下载的是<strong>Recommended for most User</strong> V6.10.2LTS    版本。一路安装，自定义安装的话注意配置环境变量。<a href="http://www.cnblogs.com/zhouyu2017/p/6485265.html" target="_blank" rel="external">配置教程看这里</a></p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>打开命令行，键入命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
-<p>###安装git</p>
-<p>去git官方网站下载页选择对应平台下载，<a href="http://blog.csdn.net/renfufei/article/details/41647875/" target="_blank" rel="external">安装教程在这</a><br>设置下环境变量。</p>
-<p>###Github注册和GitHubPage建立</p>
-<ul>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p>去git官方网站下载页选择对应平台下载，<a href="http://blog.csdn.net/renfufei/article/details/41647875/" target="_blank" rel="external">安装教程在这</a><br>设置下环境变量。</p>
+<h3 id="Github注册和GitHubPage建立"><a href="#Github注册和GitHubPage建立" class="headerlink" title="Github注册和GitHubPage建立"></a>Github注册和GitHubPage建立</h3><ul>
 <li><p>注册github账号，已有忽略。</p>
 </li>
 <li><p>建立与你账户名对应的仓库，仓库名必须是[your_name.github.io],一个账号下只能建一个。</p>
@@ -58,8 +53,7 @@ Are you sure you want to continue connecting (yes/no)?
 </code></pre><p>输入yes就好，最后如果看到</p>
 <pre><code>Hi 【你的用户名】! You&apos;ve successfully authenticated, but GitHub does not provide shell access.
 </code></pre><p>就表示成功了</p>
-<p>###搭建Hexo工作空间</p>
-<p>在电脑上建立一个处理博客的文件夹如E:\blog_github\hexo，鼠标右键Git Bash Here 打开命令行，输入：</p>
+<h3 id="搭建Hexo工作空间"><a href="#搭建Hexo工作空间" class="headerlink" title="搭建Hexo工作空间"></a>搭建Hexo工作空间</h3><p>在电脑上建立一个处理博客的文件夹如E:\blog_github\hexo，鼠标右键Git Bash Here 打开命令行，输入：</p>
 <pre><code>hexo init
 npm install #安装所需要的依赖包
 </code></pre><p>执行完成后看到目录结构</p>
@@ -355,7 +349,7 @@ npm install #安装所需要的依赖包
 <pre><code>hexo g #生成博客依赖的html css js文件
 hexo s #本地提供博客服务
 </code></pre><p>就会看到如下界面<br><img src="https://raw.githubusercontent.com/CoderTian/CoderTian.github.io/master/2015/11/26/github-hexo-blog/success.png" alt=""></p>
-<p>###更改网站描述信息<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，配置以下参数</p>
+<h3 id="更改网站描述信息"><a href="#更改网站描述信息" class="headerlink" title="更改网站描述信息"></a>更改网站描述信息</h3><p>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，配置以下参数</p>
 <pre><code>title: 张三的博客 
 subtitle: 学习笔记
 description: That&apos;s all, thank you！
@@ -363,12 +357,12 @@ author: 张三
 language: zh-CN
 timezone: Asia/Shanghai
 </code></pre><p>注意冒号之后有一个空格的，不然解析报错</p>
-<p>###关联github仓库<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开</p>
+<h3 id="关联github仓库"><a href="#关联github仓库" class="headerlink" title="关联github仓库"></a>关联github仓库</h3><p>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开</p>
 <pre><code>deploy:
   type: git
   repo: git@github.com:ytjojo/ytjojo.github.io.git
   branch: master
-</code></pre><p>###将Hexo系统绑定到你的github page网址<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，找到# URl这一项，更改url: 和root: 内容，如</p>
+</code></pre><h3 id="将Hexo系统绑定到你的github-page网址"><a href="#将Hexo系统绑定到你的github-page网址" class="headerlink" title="将Hexo系统绑定到你的github page网址"></a>将Hexo系统绑定到你的github page网址</h3><p>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，找到# URl这一项，更改url: 和root: 内容，如</p>
 <pre><code># URL
 ## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;
 url: https://github.com/ytjojo/ytjojo.github.io
@@ -397,8 +391,7 @@ To github.com:ytjojo/ytjojo.github.io.git
    ad4d091..817debc  HEAD -&gt; master
 INFO  Deploy done: git
 </code></pre><p>打开你的主页,<a href="https://ytjojo.github.io/" target="_blank" rel="external">https://ytjojo.github.io/</a>，就会看到你的博客了</p>
-<p>###添加文章</p>
-<ol>
+<h3 id="添加文章"><a href="#添加文章" class="headerlink" title="添加文章"></a>添加文章</h3><ol>
 <li><p>如果已经有写好的markdown文件<br>打开文件，头部加入下面描述。已经有就忽略</p>
 <p> title: postName #文章页面上的显示名称，可以任意修改，不会出现在URL中<br> date: 2013-12-02 15:30:16 #文章生成时间，一般不改，当然也可以任意修改<br> categories: example #分类<br> tags: [tag1,tag2,tag3] #文章标签，可空，多标签请用格式，注意:后面有个空格<br> description: 附加一段文章摘要，字数最好在140字以内。<br>复制到source_posts文件夹下面</p>
 </li>
@@ -418,12 +411,11 @@ description:
 ---
 </code></pre><p>新建文章之后，就可以用自己喜欢的markdown 编辑器写文章了</p>
 <p><strong>注意</strong>：source/_posts是网站中显示的文章source/_draft是草稿文件夹，有些主题默认不显示的，如果你在草稿里已经完成了文章，请将文章复制到source/_posts文件夹下</p>
-<p>###将新建的文章发布到博客里</p>
-<pre><code>hexo clean
+<h3 id="将新建的文章发布到博客里"><a href="#将新建的文章发布到博客里" class="headerlink" title="将新建的文章发布到博客里"></a>将新建的文章发布到博客里</h3><pre><code>hexo clean
 hexo g
 hexo d
 </code></pre><p>过一会儿打开你的博客网址<a href="https://ytjojo.github.io/" target="_blank" rel="external">https://ytjojo.github.io/</a>,就会看到你写的博客了</p>
-<p>###fancybox<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feqnavr0daj20l40op40u.jpg" alt=""></p>
+<h3 id="fancybox"><a href="#fancybox" class="headerlink" title="fancybox"></a>fancybox</h3><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feqnavr0daj20l40op40u.jpg" alt=""></p>
 <p>可能有人对这个<a href="http://bruce-sha.github.io/reading/" target="_blank" rel="external">Reading</a>页面中图片的fancybox效果感兴趣，这个是怎么做的呢。<br>很简单，只需要在你的文章*.md文件的头上添加photos项即可，然后一行行添加你要展示的照片：</p>
 <pre><code>layout: photo
 title: 我的阅历
@@ -442,12 +434,19 @@ photos:
 ---
 </code></pre><p>然后每次可以执行带layout的new命令生成照片文章：</p>
 <pre><code>hexo new photo &quot;photoPostName&quot; #新建照片文章
-</code></pre><p>###文章摘要<br>在需要显示摘要的地方添加如下代码即可：</p>
+</code></pre><h3 id="文章摘要"><a href="#文章摘要" class="headerlink" title="文章摘要"></a>文章摘要</h3><p>在需要显示摘要的地方添加如下代码即可：</p>
 <pre><code>以上是摘要
 &lt;!--more--&gt;
 以下是余下全文
 </code></pre><p>用<code>&lt;!--more--&gt;</code>分割摘要和正文,</p>
 <p>more以上内容即是文章摘要，在主页显示，more以下内容点击『&gt; Read More』链接打开全文才显示。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ol>
+<li><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">http://ibruce.info/2013/11/22/hexo-your-blog/</a></li>
+<li><a href="http://www.jianshu.com/p/05289a4bc8b2" target="_blank" rel="external">http://www.jianshu.com/p/05289a4bc8b2</a></li>
+<li><a href="http://www.jianshu.com/p/a4b74cc9ff28" target="_blank" rel="external">http://www.jianshu.com/p/a4b74cc9ff28</a></li>
+<li><a href="http://blog.csdn.net/u014595668/article/details/51854259" target="_blank" rel="external">http://blog.csdn.net/u014595668/article/details/51854259</a></li>
+<li>hexo官方中文文档<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">https://hexo.io/zh-cn/docs/</a></li>
+</ol>
 ]]></content>
       
         <categories>
@@ -479,20 +478,23 @@ photos:
       <title><![CDATA[Markdown学习笔记]]></title>
       <url>/2017/04/15/markdown%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>#Markdown学习笔记<br>[toc]</p>
-<p>###导语</p>
-<p>markdown是一种轻量级的标记语言，宜读宜写，常被用了写文章，记日记，总结经验，也被程序员用了写技术文档，技术博客。markdown的语法比较简单，常用的也就不超过10个，学习成本也比较低，一旦熟悉这种语法规则，有一劳永逸的效果，对以后的工作学习都有很好的帮助。简书、github、Tumblr等平台都原生支持markdown语法，学习markdown更有助于写出简洁美观宜与阅读的文章。</p>
-<p>###Markdown 官方文档</p>
-<ul>
+<h3 id="导语"><a href="#导语" class="headerlink" title="导语"></a>导语</h3><p>markdown是一种轻量级的标记语言，宜读宜写，常被用了写文章，记日记，总结经验，也被程序员用了写技术文档，技术博客。markdown的语法比较简单，常用的也就不超过10个，学习成本也比较低，一旦熟悉这种语法规则，有一劳永逸的效果，对以后的工作学习都有很好的帮助。简书、github、Tumblr等平台都原生支持markdown语法，学习markdown更有助于写出简洁美观宜与阅读的文章。</p>
+<h3 id="Markdown-官方文档"><a href="#Markdown-官方文档" class="headerlink" title="Markdown 官方文档"></a>Markdown 官方文档</h3><ul>
 <li><p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">创始人 John Gruber 的 Markdown 语法说明</a></p>
 </li>
-<li><p><a href="http://wowubuntu.com/markdown/#list" target="_blank" rel="external">Markdown 中文版语法说明</a><br>###Markdown工具推荐<br><strong>Mac Os X</strong></p>
+<li><p><a href="http://wowubuntu.com/markdown/#list" target="_blank" rel="external">Markdown 中文版语法说明</a></p>
 </li>
+</ul>
+<h3 id="Markdown工具推荐"><a href="#Markdown工具推荐" class="headerlink" title="Markdown工具推荐"></a>Markdown工具推荐</h3><p><strong>Mac Os X</strong></p>
+<ul>
 <li><p><a href="http://25.io/mou/" target="_blank" rel="external">MOU</a>被很多人推荐<br><img src="http://www.williamlong.info/upload/4319_14.jpg" alt="Mou"></p>
 </li>
-<li><p><a href="http://typora.io/" target="_blank" rel="external">Typora</a> 有出Windows 和Linux版本的计划<br><img src="http://www.williamlong.info/upload/4319_15.jpg" alt="Typora"><br><strong>Windows平台上</strong></p>
+<li><p><a href="https://www.ulyssesapp.com/" target="_blank" rel="external">Ulysses</a>一款由国外开发商 The Soulmen 制作的 Markdown 编辑器。与其它同类应用相比，Ulysses 最大的不同在于，它能根据内置的文件管理器，以及与 iCloud 云服务器的实时同步方案，达到最快捷的文章整理效率。这</p>
 </li>
-<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/chenguanzhou/MarkDownEditor/releases" target="_blank" rel="external">MarkdownEditor</a>Metro风格的markdown编辑器，号称功能最全，一个亮点是与七牛存储集成，可以直接将本地图片上传到服务器，将图片的URL地址嵌入到编辑器</p>
-</li>
+</ul>
+<p><strong>Windows平台上</strong></p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/chenguanzhou/MarkDownEditor/releases" target="_blank" rel="external">MarkdownEditor</a>Metro风格的markdown编辑器，号称功能最全，一个亮点是与七牛存储集成，可以直接将本地图片上传到服务器，将图片的URL地址嵌入到编辑器</li>
 </ul>
 <p><img src="https://pic1.zhimg.com/b507d385b024c86efe3457c423bdf004_b.jpg" alt="https://link.zhihu.com/?target=https%3A//www.microsoft.com/store/apps/9nblggh4q9rs"></p>
 <ul>
@@ -516,7 +518,9 @@ photos:
 <li><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">Cmd Markdown</a> 作业部落出品，也是一款不错的工具和博客平台兼顾的产品。全平台且提供web版<br><img src="http://www.williamlong.info/upload/4319_6.jpg" alt="Cmd Markdown"></li>
 <li><p><a href="http://pad.haroopress.com/user.html" target="_blank" rel="external">Haroopad</a>是一款覆盖三大主流桌面系统的编辑器，支持 Windows、Mac OS X 和 Linux。 主题样式丰富，语法标亮支持 54 种编程语言。最新版支持流程图和幻灯片<br><img src="http://img1.tuicool.com/fiaIVz.png!web" alt="Haroopad"></p>
 </li>
-<li><p><a href="http://soft.xiaoshujiang.com/" target="_blank" rel="external">小书匠编辑器</a> 全平台覆盖并且有web版<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejmcv0wunj21gw0oq41q.jpg" alt=""><br><strong>文库集成类</strong></p>
+<li><p><a href="http://soft.xiaoshujiang.com/" target="_blank" rel="external">小书匠编辑器</a> 全平台覆盖并且有web版<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejmcv0wunj21gw0oq41q.jpg" alt=""></p>
+</li>
+<li><p><a href="http://typora.io/" target="_blank" rel="external">Typora</a> 有Windows 和Linux版本<br><img src="http://www.williamlong.info/upload/4319_15.jpg" alt="Typora"><br><strong>文库集成类</strong></p>
 </li>
 </ul>
 <ul>
@@ -527,32 +531,42 @@ photos:
 <li><p>马克飞象: 集成印象笔记<br>GitBook的火热程度如同GitHub，我所看到的很多软件帮助文档、技术教程，都已经在GibBook上发布。GitBook于2014年创办，已发布35500本书籍。</p>
 </li>
 </ul>
-<p>###图床</p>
-<p>Markdown作为纯文本格式，自然不能粘贴图像文件，只能嵌入图像的地址（URL或者本地地址）。所以插入图片需要预先将图片存储在网络。</p>
+<h3 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h3><p>Markdown作为纯文本格式，自然不能粘贴图像文件，只能嵌入图像的地址（URL或者本地地址）。所以插入图片需要预先将图片存储在网络。</p>
 <p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejm5pg7qwj20qq0c0tab.jpg" alt=""><br>在chrome搜图床就会出现这三个，都挺好用的。<br>另外一个图床墙裂推荐七牛，七牛是云服务提供商，注册就送10G云存储<br>如何使用看这篇文章<a href="http://www.jianshu.com/p/5f0d5451ca01" target="_blank" rel="external">http://www.jianshu.com/p/5f0d5451ca01</a><br>配合<a href="http://mpic.lzhaofu.cn" target="_blank" rel="external">MPic</a>，一款支持拖曳、复制、截图上传的七牛图床神器,用起来爽爆了。</p>
-<p>###截屏工具<br>windows平台<a href="https://faststone-capture.en.softonic.com/" target="_blank" rel="external">Faststone Capture</a><br>体积小巧、功能强大。不但具有常规截图等功能，更有从扫描器获取图像，和将图像转换为 PDF 文档等功能,该软件拥有不规则抓图、滚动抓图、活动窗口抓图、图片简单处理、屏幕录制等很多很多实用的功能。<br>Mac OS X平台 <a href="http://snip.qq.com/" target="_blank" rel="external">Snip</a><br><br>Snip是一款腾讯推出的一款截图工具，是Mac平台的截屏应用，支持自动识别窗口、图标标记再次编辑、关联QQ邮箱截屏、滚动截屏、邮件分享截图、支持Retina显示屏等。 </p>
-<p>###语法</p>
-<p>####1.  <strong>标题</strong><br><br>行首用1-6个#开头表示不同级别的标题<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feiwg6ftxcj20wl0g70tq.jpg" alt=""></p>
-<p>####2. <strong>引用</strong><br><br>行首使用 &gt; 加上一个空格表示引用一个段落，可嵌套<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejnie3clej21a007q3za.jpg" alt=""></p>
-<p>####3. <strong>分割线</strong><br><br>在一行连续三个或者三个以上_或者*  </p>
+<h3 id="截屏工具"><a href="#截屏工具" class="headerlink" title="截屏工具"></a>截屏工具</h3><p>windows平台<a href="https://faststone-capture.en.softonic.com/" target="_blank" rel="external">Faststone Capture</a></p>
+<p>体积小巧、功能强大。不但具有常规截图等功能，更有从扫描器获取图像，和将图像转换为 PDF 文档等功能,该软件拥有不规则抓图、滚动抓图、活动窗口抓图、图片简单处理、屏幕录制等很多很多实用的功能。</p>
+<p>Mac OS X平台 <a href="http://snip.qq.com/" target="_blank" rel="external">Snip</a></p>
+<p>Snip是一款腾讯推出的一款截图工具，是Mac平台的截屏应用，支持自动识别窗口、图标标记再次编辑、关联QQ邮箱截屏、滚动截屏、邮件分享截图、支持Retina显示屏等。 </p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="1-标题"><a href="#1-标题" class="headerlink" title="1.  标题"></a>1.  <strong>标题</strong></h4><p>行首用1-6个#开头表示不同级别的标题<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feiwg6ftxcj20wl0g70tq.jpg" alt=""></p>
+<h4 id="2-引用"><a href="#2-引用" class="headerlink" title="2. 引用"></a>2. <strong>引用</strong></h4><p>行首使用 &gt; 加上一个空格表示引用一个段落，可嵌套</p>
+<p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejnie3clej21a007q3za.jpg" alt=""></p>
+<h4 id="3-分割线"><a href="#3-分割线" class="headerlink" title="3. 分割线"></a>3. <strong>分割线</strong></h4><p>在一行连续三个或者三个以上_或者*  </p>
 <pre><code>___  
 ***
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejnrtinbaj2197082aao.jpg" alt=""><br>途中分割线不是很明显。</p>
-<p>####4.<strong>代码区域</strong><br><br>代码区域内的文字不会被处理，按照原样输出。<br>每一行前边加入4个空格或者一个tab可以标记一个代码段落：<br></p>
+<h4 id="4-代码区域"><a href="#4-代码区域" class="headerlink" title="4.代码区域"></a>4.<strong>代码区域</strong></h4><p>代码区域内的文字不会被处理，按照原样输出。<br>每一行前边加入4个空格或者一个tab可以标记一个代码段落：</p>
 <pre><code>int main(){
     return 0
 }
-</code></pre><p>效果如下<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejo70v647j20pc02ot8i.jpg" alt=""></p>
-<p>还可以使用  `这是代码块` 来标记行内代码<br><br>如：在activity的初始化代码一般是`  protected void onCreate(Bundle savedInstanceState){super.onCreate(savedInstanceState);}`<br><br>效果如下<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejotkmz67j21bh056dge.jpg" alt=""></p>
-<p>也可以用三个`表示代码块<br>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="string">"hello world"</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="string">"good luck"</span>;</div></pre></td></tr></table></figure></p>
-<p>####5.<strong>强调</strong><br><br>    <em>斜体</em><br>    <strong>粗体</strong></p>
-<pre><code>_斜体_
+</code></pre><p>效果如下</p>
+<p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejo70v647j20pc02ot8i.jpg" alt=""></p>
+<p>还可以使用  `这是代码块` 来标记行内代码</p>
+<p>如：在activity的初始化代码一般是`  protected void onCreate(Bundle savedInstanceState){super.onCreate(savedInstanceState);}`</p>
+<p>效果如下</p>
+<p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejotkmz67j21bh056dge.jpg" alt=""></p>
+<p>也可以用三个`表示代码块</p>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="string">"hello world"</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="string">"good luck"</span>;</div></pre></td></tr></table></figure>
+</code></pre><h4 id="5-强调"><a href="#5-强调" class="headerlink" title="5.强调"></a>5.<strong>强调</strong></h4><pre><code>*斜体*
+**粗体**
+
+
+_斜体_
 __粗体__
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejoqd53waj20uv06r74o.jpg" alt=""></p>
-<p>####6. <strong>链接</strong><br><br>Markdown有两种链接方式：Inline以及Reference<br></p>
+<h4 id="6-链接"><a href="#6-链接" class="headerlink" title="6. 链接"></a>6. <strong>链接</strong></h4><p>Markdown有两种链接方式：Inline以及Reference</p>
 <ul>
 <li><p>文字链接</p>
-<p> Inline:<br> <a href="https://www.google.com" target="_blank" rel="external">谷歌</a><br> <br><br> Reference:<br> [谷歌][google_url]</p>
+<p> Inline:<br> <a href="https://www.google.com" target="_blank" rel="external">谷歌</a><br> Reference:<br> [谷歌][google_url]</p>
 </li>
 </ul>
 <pre><code>[google_url]:https://www.google.com
@@ -572,13 +586,13 @@ __粗体__
 &lt;img src=&quot;http://latex.codecogs.com/gif.latex?\prod(n_{i_1})+10000&quot;&gt;
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejq7fbwi7j211m04qwey.jpg" alt=""></p>
 <ul>
-<li>自动链接<br><br>使用尖括号&lt;&gt;包含住一段地址或者邮箱  </li>
+<li>自动链接</li>
+<li>使用尖括号&lt;&gt;包含住一段地址或者邮箱  </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">  </div><div class="line"></div><div class="line">####7.**转义字符**&lt;br/&gt;</div><div class="line">&lt;br/&gt;</div><div class="line"></div><div class="line">	\\ 反斜杠</div><div class="line">	\` 反引号</div><div class="line">	\* 星号</div><div class="line">	\_ 下划线</div><div class="line">	\&#123;\&#125; 大括号</div><div class="line">	\[\] 中括号</div><div class="line">	\(\) 小括号</div><div class="line">	\# 井号</div><div class="line">	\+ 加号</div><div class="line">	\- 减号</div><div class="line">	\. 英文句号</div><div class="line">	\! 感叹号</div><div class="line">	&amp;gt; &gt;	</div><div class="line">	&amp;amp; &amp;</div><div class="line">	&amp;nbsp； 空格（non-breaking space）</div><div class="line"></div><div class="line"></div><div class="line">####8.**列表**&lt;br/&gt;</div><div class="line">* 无序列表</div><div class="line"> 一个*或者+或者- 加上一个空格</div><div class="line">	</div><div class="line">	* 无序列表</div><div class="line">	+ 无序列表</div><div class="line">	- 无序列表</div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejqrg1it5j20zq04a74c.jpg)</div><div class="line">* 有序列表</div><div class="line">使用数字接着一个英文句点再加一个空格,数字可以任意值</div><div class="line"></div><div class="line">	1. 第一项</div><div class="line">	1. 第二项</div><div class="line">	1. 第三项</div><div class="line"></div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejqxygs4yj210w03h3yi.jpg)</div><div class="line"></div><div class="line"></div><div class="line">####9.**段落和换行**&lt;br/&gt;</div><div class="line">单个回车视为空格.</div><div class="line">连续回车才能分段</div><div class="line"></div><div class="line">两种方式  </div><div class="line"></div><div class="line">1. 输入`&lt;br/&gt;`&lt;br/&gt;</div><div class="line"></div><div class="line">2. 两个空格加回车键 </div><div class="line">  </div><div class="line">---</div><div class="line">**一下是扩展语法**&lt;br/&gt;</div><div class="line"></div><div class="line">####10.**任务列表**&lt;br/&gt;</div><div class="line">未做任务`- + 空格 + [ ]`</div><div class="line">已做任务`- + 空格 + [x]`</div><div class="line"></div><div class="line">	- [ ] 任务一 给女朋友买口红</div><div class="line">	- [x] 任务二 陪女朋友吃饭</div><div class="line">	</div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejsy1c55mj20zu01ut8t.jpg)</div><div class="line"></div><div class="line">####11.**表格格式**&lt;br/&gt;</div><div class="line"></div><div class="line">	第一格表头 | 第二格表头</div><div class="line">	--------- | -------------</div><div class="line">	内容单元格 第一列第一格 | 内容单元格第二列第一格</div><div class="line">	内容单元格 第一列第二格 多加文字 | 内容单元格第二列第二格  </div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejv0vifb5j21az03vwez.jpg)</div><div class="line"></div><div class="line">####12.**删除线**&lt;br/&gt;    </div><div class="line"></div><div class="line">    加删除线像这样用： ~~删除这些~~   </div><div class="line"></div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejv78uo1mj20vj028jre.jpg)  </div><div class="line"></div><div class="line">####13.**顺序图或流程图**&lt;br/&gt;</div><div class="line"></div><div class="line">	```sequence</div><div class="line">	张三-&gt;李四: 嘿，小四儿, 写博客了没?</div><div class="line">	Note right of 李四: 李四愣了一下，说：</div><div class="line">	李四--&gt;张三: 忙得吐血，哪有时间写。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">  </div><div class="line"></div><div class="line">#### 7.**转义字符**</div><div class="line"></div><div class="line"></div><div class="line">	\\ 反斜杠</div><div class="line">	\` 反引号</div><div class="line">	\* 星号</div><div class="line">	\_ 下划线</div><div class="line">	\&#123;\&#125; 大括号</div><div class="line">	\[\] 中括号</div><div class="line">	\(\) 小括号</div><div class="line">	\# 井号</div><div class="line">	\+ 加号</div><div class="line">	\- 减号</div><div class="line">	\. 英文句号</div><div class="line">	\! 感叹号</div><div class="line">	&amp;gt; &gt;	</div><div class="line">	&amp;amp; &amp;</div><div class="line">	&amp;nbsp； 空格（non-breaking space）</div><div class="line"></div><div class="line"></div><div class="line">#### 8.**列表**</div><div class="line"></div><div class="line">* 无序列表</div><div class="line"> 一个*或者+或者- 加上一个空格</div><div class="line">	</div><div class="line">	* 无序列表</div><div class="line">	+ 无序列表</div><div class="line">	- 无序列表</div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejqrg1it5j20zq04a74c.jpg)</div><div class="line">* 有序列表</div><div class="line">使用数字接着一个英文句点再加一个空格,数字可以任意值</div><div class="line"></div><div class="line">	1. 第一项</div><div class="line">	1. 第二项</div><div class="line">	1. 第三项</div><div class="line"></div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejqxygs4yj210w03h3yi.jpg)</div><div class="line"></div><div class="line"></div><div class="line">#### 9.**段落和换行**</div><div class="line"></div><div class="line">单个回车视为空格.</div><div class="line">连续回车才能分段</div><div class="line"></div><div class="line">两种方式  </div><div class="line"></div><div class="line">1. 输入`&lt;br/&gt;`</div><div class="line"></div><div class="line">2. 两个空格加回车键 </div><div class="line">  </div><div class="line">---</div><div class="line">**一下是扩展语法**</div><div class="line"></div><div class="line"></div><div class="line">#### 10.**任务列表**</div><div class="line"></div><div class="line">未做任务`- + 空格 + [ ]`</div><div class="line">已做任务`- + 空格 + [x]`</div><div class="line"></div><div class="line">	- [ ] 任务一 给女朋友买口红</div><div class="line">	- [x] 任务二 陪女朋友吃饭</div><div class="line">	</div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejsy1c55mj20zu01ut8t.jpg)</div><div class="line"></div><div class="line">#### 11.**表格格式**</div><div class="line"></div><div class="line"></div><div class="line">	第一格表头 | 第二格表头</div><div class="line">	--------- | -------------</div><div class="line">	内容单元格 第一列第一格 | 内容单元格第二列第一格</div><div class="line">	内容单元格 第一列第二格 多加文字 | 内容单元格第二列第二格  </div><div class="line"></div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejv0vifb5j21az03vwez.jpg)</div><div class="line"></div><div class="line">#### 12.**删除线** </div><div class="line"></div><div class="line">    加删除线像这样用： ~~删除这些~~   </div><div class="line"></div><div class="line">![](http://ww1.sinaimg.cn/large/c1ff19eagy1fejv78uo1mj20vj028jre.jpg)  </div><div class="line"></div><div class="line">#### 13.**顺序图或流程图**</div><div class="line"></div><div class="line">	```sequence</div><div class="line">	张三-&gt;李四: 嘿，小四儿, 写博客了没?</div><div class="line">	Note right of 李四: 李四愣了一下，说：</div><div class="line">	李四--&gt;张三: 忙得吐血，哪有时间写。</div></pre></td></tr></table></figure>
 <pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: 开始</div><div class="line">e=&gt;end: 结束</div><div class="line">op=&gt;operation: 我的操作</div><div class="line">cond=&gt;condition: 确认？</div><div class="line"></div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejvy1jwgxj21f70jqmyf.jpg" alt=""></p>
-<p>####14.<strong>MathJax</strong></p>
-<p>关于MathJax与LaTex<br><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">可参考该文章</a></p>
+<h4 id="14-MathJax"><a href="#14-MathJax" class="headerlink" title="14.MathJax"></a>14.<strong>MathJax</strong></h4><p>关于MathJax与LaTex<br><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">可参考该文章</a></p>
 <pre><code>块级公式：
 $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
 
@@ -588,15 +602,15 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
 
 行内公式： $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejw6yp6e1j21dd080mya.jpg" alt=""></p>
-<p>####15.<strong>脚注(Footnote)</strong></p>
-<pre><code>第一[^1x]
+<h4 id="15-脚注-Footnote"><a href="#15-脚注-Footnote" class="headerlink" title="15.脚注(Footnote)"></a>15.<strong>脚注(Footnote)</strong></h4><pre><code>第一[^1x]
 [^1x]:脚注的用发
 
 
 百度地址[^百度地址]
 [^百度地址]:www.baidu.com
 </code></pre><p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejx7dl6vij20tf05l0su.jpg" alt=""><br>在文档的末尾自动生成如下图所示脚注<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fejxe0kh6nj20kv036a9y.jpg" alt=""></p>
-<p>16.<strong>TOC</strong><br>如果想点击文章中某一小标题自动滚动到标题位置，如何做呢，很简单。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[toc]</div></pre></td></tr></table></figure></p>
+<p>####16.<strong>TOC</strong><br>如果想点击文章中某一小标题自动滚动到标题位置，如何做呢，很简单。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[toc]</div></pre></td></tr></table></figure>
 <p>参考文章:</p>
 <ol>
 <li><a href="http://www.jianshu.com/p/4Q3aay" target="_blank" rel="external">http://www.jianshu.com/p/4Q3aay</a></li>
@@ -634,11 +648,9 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
   
     
     <entry>
-      <title><![CDATA[关于]]></title>
-      <url>/about/index.html</url>
-      <content type="html"><![CDATA[<p>大家好，我是XXX。欢迎来到我的个人技术博客。</p>
-<p>这里用markdown写下你的简介，就跟平时写md一样就可以了。</p>
-]]></content>
+      <title><![CDATA[读书]]></title>
+      <url>/reading/index.html</url>
+      <content type="html"></content>
     </entry>
     
     <entry>
@@ -648,9 +660,11 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
     </entry>
     
     <entry>
-      <title><![CDATA[读书]]></title>
-      <url>/reading/index.html</url>
-      <content type="html"></content>
+      <title><![CDATA[关于]]></title>
+      <url>/about/index.html</url>
+      <content type="html"><![CDATA[<p>大家好，我是XXX。欢迎来到我的个人技术博客。</p>
+<p>这里用markdown写下你的简介，就跟平时写md一样就可以了。</p>
+]]></content>
     </entry>
     
     <entry>
