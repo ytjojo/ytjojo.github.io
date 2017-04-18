@@ -3,6 +3,479 @@
   
     
     <entry>
+      <title><![CDATA[Hexo和GitHub Pages建立个人博客]]></title>
+      <url>/2017/04/18/hexo%E5%92%8Cgithubpage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<p>#Hexo和GitHub Pages建立个人博客</p>
+<blockquote>
+<p>作为一个程序员，一直想写点技术文章，一来记录下自己的工作学习心得体会，二是遇到棘手问题或者深层理论可以理清楚思路头绪，记录下来方便以后查找，三是锻炼自己表达和整理能力，四分享给同行业需要的人，帮别人解决共同问题，如果内容比较精髓，可以增加自己的影响力。总之好处多多。但是去哪写是个问题，大部分人选择简书，CSDN，cnblogs，LOFTER，在这些平台写博客方便，但是自定义功能太差，界面千篇一律不够极客，所以我选择了自建。自建的方式有WordPress、Jekyll和Octopress，但是配置什么的比较麻烦，最后选择了HEXO</p>
+</blockquote>
+<p>###简介<br>hexo出自台湾大学生<a href="https://twitter.com/tommy351" target="_blank" rel="external">tommy351</a>之手，是一个基于Node.js的静态博客程序，其编译上百篇文字只需要几秒。hexo生成的静态网页可以直接放到GitHub Pages，BAE，SAE等平台上。官方中文文档在<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">这里</a></p>
+<p>###环境准备</p>
+<p>###安装Node.js</p>
+<p>到Node.js的<a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>下载对应平台的最新版本，有两个可选项，<strong>Recommended for most User</strong> 和 <strong>Latest Features</strong>,我下载的是<strong>Recommended for most User</strong> V6.10.2LTS    版本。一路安装，自定义安装的话注意配置环境变量。<a href="http://www.cnblogs.com/zhouyu2017/p/6485265.html" target="_blank" rel="external">配置教程看这里</a></p>
+<p>###安装Hexo</p>
+<p>打开命令行，键入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
+<p>###安装git</p>
+<p>去git官方网站下载页选择对应平台下载，<a href="http://blog.csdn.net/renfufei/article/details/41647875/" target="_blank" rel="external">安装教程在这</a><br>设置下环境变量。</p>
+<p>###Github注册和GitHubPage建立</p>
+<ul>
+<li><p>注册github账号，已有忽略。</p>
+</li>
+<li><p>建立与你账户名对应的仓库，仓库名必须是[your_name.github.io],一个账号下只能建一个。</p>
+</li>
+<li><p>生成SSH Keys</p>
+</li>
+</ul>
+<p>首先设置你的用户名密码：</p>
+<pre><code>git config --global user.email &quot;你的邮箱&quot;
+git config --global user.name &quot;github用户名&quot;
+
+
+cd ~/.ssh #检查本机的ssh密钥
+</code></pre><p>如果提示：No such file or directory 说明你是第一次使用git</p>
+<p>生成ssh key，替换你的邮件地址</p>
+<pre><code>ssh-keygen -t rsa -C &quot;邮件地址@youremail.com&quot;
+</code></pre><p>提示</p>
+<pre><code>Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/Administrator/.ssh/id_rsa):#&lt;回车就好&gt;
+</code></pre><p>然后系统会要你输入密码：</p>
+<pre><code>Enter passphrase (empty for no passphrase):&lt;输入加密串&gt;
+Enter same passphrase again:&lt;再次输入加密串&gt;
+</code></pre><p><strong>注意</strong>，你可能疑惑输入密码命令行窗口却不显示，不要惊慌，只要正常输入就好了。</p>
+<ul>
+<li><p>添加SSH key 到github<br>用记事本打开本地C:\Documents and Settings\Administrator.ssh\id_rsa.pub文件，完全复制文本内容</p>
+<p>登陆github系统。点击右上角的 Account Settings—&gt;SSH Public keys —&gt; add another public keys</p>
+<p>你本地生成的密钥复制到里面（key文本框中）， 点击 add key 就ok了</p>
+</li>
+</ul>
+<p><strong>测试github ssh key</strong><br>键入命令</p>
+<pre><code>ssh -vT git@github.com
+</code></pre><p>如果看到</p>
+<pre><code>The authenticity of host &apos;github.com (207.97.227.239)&apos; can&apos;t be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre><p>输入yes就好，最后如果看到</p>
+<pre><code>Hi 【你的用户名】! You&apos;ve successfully authenticated, but GitHub does not provide shell access.
+</code></pre><p>就表示成功了</p>
+<p>###搭建Hexo工作空间</p>
+<p>在电脑上建立一个处理博客的文件夹如E:\blog_github\hexo，鼠标右键Git Bash Here 打开命令行，输入：</p>
+<pre><code>hexo init
+npm install #安装所需要的依赖包
+</code></pre><p>执行完成后看到目录结构</p>
+<pre><code>.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   ├── _drafts
+|   └── _posts
+└── themes
+</code></pre><p>结构说明：</p>
+<p>_config.yml：可以在这里配置需要的配置。</p>
+<p>package.json：应用程序数据。EJS, Stylus 和 Markdown渲染器会自动安装。如果想要卸载他们，也是可以的。</p>
+<p>scaffolds：当你创建一个新文章时，用到的模板文件。</p>
+<p>themes：主题。</p>
+<hr>
+<p>您可以在 <code>_config.yml</code> 中修改大部份的配置。</p>
+<h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>网站标题</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>网站描述</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>您的名字</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>网站使用的语言</td>
+</tr>
+<tr>
+<td><code>timezone</code></td>
+<td>网站时区。Hexo 默认使用您电脑的时区。<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank" rel="external">时区列表</a>。比如说：<code>America/New_York</code>, <code>Japan</code>, 和 <code>UTC</code> 。</td>
+</tr>
+</tbody>
+</table>
+<p>其中，<code>description</code>主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。<code>author</code>参数用于主题显示文章的作者。</p>
+<h4 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>网址</td>
+<td></td>
+</tr>
+<tr>
+<td><code>root</code></td>
+<td>网站根目录</td>
+<td></td>
+</tr>
+<tr>
+<td><code>permalink</code></td>
+<td>文章的 <a href="permalinks.html">永久链接</a> 格式</td>
+<td><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td><code>permalink_defaults</code></td>
+<td>永久链接中各部分的默认值</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>网站存放在子目录<br>如果您的网站存放在子目录中，例如 <code>http://yoursite.com/blog</code>，则请将您的 <code>url</code> 设为 <code>http://yoursite.com/blog</code> 并把 <code>root</code> 设为 <code>/blog/</code>。</p>
+<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source_dir</code></td>
+<td>资源文件夹，这个文件夹用来存放内容。</td>
+<td><code>source</code></td>
+</tr>
+<tr>
+<td><code>public_dir</code></td>
+<td>公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td><code>public</code></td>
+</tr>
+<tr>
+<td><code>tag_dir</code></td>
+<td>标签文件夹</td>
+<td><code>tags</code></td>
+</tr>
+<tr>
+<td><code>archive_dir</code></td>
+<td>归档文件夹</td>
+<td><code>archives</code></td>
+</tr>
+<tr>
+<td><code>category_dir</code></td>
+<td>分类文件夹</td>
+<td><code>categories</code></td>
+</tr>
+<tr>
+<td><code>code_dir</code></td>
+<td>Include code 文件夹</td>
+<td><code>downloads/code</code></td>
+</tr>
+<tr>
+<td><code>i18n_dir</code></td>
+<td>国际化（i18n）文件夹</td>
+<td><code>:lang</code></td>
+</tr>
+<tr>
+<td><code>skip_render</code></td>
+<td>跳过指定文件的渲染，您可使用 <a href="https://github.com/isaacs/node-glob">glob 表达式</a>来匹配路径。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>提示<br>如果您刚刚开始接触Hexo，通常没有必要修改这一部分的值。</p>
+<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new_post_name</code></td>
+<td>新文章的文件名称</td>
+<td>:title.md</td>
+</tr>
+<tr>
+<td><code>default_layout</code></td>
+<td>预设布局</td>
+<td>post</td>
+</tr>
+<tr>
+<td><code>auto_spacing</code></td>
+<td>在中文和英文之间加入空格</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>titlecase</code></td>
+<td>把标题转换为 title case</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>external_link</code></td>
+<td>在新标签中打开链接</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>filename_case</code></td>
+<td>把文件名称转换为 (1) 小写或 (2) 大写</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>render_drafts</code></td>
+<td>显示草稿</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>post_asset_folder</code></td>
+<td>启动 <a href="asset-folders.html">Asset 文件夹</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>relative_link</code></td>
+<td>把链接改为与根目录的相对位址</td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>future</code></td>
+<td>显示未来的文章</td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>代码块的设置</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>相对地址<br>默认情况下，Hexo生成的超链接都是绝对地址。例如，如果您的网站域名为<code>example.com</code>,您有一篇文章名为<code>hello</code>，那么绝对链接可能像这样：<code>http://example.com/hello.html</code>，它是<strong>绝对</strong>于域名的。相对链接像这样：<code>/hello.html</code>，也就是说，无论用什么域名访问该站点，都没有关系，这在进行反向代理时可能用到。通常情况下，建议使用绝对地址。</p>
+<h4 id="分类-amp-标签"><a href="#分类-amp-标签" class="headerlink" title="分类 &amp; 标签"></a>分类 &amp; 标签</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_category</code></td>
+<td>默认分类</td>
+<td><code>uncategorized</code></td>
+</tr>
+<tr>
+<td><code>category_map</code></td>
+<td>分类别名</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tag_map</code></td>
+<td>标签别名</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="日期-时间格式"><a href="#日期-时间格式" class="headerlink" title="日期 / 时间格式"></a>日期 / 时间格式</h4><p>Hexo 使用 <a href="http://momentjs.com/" target="_blank" rel="external">Moment.js</a> 来解析和显示时间。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>date_format</code></td>
+<td>日期格式</td>
+<td><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td><code>time_format</code></td>
+<td>时间格式</td>
+<td><code>H:mm:ss</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>per_page</code></td>
+<td>每页显示的文章量 (0 = 关闭分页功能)</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>pagination_dir</code></td>
+<td>分页目录</td>
+<td><code>page</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theme</code></td>
+<td>当前主题名称。值为<code>false</code>时禁用主题</td>
+</tr>
+<tr>
+<td><code>deploy</code></td>
+<td>部署部分的设置</td>
+</tr>
+</tbody>
+</table>
+<p>现在已经搭建本地Hexo博客了，执行以下命令，然后在浏览器输入<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a></p>
+<pre><code>hexo g #生成博客依赖的html css js文件
+hexo s #本地提供博客服务
+</code></pre><p>就会看到如下界面<br><img src="https://raw.githubusercontent.com/CoderTian/CoderTian.github.io/master/2015/11/26/github-hexo-blog/success.png" alt=""></p>
+<p>###更改网站描述信息<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，配置以下参数</p>
+<pre><code>title: 张三的博客 
+subtitle: 学习笔记
+description: That&apos;s all, thank you！
+author: 张三
+language: zh-CN
+timezone: Asia/Shanghai
+</code></pre><p>注意冒号之后有一个空格的，不然解析报错</p>
+<p>###关联github仓库<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开</p>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:ytjojo/ytjojo.github.io.git
+  branch: master
+</code></pre><p>###将Hexo系统绑定到你的github page网址<br>打开你hexo工作目录如E:\blog_github\hexo，找到_config.yml文件打开，找到# URl这一项，更改url: 和root: 内容，如</p>
+<pre><code># URL
+## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;
+url: https://github.com/ytjojo/ytjojo.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+</code></pre><p>由于我Hexo是直接初始化在blog根目录文件夹下的，因此我的url和root没有改动，如果是初始化在子目录下的(如：blog中的hexo目录)就需要改为<br>    url: <a href="https://github.com/ytjojo/ytjojo.github.io/hexo">https://github.com/ytjojo/ytjojo.github.io/hexo</a><br>    root: /hexo/</p>
+<p>配置完成，清除生成静态文件</p>
+<pre><code>hexo clean
+</code></pre><p>重新生成静态文件</p>
+<pre><code>hexo g #hexo generate的简化版
+</code></pre><p>部署到your_name.github.io.</p>
+<pre><code>hexo d #hexo deploy的简化版，部署到github远程仓库
+</code></pre><p>如果发布时候出现错误</p>
+<pre><code>ERROR Deployer not found: git
+</code></pre><p>执行</p>
+<pre><code>npm install hexo-deployer-git --save
+</code></pre><p>出现</p>
+<pre><code>hexo-site@0.0.0 E:\blog_github\hexo
+`-- hexo-deployer-git@0.2.0
+</code></pre><p>表示正常安装，默认是0.2.0版本，默认也可以指定高版本的，</p>
+<pre><code>npm install hexo-deployer-git@0.4.0 --save
+</code></pre><p>直到命令行出现</p>
+<pre><code>Branch master set up to track remote branch master from git@github.com:ytjojo/ytjojo.github.io.git.
+To github.com:ytjojo/ytjojo.github.io.git
+   ad4d091..817debc  HEAD -&gt; master
+INFO  Deploy done: git
+</code></pre><p>打开你的主页,<a href="https://ytjojo.github.io/" target="_blank" rel="external">https://ytjojo.github.io/</a>，就会看到你的博客了</p>
+<p>###添加文章</p>
+<ol>
+<li><p>如果已经有写好的markdown文件<br>打开文件，头部加入下面描述。已经有就忽略</p>
+<p> title: postName #文章页面上的显示名称，可以任意修改，不会出现在URL中<br> date: 2013-12-02 15:30:16 #文章生成时间，一般不改，当然也可以任意修改<br> categories: example #分类<br> tags: [tag1,tag2,tag3] #文章标签，可空，多标签请用格式，注意:后面有个空格<br> description: 附加一段文章摘要，字数最好在140字以内。<br>复制到source_posts文件夹下面</p>
+</li>
+<li><p>如果是新建文章</p>
+<p> hexo new [layout] “postName” #新建文章</p>
+</li>
+</ol>
+<p>其中layout是可选参数，hexo提供了3种默认的布局， post 、 page 和 draft ，路径分别为： source/_posts 、 source 、 source/_draft 。如果你将在文章前置申明中，将layout设置为false，那么这篇文章将不会有任何的布局。如果不写layout类型，默认到source/_post文件夹，如果想放入草稿文件夹，输入</p>
+<pre><code>hexo new draft &quot;我新建的草稿文章&quot;
+</code></pre><p>找到source/_draft文件夹对应的文件打开，发现少了categories，date<br>等，可以手动添加，也可以配置下，下次执行  <code>hexo new &quot;新的文章&quot;</code> 时候默认就会有这些信息<br>配置方法：在你的hexo工作空间打开scaffolds\post.md或者scaffolds\draft.md,输入</p>
+<pre><code>---
+title: { { title } }
+date: { { date } }
+categories: 
+tags: 
+description: 
+---
+</code></pre><p>新建文章之后，就可以用自己喜欢的markdown 编辑器写文章了</p>
+<p><strong>注意</strong>：source/_posts是网站中显示的文章source/_draft是草稿文件夹，有些主题默认不显示的，如果你在草稿里已经完成了文章，请将文章复制到source/_posts文件夹下</p>
+<p>###将新建的文章发布到博客里</p>
+<pre><code>hexo clean
+hexo g
+hexo d
+</code></pre><p>过一会儿打开你的博客网址<a href="https://ytjojo.github.io/" target="_blank" rel="external">https://ytjojo.github.io/</a>,就会看到你写的博客了</p>
+<p>###fancybox<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feqnavr0daj20l40op40u.jpg" alt=""></p>
+<p>可能有人对这个<a href="http://bruce-sha.github.io/reading/" target="_blank" rel="external">Reading</a>页面中图片的fancybox效果感兴趣，这个是怎么做的呢。<br>很简单，只需要在你的文章*.md文件的头上添加photos项即可，然后一行行添加你要展示的照片：</p>
+<pre><code>layout: photo
+title: 我的阅历
+date: 2085-01-16 07:33:44
+tags: [hexo]
+photos:
+- http://bruce.u.qiniudn.com/2013/11/27/reading/photos-0.jpg
+- http://bruce.u.qiniudn.com/2013/11/27/reading/photos-1.jpg
+</code></pre><p>如果不想每次添加，打开您的scaffolds\photo.md，没有的话新建一个。</p>
+<pre><code>layout: { { layout } }
+title: { { title } }
+date: { { date } }
+tags: 
+photos: 
+- 
+---
+</code></pre><p>然后每次可以执行带layout的new命令生成照片文章：</p>
+<pre><code>hexo new photo &quot;photoPostName&quot; #新建照片文章
+</code></pre><p>###文章摘要<br>在需要显示摘要的地方添加如下代码即可：</p>
+<pre><code>以上是摘要
+&lt;!--more--&gt;
+以下是余下全文
+</code></pre><p>用<code>&lt;!--more--&gt;</code>分割摘要和正文,</p>
+<p>more以上内容即是文章摘要，在主页显示，more以下内容点击『&gt; Read More』链接打开全文才显示。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> hexo </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Hexo </tag>
+            
+            <tag> git </tag>
+            
+            <tag> git配置 </tag>
+            
+            <tag> ssh </tag>
+            
+            <tag> github page </tag>
+            
+            <tag> 建立个人博客 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Markdown学习笔记]]></title>
       <url>/2017/04/15/markdown%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>#Markdown学习笔记<br>[toc]</p>
@@ -136,6 +609,24 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
 </ol>
 ]]></content>
       
+        <categories>
+            
+            <category> markdown </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> markdown </tag>
+            
+            <tag> markdown编辑器 </tag>
+            
+            <tag> markdown语法 </tag>
+            
+            <tag> 图床 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -151,8 +642,20 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
     </entry>
     
     <entry>
+      <title></title>
+      <url>/categories/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[读书]]></title>
       <url>/reading/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title></title>
+      <url>/tags/index.html</url>
       <content type="html"></content>
     </entry>
     
