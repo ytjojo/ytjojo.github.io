@@ -81,6 +81,7 @@ git命令
 
 将hexo源码复制到这个git仓库目录下
 必须的文件如下
+
 	.
 	├── _config.yml*
 	├── db.json*
@@ -96,6 +97,7 @@ git命令
 	│   ├── media
 	│   └── tags
 	└── themes
+
 
 同时在当前目录下新建.travis.yml
 
@@ -147,7 +149,12 @@ git命令
 	env:
 	 global:
 	   - GH_REF: github.com/ytjojo/ytjojo.github.io.git #替换自己的
-	   
+
+##提交blog-source分支
+分支文件结构如图
+
+![](http://ww1.sinaimg.cn/large/c1ff19eagy1fetapb1g3rj20l007wt9d.jpg)
+
 最后将本地blog-source 分支提交到远程，Travis 就会自动构建然后push到你github page master分支上
 
 
