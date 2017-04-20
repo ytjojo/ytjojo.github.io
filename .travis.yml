@@ -30,8 +30,7 @@ before_install:
 script:
   - hexo clean
   - hexo g
-
-after_script:
+after_success:
   - cd ./public
   - git init
   - git config user.name "ytjojo"
