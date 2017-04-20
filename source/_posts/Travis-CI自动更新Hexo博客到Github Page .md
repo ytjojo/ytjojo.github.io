@@ -150,12 +150,18 @@ git命令
 	 global:
 	   - GH_REF: github.com/ytjojo/ytjojo.github.io.git #替换自己的
 
-##提交blog-source分支
+## 提交blog-source分支
 分支文件结构如图
 
 ![](http://ww1.sinaimg.cn/large/c1ff19eagy1fetapb1g3rj20l007wt9d.jpg)
 
 最后将本地blog-source 分支提交到远程，Travis 就会自动构建然后push到你github page master分支上
+
+## 参考文章
+
+1. <https://github.com/ytjojo/ytjojo.github.io.git>
+2. <http://kchen.cc/2016/11/12/hexo-instructions/>
+
 
 
 
