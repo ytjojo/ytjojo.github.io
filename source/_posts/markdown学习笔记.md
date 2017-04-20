@@ -223,16 +223,16 @@ Markdown有两种链接方式：Inline以及Reference
 
 百分比控制大小
 
-```<img src="http://img.blog.csdn.net/20151129213701642" width="50%" alt="图片名称" align=center />
-```
+```<img src="http://img.blog.csdn.net/20151129213701642" width="50%" alt="图片名称" align=center />```
 
 
-* 给图片加脚注
+给图片加脚注  
 
-   <center>
-   <img src="http://img.blog.csdn.net/20151129213701642" width="25%" alt="图片名称" align=center />
-   Figure 1. Lena
-   </center>
+	<center>
+	<img src="http://img.blog.csdn.net/20151129213701642" width="25%" alt="图片名称" align=center />
+	Figure 1. Lena
+	</center>```
+
 
 <center>
 <img src="http://img.blog.csdn.net/20151129213701642" width="25%" alt="图片名称" align=center />
