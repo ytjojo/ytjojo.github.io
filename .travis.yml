@@ -24,7 +24,7 @@ before_install:
 # 由于使用了yarn，所以需要下载，如不用yarn这两行可以删除
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
-#- npm install -g hexo-cli
+- npm install -g hexo
 install:
 # 不用yarn的话这里改成 npm i 即可
 - yarn
@@ -39,7 +39,8 @@ after_script:
   - git config user.email "ytjojo@163.com"
   - git add --all .
   - git commit -m "Update docs"
-  - git push --force --quiet "https://$GH_TOKEN@$GH_REF" master:master
+  - git push --force --quiet "https://$GH_TOKEN@$GH_REF" 
+    master:master
 # E: Build LifeCycle
 
 branches:
