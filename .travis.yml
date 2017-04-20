@@ -4,6 +4,7 @@ node_js: stable
 # S: Build Lifecycle
 install:
   - npm install
+  - yarn
 
 
 #before_script:
@@ -25,9 +26,7 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
 - npm install -g hexo
-install:
-# 不用yarn的话这里改成 npm i 即可
-- yarn
+
 script:
   - hexo clean
   - hexo g
