@@ -7,8 +7,8 @@ install:
 - yarn
 
 
-before_script: 
-- npm install -g gulp
+#before_script: 
+#- npm install -g gulp
 
  
  # 缓存，可以节省集成的时间，这里我用了yarn，如果不用可以删除
@@ -26,7 +26,7 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH=$HOME/.yarn/bin:$PATH
 - npm install -g hexo
-- git clone -b mod https://github.com/raytaylorlin/hexo-theme-raytaylorism.git themes/raytaylorism
+- git clone https://github.com/raytaylorlin/hexo-theme-raytaylorism.git themes/raytaylorism
 
 script:
   - hexo clean
