@@ -326,8 +326,8 @@ Hexo 使用 [Moment.js](http://momentjs.com/) 来解析和显示时间。
 
 
 	---
-	title: { { title } }
-	date: { { date } }
+	title: {{ title }}
+	date: {{ date }}
 	categories: 
 	tags: 
 	description: 
