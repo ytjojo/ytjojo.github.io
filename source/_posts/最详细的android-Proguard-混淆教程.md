@@ -1,8 +1,8 @@
 ---
 title: 最详细的android Proguard 混淆教程
 date: 2017-04-21 17:43:00
-categories:Android Proguard
-tags:[android混淆,Proguard,android Proguard]
+categories: Android Proguard
+tags: [android混淆,Proguard,android Proguard,恢复堆栈,Unknown Source]
 ---
 
 >ProGuard是一个压缩、优化和混淆Java字节码文件的免费的工具，它可以删除无用的类、字段、方法和属性。可以删除没用的注释，最大限度地优化字节码文件。它还可以使用简短的无意义的名称来重命名已经存在的类、字段、方法和属性。常常用于Android开发用于混淆最终的项目，增加项目被反编译的难度。  
