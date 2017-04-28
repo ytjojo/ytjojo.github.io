@@ -651,4 +651,5 @@ git checkout <branch-name> && git cherry-pick <commit-id>
 12. <http://gitbook.liuhui998.com/index.html>
 13. <https://github.com/ruijun/Android-Dev-Favorites/blob/master/Git/Git.md>
 14. <http://www.jianshu.com/p/da3ee7d07a03>
+15. commit是如何填message<http://mp.weixin.qq.com/s?__biz=MzAwNDYwNzU2MQ==&mid=401622986&idx=1&sn=470717939914b956ac372667ed23863c&scene=2&srcid=0114ZcTNyAMH8CLwTKlj6CTN&from=timeline&isappinstalled=0#wechat_redirect>
 
