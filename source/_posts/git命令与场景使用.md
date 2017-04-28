@@ -635,6 +635,30 @@ git checkout <branch-name> && git cherry-pick <commit-id>
 	git gc --prune=now
 	git gc --aggressive --prune=now
 
+### 输出最后一次提交的改变到压缩包中
+
+	git archive -o ../updated.zip HEAD $(git diff --name-only HEAD^)
+
+	#输出两个提交间的改变
+	git archive -o ../latest.zip NEW_COMMIT_ID_HERE $(git diff --name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE) 
+
+### 检测你的分支的改变是否为其它分支的一部分
+
+cherry命令让我们检测你的分支的改变是否出现在其它一些分支中。它通过+或者-符号来显示从当前分支与所给的分支之间的改变：是否合并了(merged)。.+ 指示没有出现在所给分支中，反之，- 就表示出现在了所给的分支中了。这里就是如何去检测：
+
+	git cherry -v OTHER_BRANCH_NAME_HERE
+	#例如: 检测master分支
+	git cherry -v master
+### 使用rebase推送而非merge
+
+如果您正在团队中工作并且整个团队都在同一条branch上面工作，那么您就得经常地进行fetch/merge或者pull。Git中，分支的合并以所提交的merge来记录，以此表明一条feature分支何时与主分支合并。但是在多团队成员共同工作于一条branch的情形中，常规的merge会导致log中出现多条消息，从而产生混淆。因此，您可以在pull的时候使用rebase，以此来减少无用的merge消息，从而保持历史记录的清晰。
+
+	git pull --rebase
+
+您也可以将某条branch配置为总是使用rebase推送：
+
+	git config branch.BRANCH_NAME_HERE.rebase true	 	
+
 ## 参考文章
 
 1. <https://www.ibm.com/developerworks/cn/devops/d-learn-workings-git/index.html>
