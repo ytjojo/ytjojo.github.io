@@ -30,13 +30,11 @@ tags: [git,git命令，git教程，git详解，git学习笔记]
 
 	git config --system user.name "Your Name"
 
-	#用户级的配置,~/.gitconifg
-
-	git config --globe user.email "email@example.com"
+	git config --system user.email "email@example.com"
 
 	#仓库级配置,~/.gitconifg
 
-	git config --globe user.email "email@example.com"
+	git config --local user.email "email@example.com"
 
 ## git 仓库初始化
 
@@ -44,12 +42,17 @@ tags: [git,git命令，git教程，git详解，git学习笔记]
 	git init
 	# 新建一个目录，将其初始化为Git代码库
 	git init androidDemo
+	git remote add origin git@github.com:YotrolZ/helloTest.git
 
 	# 下载一个项目和它的整个代码历史
 	git clone https://github.com/521xueweihan/git-tips.git
 	
 	# 在androidDemo目录下载一个项目和它的整个代码历史
 	git clone [url] androidDemo
+	
+	#修改远程仓库的地址，把<URL>替换成新的url地址。
+	git remote origin set-url <URL>
+
 	
 	
 ## 增加/删除文件
@@ -172,6 +175,9 @@ tags: [git,git命令，git教程，git详解，git学习笔记]
 	
 	# 新建一个分支，与指定的远程分支建立追踪关系
 	git branch --track [branch] [remote-branch]
+	
+	# 本地没有master分支，新建master 分支，与远程master分支建立追踪关系
+	git checkout --track -b master origin/master
 	
 	# 切换到指定分支，并更新工作区
 	git checkout [branch-name]
@@ -348,6 +354,24 @@ tags: [git,git命令，git教程，git详解，git学习笔记]
 	
 	# 显示两次提交之间的差异
 	$ git diff [first-branch]...[second-branch]
+
+	#显示出所有有差异的文件列表
+	$ git diff branch1 branch2 --stat 
+	
+	#将两个分支不同内容输出到foo.diff 文件中，用notepad++/sublime 之类的编辑器打开，高亮颜色
+	$ git diff branch1 branch2 --color > foo.diff  
+
+	#显示当前目录下的lib目录和上次提交之间的差别（更准确的说是在当前分支下）
+	$ git diff HEAD -- ./lib
+
+	#、比较上次提交commit和上上次提交
+    $ git diff HEAD^ HEAD
+
+	#直接将两个分支上最新的提交做diff
+    $ git diff topic master 或 git diff topic..master
+
+	#如果你想查看将要合并的某个分枝会有什么样的变化，将branch替换为你想要合并的分枝名即可
+	$ git diff ...(branch)
 	
 
 ## 远程仓库同步
@@ -657,7 +681,52 @@ cherry命令让我们检测你的分支的改变是否出现在其它一些分�
 
 您也可以将某条branch配置为总是使用rebase推送：
 
-	git config branch.BRANCH_NAME_HERE.rebase true	 	
+	git config branch.BRANCH_NAME_HERE.rebase true	 
+
+### 远程分支回滚到某个commit
+
+	$ git checkout the_branch
+
+	$ git pull
+	
+	$ git branch the_branch_backup //备份一下这个分支当前的情况
+	
+	$ git reset --hard the_commit_id //把the_branch本地回滚到the_commit_id
+	
+	$ git push origin :the_branch //删除远程 the_branch
+	
+	$ git push origin the_branch //用回滚后的本地分支重新建立远程分支
+	
+	$ git push origin :the_branch_backup //如果前面都成功了，删除这个备份分支
+
+### git将单个文件恢复到历史版本的正确方法如下：
+
+	$ git reset commit_id 文件路径
+	$ git checkout -- 文件路径	
+
+### git reflog
+
+Git reflog 可以查看所有分支的所有操作记录（包括（包括commit和reset的操作），包括已经被删除的commit记录，git log则不能察看已经删除了的commit记录
+commit1: add Test1.java
+commit2: add Test2.java
+commit3: add Test2.java
+	
+	#删除commit3的提交
+	$ git reset --hard HEAD~1
+	#如果恢复commit3的提交，就要查看commitid
+	$ git reflog
+	
+	3e94c18ae HEAD@{0}: commit: add Test3.java
+	e55c2974f HEAD@{1}: commit: add Test2.java
+	3e94c18ae HEAD@{2}: commit: add Test1.java
+	#恢复删除的commit3 有两种方式 
+	$ git reset --hard 3e94c18ae
+	#第二种方式
+	$ git cherry-pick 3e94c18ae
+	
+
+
+	
 
 ## 参考文章
 
@@ -675,5 +744,8 @@ cherry命令让我们检测你的分支的改变是否出现在其它一些分�
 12. <http://gitbook.liuhui998.com/index.html>
 13. <https://github.com/ruijun/Android-Dev-Favorites/blob/master/Git/Git.md>
 14. <http://www.jianshu.com/p/da3ee7d07a03>
-15. commit是如何填message<http://mp.weixin.qq.com/s?__biz=MzAwNDYwNzU2MQ==&mid=401622986&idx=1&sn=470717939914b956ac372667ed23863c&scene=2&srcid=0114ZcTNyAMH8CLwTKlj6CTN&from=timeline&isappinstalled=0#wechat_redirect>
+15. commit是如何填message<http://mp.weixin.qq.com/s?__biz=MzAwNDYwNzU2MQ==&mid=401622986&idx=1&sn=470717939914b956ac372667ed23863c&scene=2&srcid=0114ZcTNyAMH8CLwTKlj6CTN&from=timeline&isappinstalled=0#wechat_re
+16. 
+17. 
+18. direct>
 
