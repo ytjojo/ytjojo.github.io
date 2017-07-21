@@ -53,6 +53,15 @@ tags: [git,git命令，git教程，git详解，git学习笔记]
 	#修改远程仓库的地址，把<URL>替换成新的url地址。
 	git remote origin set-url <URL>
 
+	#三种方式修改远程仓库地址
+	#1. 修改命令
+	git remte origin set-url URL
+
+	#2.先删后加
+	git remote rm origin 
+	git remote add origin git@github.com:Liutos/foobar.git 
+
+	# 3. 直接修改config文件
 	
 	
 ## 增加/删除文件
