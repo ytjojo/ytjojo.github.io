@@ -2,7 +2,7 @@
 title: git命令与场景使用
 date: 2017-04-25 16:19:20
 categories: git
-tags: [git,git命令，git教程，git详解，git学习笔记]
+tags: [git,git命令,git教程,git详解,git学习笔记]
 ---
 
 ![](https://segmentfault.com/img/remote/1460000006774229)
