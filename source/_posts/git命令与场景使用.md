@@ -781,6 +781,14 @@ $ git gc --prune=now
 
 $ git gc --aggressive --prune=now
 ```
+### 只拉取仓库中的一个文件或者文件夹
+git init <repo>
+cd <repo>
+git remote add origin <url>
+git config core.sparsecheckout true
+echo "finisht/*" >> .git/info/sparse-checkout
+echo "another/sub/tree" >> .git/info/sparse-checkout
+git pull --depth=1 origin master
 	
 
 ## 参考文章
