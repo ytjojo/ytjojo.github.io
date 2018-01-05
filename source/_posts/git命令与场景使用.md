@@ -137,6 +137,16 @@ tags: [git,git命令,git教程,git详解,git学习笔记]
 	
 	#将文件夹移动到另一个文件夹下,其实相当于文件夹重命名
 	git mv app/ androidDemo/app
+
+	#重命名本地分支：
+
+	git branch -m devel develop
+	#在git中重命名远程分支，其实就是先删除远程分支，然后重命名本地分支，再重新提交一个远程分支。
+
+    例如下面的例子中，我需要把 devel 分支重命名为 develop 分支：
+	git push --delete origin devel
+	git branch -m devel develop
+    git push origin develop
 	
 
 
@@ -163,7 +173,11 @@ tags: [git,git命令,git教程,git详解,git学习笔记]
 	$ git commit --amend [file1] [file2] ...
 
 ## 分支
-
+	#设置git push,pull默认的提交获取分支,这样就很方便的使用git push 提交信息或git pull获取信息
+	#常用于本地新建分支
+	git branch --set-upstream-to=origin/dev
+	#取消对master的跟踪
+	git branch --unset-upstream master
 	# 列出所有本地分支
 	git branch
 	
@@ -215,6 +229,11 @@ tags: [git,git命令,git教程,git详解,git学习笔记]
 	# 删除远程分支
 	git push origin --delete [branch-name]
 	git branch -dr [remote/branch]
+	
+	git push origin :<branchName>
+	#删除不存在对应远程分支的本地分支
+	
+    git fetch -p
 
 	#重命名分支,不会覆盖已经存在的同名分支
 	git branch -m original-branch newbranch

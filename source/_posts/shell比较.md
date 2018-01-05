@@ -439,6 +439,51 @@ sys     0m0.036s
   fi
   ```
 
+zhezhelin
+linux shell 中判断字符串为空的正确方法
+help命令可以查看帮助
+
+help test
+
+ 
+
+正确做法：
+ 
+```
+#!/bin/sh
+
+STRING=
+
+if [ -z "$STRING" ]; then 
+    echo "STRING is empty" 
+fi
+
+if [ -n "$STRING" ]; then 
+    echo "STRING is not empty" 
+fi
+
+ 
+
+root@james-desktop:~# ./zerostring.sh 
+STRING is empty
+
+````
+-------------------------------------------------------------------------
+
+错误做法：
+```
+#!/bin/sh
+
+STRING=
+
+if [ -z $STRING ]; then 
+    echo "STRING is empty" 
+fi
+
+if [ -n $STRING ]; then 
+    echo "STRING is not empty" 
+fi 
+```
 ## Linux命令之exit - 退出当前shell【返回值状态】
 
 使用示例
