@@ -1,3 +1,10 @@
+
+---
+title: shell中字符串比较
+date: 2017-11-25 10:10:20
+categories: shell
+tags: [shell,shell数组]
+---
 ## 判断字符串相等不相等方法
 
 
