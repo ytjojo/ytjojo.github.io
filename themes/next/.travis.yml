@@ -1,50 +1,17 @@
 language: node_js
-node_js: stable
+node_js: node
 
-# S: Build Lifecycle
-install: 
-- npm install 
-- yarn
-
-
-#before_script: 
-#- npm install -g gulp
-
- 
- # 缓存，可以节省集成的时间，这里我用了yarn，如果不用可以删除
 cache:
-  apt: true
-  yarn: true
   directories:
     - node_modules
-    
-# tarvis生命周期执行顺序详见官网文档
-before_install:
-- git config --global user.name "ytjojo"
-- git config --global user.email "ytjojo@163.com"
-# 由于使用了yarn，所以需要下载，如不用yarn这两行可以删除
-- curl -o- -L https://yarnpkg.com/install.sh | bash
-- export PATH=$HOME/.yarn/bin:$PATH
-- npm install -g hexo
 
+install: npm install
 
-script:
-  - hexo clean
-  - hexo g
-after_success:
-  - cd ./public
-  - git init
-  - git config user.name "ytjojo"
-  - git config user.email "ytjojo@163.com"
-  - git add --all .
-  - git commit -m "Update docs"
-  - git push --quiet --force https://$GH_TOKEN@$GH_REF    
-    master
-# E: Build LifeCycle
+before_script:
+  - npm install -g gulp
 
-branches:
-  only:
-    - blog-source 
-env:
- global:
-   - GH_REF: github.com/ytjojo/ytjojo.github.io.git
+addons:
+  browserstack:
+    username: "ivannginx1"
+    access_key:
+      secure: "NutOhdgtUdBUXMPZhy8X1F1Jq+tan1LeNOV0FArBt15SNlxtNArqhiyTi4XnG9MPruX4306aGF2RBrKso+OiGNRdGtRGngH613Q0GWNtlC/boMqnI7fHqLIyCs6S12y2uA8PK4Ifxg9bZ0VtCTYYbMy+p1KvBM//L12vmtfdnby8z5Qvex3tB3dLoPOR50CKkINHJVDLm+iVRFrdz4/83oDsulZSRRGIaxu5taDWPIcp3fYZtre2Nc+RXcsyFDyjN7U0Hvr5tKBbloJxXEQEBv2xLkMOtp85nmCPD06s1Il8Wus1ux3raVsfUyaW5FpNX37Jeb5e00RQUM1wgU5m75H6qiGwDvQswbugJG0i/a2nNfsgVmbrSZdMnkHcx2Uxmrw4ejyEP5NSrJSBi05Ck1fQ4UsZ4Qkdf1fd04SI0LpLWt43eoNO/7rHKsQoP4LCX9gxKUuC075NEBLODyJ529RYfA6dKKwwH6o0ZbOgASmCoAWaM65g4+FHRnJcKL/Kj9ZWklQtRa7/ynlHaA65jefFS2lB8Ut6d3rXDDBih9mIrwV1uUaEH96xgAN42bgU/vY6FGzNkDOYZqj4YfsepDM0wbOsslFie7JZq7iFjsYvrXqLvYUMk37AZwQ2Sb6uH4tIT4Qw/4oZfDzA1En3/8HdZJ28nKW/lzjwMSqheIY="

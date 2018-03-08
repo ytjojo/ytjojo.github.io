@@ -97,7 +97,6 @@ menu:
   #about: /about/ || user
   tags: /tags/ || tags
   categories: /categories/ || th
-  archives: /archives/ || archive
   search: 搜索
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
