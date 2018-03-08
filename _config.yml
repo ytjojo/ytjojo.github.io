@@ -7,11 +7,9 @@ title: ytjojo's blog
 subtitle: 杨腾蛟
 description: 一万年太久，只争朝夕
 author: ytjojo
-language: zh-CN #语言
+language: zh-Hans
+timezone:
 email: ytjojo@163.com
-
-
-
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://github.com/ytjojo/ytjojo.github.io
@@ -44,7 +42,16 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-
+  
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+  
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -58,28 +65,18 @@ date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 
 # Pagination
-
 ## Set per_page to 0 to disable pagination
 per_page: 10
 pagination_dir: page
-archive_generator:
-  per_page: 0
-tag_generator:
-  per_page: 0
-category_generator:
-  per_page: 0
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-material
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: git@github.com:ytjojo/ytjojo.github.io.git
-  branch: master
+
   
-search:
-  path: search.xml
-  field: all
+
