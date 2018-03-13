@@ -800,7 +800,8 @@ $ git gc --prune=now
 
 $ git gc --aggressive --prune=now
 ```
-### 只拉取仓库中的一个文件或者文件夹
+### 只拉取仓库中的一个文件
+```
 git init <repo>
 cd <repo>
 git remote add origin <url>
@@ -808,8 +809,21 @@ git config core.sparsecheckout true
 echo "finisht/*" >> .git/info/sparse-checkout
 echo "another/sub/tree" >> .git/info/sparse-checkout
 git pull --depth=1 origin master
-	
+```
+### 删除文件夹在git记录
+```
+#文件夹名为.idea
+git filter-branch --force --index-filter "git rm --cached -r --ignore-unmatch .idea" --prune-empty --tag-name-filter cat -- --all
 
+git push --force --all
+rm -rf .git/refs/original/
+
+git reflog expire --expire=now --all
+
+git gc --prune=now
+
+git gc --aggressive --prune=now
+```
 ## 参考文章
 
 1. <https://www.ibm.com/developerworks/cn/devops/d-learn-workings-git/index.html>
