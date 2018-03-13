@@ -27,13 +27,13 @@ https://github.com/guodongxiaren/README#%E5%9B%BE%E7%89%87
 
 HTTP 的请求方法共有 8 个，HTTP 协议 1.0 版本中定义了GET、POST、HEAD 这 3 个方法，1.1 版本时又新增了PUT、DELETE、TRACE、CONNECT、OPTION 这 5 个方法。其中最常用的是 GET 和 POST。
 
-![ZDepthShadowLayout GIF](./pic/method.png)
+![ZDepthShadowLayout GIF](/pic/method.png)
 
 ### 请求报文
 
 HTTP 请求报文的一般格式如图所示：
 
-![ZDepthShadowLayout GIF](./pic/request.png)
+![ZDepthShadowLayout GIF](/pic/request.png)
 
 ### 响应报文
 ![ZDepthShadowLayout GIF](./pic/respons.png)
