@@ -1,7 +1,7 @@
 ---
 title: 一看要懂的http简介
 date: 2017-12-25 20:18:20
-categories: git
+categories: http
 tags: [http,缓存]
 ---
 
