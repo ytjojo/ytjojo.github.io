@@ -224,7 +224,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings
@@ -819,13 +819,15 @@ images: images
 
 # Theme version
 version: 5.1.4
-auto_excerpt:
-  enable: true
-  length: 150
-  
+
 # Post wordcount display settings
 # Dependencies: https://github.com/willin/hexo-wordcount
 post_wordcount:
   item_text: true
   wordcount: true
   min2read: true  
+  
+  
+  sdjowj sldjw
+  
+  
