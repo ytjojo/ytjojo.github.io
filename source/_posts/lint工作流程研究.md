@@ -8,8 +8,8 @@ tags: [lint,源码分析，androidLint]
 
 >文章会试图解答如下问题
 >1. lintOptions如何获取
->2. 系统定义Issues在哪里被加载进来的
->3. 用户自定lint.jar如何被找的
+>2. 系统定义Issues如何被加载进来的
+>3. 用户自定lint.jar如何被找到的
 >4. Detector如何加载的
 >
 ### lint入口
