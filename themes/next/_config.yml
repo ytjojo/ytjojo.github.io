@@ -106,9 +106,9 @@ menu:
 menu_icons:
   enable: true
   home: home
+  categories: th
   archives: archive
   tags: tags
-  categories: th
   about: user
   search: search
  
@@ -819,9 +819,6 @@ images: images
 
 # Theme version
 version: 5.1.4
-search:
-  path: search.xml
-  field: post
-  format: html
-  limit: 10000
-
+auto_excerpt:
+  enable: true
+  length: 150
