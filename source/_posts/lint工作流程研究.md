@@ -17,7 +17,7 @@ tags: [lint,源码分析，androidLint]
 
 1. 创建AndroidProject
 2. 获得LintOptions配置信息
-3. 获得系统定义的IssueRegistry，为BuiltinIssueRegistry的子类
+3. 获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类)
 3. 获得所有lint.jar
 4. 获得所有定义的Issues，包括系统和用户定义的
 5. 获得检测范围Scope
