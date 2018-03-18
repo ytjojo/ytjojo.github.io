@@ -54,13 +54,13 @@ footer:
   copyright:
   # -------------------------------------------------------------
   # Hexo link (Powered by Hexo).
-  powered: true
+  powered: false
 
   theme:
     # Theme & scheme info link (Theme - NexT.scheme).
-    enable: true
+    enable: false
     # Version info of NexT after scheme info (vX.X.X).
-    version: true
+    version: false
   # -------------------------------------------------------------
   # Any custom text can be defined here.
   #custom_text: Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a>
@@ -106,12 +106,12 @@ menu:
 menu_icons:
   enable: true
   home: home
+  categories: th
   archives: archive
   tags: tags
-  categories: th
   about: user
   search: search
- 
+
 
 
 # ---------------------------------------------------------------
@@ -224,7 +224,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings
@@ -819,3 +819,10 @@ images: images
 
 # Theme version
 version: 5.1.4
+
+# Post wordcount display settings
+# Dependencies: https://github.com/willin/hexo-wordcount
+
+
+
+
