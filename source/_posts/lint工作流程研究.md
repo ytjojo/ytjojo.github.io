@@ -11,23 +11,26 @@ tags: [lint,源码分析，androidLint]
 >2. 系统定义Issues如何被加载进来的
 >3. 用户自定lint.jar如何被找到的
 >4. Detector如何加载的
->
-### lint入口
 
 
-gradle 方式
-入口类为com.android.build.gradle.tasks.Lint.groovy
-gradle-core-2.3.3.jar
+### lint总体流程
 
 1. 创建AndroidProject
 2. 获得LintOptions配置信息
-3. 获得系统定义的IssueRegistry，为BuiltinIssueRegistry的子类
+3. 获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类)
 3. 获得所有lint.jar
 4. 获得所有定义的Issues，包括系统和用户定义的
 5. 获得检测范围Scope
 6. 获得Detectors，获取lint.xml配置信息
 7. checkProject检查当前工程和所有依赖工程
 8. runFileDetectors
+
+### lint入口
+
+
+gradle 任务的入口
+入口类为com.android.build.gradle.tasks.Lint.groovy
+
 
 
 ### 获得project
