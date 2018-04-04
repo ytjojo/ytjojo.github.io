@@ -50,10 +50,22 @@ body则根据接口不同而不同，可以是基本数据类型，也可以是J
 
 ```java
 
-public class ResponseWraper<T> implements Serializable {
-    public T body;
+
+/**
+ * Created by Administrator on 2016/10/18 0018.
+ */
+public class ServerResponse<T> implements Serializable{
+    public static int RESULT_OK =200;
     public int code;
     public String msg;
+    public T body;
+    public ServerResponse(int code, String msg, T body){
+        this.code =code;
+        this.msg = msg;
+        this.body = body;
+    }
+    public ServerResponse(){
+    }
 }
 
 
@@ -90,10 +102,10 @@ Observable<JsonElement> getArticles()
 
 3支持结果有额外字段
 
-如果code body 同级有额外字段，只需要继承这个泛型类ResponseWraper
+如果code body 同级有额外字段，只需要继承这个泛型类ServerResponse
 ```java
 
-public class ArticleResponse extends ResponseWraper<ArrayList<Article>>  {
+public class ArticleResponse extends ServerResponse<ArrayList<Article>>  {
  	public ArrayList<String> urls;
 }
 //接口可以这样写，
@@ -112,6 +124,10 @@ Observable<Object> logout()
 Observable<Object> closeChat()
 
 ```
+5 后台接口body有时候返回null，但是Rxjava2出现java.lang.NullPointerException: Null is not a valid element
+Rxjava2 的onNext()必须不为null值，如果为null值，会走到OnError回调里去。
+解决方案是Observable<BodyEntry> request()替换为Observable<ServerResponse<BodyEntry>> request()
+
 
 
 
@@ -160,7 +176,7 @@ final class JacksonResponseBodyConverter<T> implements Converter<ResponseBody, T
             return parseNoCodeAndNoBodyType(responseNode, value);
         }
         JavaType javaType = mapper.constructType(type);
-        if (!javaType.isTypeOrSubTypeOf(ResponseWraper.class)) {
+        if (!javaType.isTypeOrSubTypeOf(ServerResponse.class)) {
             if (type == String.class) {
                 JsonNode bodyNode = responseNode.get("body");
                 if (bodyNode == null) {
@@ -182,8 +198,8 @@ final class JacksonResponseBodyConverter<T> implements Converter<ResponseBody, T
                 return (T) Irrelevant.INSTANCE;
             }
             JavaType responseType = mapper.getTypeFactory().constructParametrizedType(
-                    ResponseWraper.class, ResponseWraper.class, javaType);
-            ResponseWraper responseWrapper = mapper.readValue(value, responseType);
+                    ServerResponse.class, ServerResponse.class, javaType);
+            ServerResponse responseWrapper = mapper.readValue(value, responseType);
             return (T) responseWrapper.body;
         }
         return mapper.readValue(value, javaType);
