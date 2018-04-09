@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="android混淆,Proguard,android Proguard,恢复堆栈,Unknown Source," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ProGuard是一个压缩、优化和混淆Java字节码文件的免费的工具，它可以删除无用的类、字段、方法和属性。可以删除没用的注释，最大限度地优化字节码文件。它还可以使用简短的无意义的名称来重命名已经存在的类、字段、方法和属性。常常用于Android开发用于混淆最终的项目，增加项目被反编译的难度。    ProGuard工作原理ProGuar由shrink、optimize、obfuscate和pr">
+<meta name="keywords" content="android混淆,Proguard,android Proguard,恢复堆栈,Unknown Source">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最详细的android Proguard 混淆教程">
+<meta property="og:url" content="https://github.com/ytjojo/ytjojo.github.io/2017/04/21/最详细的android-Proguard-混淆教程/index.html">
+<meta property="og:site_name" content="ytjojo&#39;s blog">
+<meta property="og:description" content="ProGuard是一个压缩、优化和混淆Java字节码文件的免费的工具，它可以删除无用的类、字段、方法和属性。可以删除没用的注释，最大限度地优化字节码文件。它还可以使用简短的无意义的名称来重命名已经存在的类、字段、方法和属性。常常用于Android开发用于混淆最终的项目，增加项目被反编译的难度。    ProGuard工作原理ProGuar由shrink、optimize、obfuscate和pr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/c1ff19eagy1fextrggeb9j20p8068mx3.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/c1ff19eagy1feyppq0yusj20o106baab.jpg">
+<meta property="og:updated_time" content="2018-04-09T01:55:50.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最详细的android Proguard 混淆教程">
+<meta name="twitter:description" content="ProGuard是一个压缩、优化和混淆Java字节码文件的免费的工具，它可以删除无用的类、字段、方法和属性。可以删除没用的注释，最大限度地优化字节码文件。它还可以使用简短的无意义的名称来重命名已经存在的类、字段、方法和属性。常常用于Android开发用于混淆最终的项目，增加项目被反编译的难度。    ProGuard工作原理ProGuar由shrink、optimize、obfuscate和pr">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/c1ff19eagy1fextrggeb9j20p8068mx3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/ytjojo/ytjojo.github.io/2017/04/21/最详细的android-Proguard-混淆教程/"/>
+
+
+
+
+
+  <title>最详细的android Proguard 混淆教程 | ytjojo's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ytjojo's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">杨腾蛟</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/ytjojo/ytjojo.github.io/2017/04/21/最详细的android-Proguard-混淆教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ytjojo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ytjojo's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">最详细的android Proguard 混淆教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-21T17:43:00+00:00">
+                2017-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android-Proguard/" itemprop="url" rel="index">
+                    <span itemprop="name">Android Proguard</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,678
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>ProGuard是一个压缩、优化和混淆Java字节码文件的免费的工具，它可以删除无用的类、字段、方法和属性。可以删除没用的注释，最大限度地优化字节码文件。它还可以使用简短的无意义的名称来重命名已经存在的类、字段、方法和属性。常常用于Android开发用于混淆最终的项目，增加项目被反编译的难度。  </p>
+</blockquote>
+<h2 id="ProGuard工作原理"><a href="#ProGuard工作原理" class="headerlink" title="ProGuard工作原理"></a>ProGuard工作原理</h2><p>ProGuar由shrink、optimize、obfuscate和preveirfy四个步骤组成，每个步骤都是可选的，我们可以通过配置脚本来决定执行其中的哪几个步骤。<br><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1fextrggeb9j20p8068mx3.jpg" alt=""></p>
+<ol>
+<li>压缩(Shrink)：检测并移除代码中无用的类、字段、方法和特性（Attribute）。</li>
+<li>优化(Optimize)：对字节码进行优化，移除无用的指令。</li>
+<li>混淆(Obfuscate)：使用a，b，c，d这样简短而无意义的名称，对类、字段和方法进行重命名。</li>
+<li>预检(Preveirfy)：在Java平台上对处理后的代码进行预检，确保加载的class文件是可执行的。</li>
+</ol>
+<p>那么ProGuard是如何工作的呢？在这里我们引入一个概念EntryPoint。EntryPoint可以理解为一种标志，它是在ProGuard过程中不会被处理的类或者方法，在压缩的过程,ProGuard会从上述的EntryPoint中开始遍搜索出哪些类和类的成员在使用（被标记为EntryPoint的类和方法有些是在使用的而且这些是我们在混淆文件中配置不希望被混淆的类和方法，有些是没有使用的）。对于那些没有被使用的类和成员，就会在压缩阶段被丢弃。然后在接下来的优化步骤中，那些非EntryPoint的类，方法都会被设置为private，static或者final，而且不使用的参数都会被移除。接着在混淆的步骤中，ProGuard会对非EntryPoint的类和方法进行重命名。最后就会对代码进行预检测，以便保证稳定性。</p>
+<h3 id="Entry-points官方介绍"><a href="#Entry-points官方介绍" class="headerlink" title="Entry points官方介绍"></a>Entry points官方介绍</h3><blockquote>
+<p>###Entry points</p>
+</blockquote>
+<blockquote>
+<p>In order to determine which code has to be preserved and which code can be discarded or obfuscated, you have to specify one or more entry points to your code. These entry points are typically classes with main methods, applets, midlets, activities, etc.</p>
+</blockquote>
+<blockquote>
+<p>In the shrinking step, ProGuard starts from these seeds and recursively determines which classes and class members are used. All other classes and class members are discarded.<br>In the optimization step, ProGuard further optimizes the code. Among other optimizations, classes and methods that are not entry points can be made private, static, or final, unused parameters can be removed, and some methods may be inlined.<br>In the obfuscation step, ProGuard renames classes and class members that are not entry points. In this entire process, keeping the entry points ensures that they can still be accessed by their original names.<br>The preverification step is the only step that doesn’t have to know the entry points. </p>
+</blockquote>
+<p>使用-keep可以使指定的类和类成员成为Entry Point, 其实就是扫描开始的地方, 即使没有其他人直接引用这个类或者类成员, 也保留它.</p>
+<h2 id="Android-混淆配置原则"><a href="#Android-混淆配置原则" class="headerlink" title="Android 混淆配置原则:"></a>Android 混淆配置原则:</h2><ul>
+<li>反射用到的类不混淆</li>
+<li>JNI方法不混淆</li>
+<li>AndroidMainfest中的类不混淆，四大组件和Application的子类和Framework层下所有的类默认不会进行混淆</li>
+<li>Parcelable的子类和Creator静态成员变量不混淆，否则会产生android.os.BadParcelableException异常</li>
+<li>继承了Serializable接口的类不混淆</li>
+<li>使用GSON、fastjson等框架时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象</li>
+<li>使用第三方开源库或者引用其他第三方的SDK包时，需要在混淆文件中加入对应的混淆规则</li>
+<li>有用到WEBView的JS调用也需要保证写的接口方法不混淆</li>
+<li>在AndroidManifest中配置的类，比如四大组件</li>
+<li>Layout文件引用到的自定义View</li>
+<li><p>引入的第三方库（一般）。这里推荐两个开源项目，里面收集了一些第三方库的混淆规则</p>
+<ul>
+<li><a href="https://github.com/krschultz/android-proguard-snippets">android-proguard-snippets</a></li>
+<li><a href="https://github.com/msdx/android-proguard-cn">android-proguard-cn</a></li>
+</ul>
+</li>
+<li><p>删除Syst.out 和Log.d打印输出代码</p>
+</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>详细说明参见<a href="https://www.guardsquare.com/en/proguard/manual/usage#classspecification" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="保留"><a href="#保留" class="headerlink" title="保留"></a>保留</h3><ul>
+<li>-keep {Modifier} {class_specification} 保护指定的类文件和类的成员</li>
+<li>-keepclassmembers {modifier} {class_specification} 保护指定类的成员，如果此类受到保护他们会保护的更好</li>
+<li>-keepclasseswithmembers {class_specification} 保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在。</li>
+<li>-keepnames {class_specification} 保护指定的类和类的成员的名称（如果他们不会压缩步骤中删除）</li>
+<li>-keepclassmembernames {class_specification} 保护指定的类的成员的名称（如果他们不会压缩步骤中删除）</li>
+<li>-keepclasseswithmembernames {class_specification} 保护指定的类和类的成员的名称，如果所有指定的类成员出席（在压缩步骤之后）</li>
+<li><p>-printseeds {filename} 列出类和类的成员-keep选项的清单，标准输出到给定的文件</p>
+<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3></li>
+<li><p>-dontshrink 不压缩输入的类文件</p>
+</li>
+<li>-printusage {filename}</li>
+<li><p>-whyareyoukeeping {class_specification}</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3></li>
+<li><p>-dontoptimize 不优化输入的类文件</p>
+</li>
+<li>-assumenosideeffects {class_specification} 优化时假设指定的方法，没有任何副作用</li>
+<li><p>-allowaccessmodification 优化时允许访问并修改有修饰符的类和类的成员</p>
+<h3 id="混淆"><a href="#混淆" class="headerlink" title="混淆"></a>混淆</h3></li>
+<li><p>-dontobfuscate 不混淆输入的类文件</p>
+</li>
+<li>-obfuscationdictionary {filename} 使用给定文件中的关键字作为要混淆方法的名称</li>
+<li>-overloadaggressively 混淆时应用侵入式重载</li>
+<li>-useuniqueclassmembernames 确定统一的混淆类的成员名称来增加混淆</li>
+<li>-flattenpackagehierarchy {package_name} 重新包装所有重命名的包并放在给定的单一包中</li>
+<li>-repackageclass {package_name} 重新包装所有重命名的类文件中放在给定的单一包中</li>
+<li>-dontusemixedcaseclassnames 混淆时不会产生形形色色的类名</li>
+<li>-keepattributes {attribute_name,…} 保护给定的可选属性，例如LineNumberTable, LocalVariableTable, SourceFile, <em> </em> * Deprecated, Synthetic, Signature, and InnerClasses.</li>
+<li>-renamesourcefileattribute {string} 设置源文件中给定的字符串常量    </li>
+</ul>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">通配符</th>
+<th style="text-align:right">规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">？</td>
+<td style="text-align:right">匹配单个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:right">匹配类名中的任何部分，但不包含额外的包名</td>
+</tr>
+<tr>
+<td style="text-align:left">**</td>
+<td style="text-align:right">匹配类名中的任何部分，并且可以包含额外的包名</td>
+</tr>
+<tr>
+<td style="text-align:left">%</td>
+<td style="text-align:right">匹配任何基础类型的类型名</td>
+</tr>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:right">匹配任意类型名 ,包含基础类型/非基础类型</td>
+</tr>
+<tr>
+<td style="text-align:left">…</td>
+<td style="text-align:right">匹配任意数量、任意类型的参数</td>
+</tr>
+<tr>
+<td style="text-align:left"><init></init></td>
+<td style="text-align:right">匹配任何构造器</td>
+</tr>
+<tr>
+<td style="text-align:left"><ifield></ifield></td>
+<td style="text-align:right">匹配任何字段名</td>
+</tr>
+<tr>
+<td style="text-align:left"><imethod></imethod></td>
+<td style="text-align:right">匹配任何方法</td>
+</tr>
+<tr>
+<td style="text-align:left">*(当用在类内部时)</td>
+<td style="text-align:right">匹配任何字段和方法</td>
+</tr>
+<tr>
+<td style="text-align:left">$</td>
+<td style="text-align:right">指内部类</td>
+</tr>
+</tbody>
+</table>
+<h2 id="公共配置选项"><a href="#公共配置选项" class="headerlink" title="公共配置选项"></a>公共配置选项</h2><p>这是配置项，基本不需要动，全部加上</p>
+<pre><code># 忽略警告，避免打包时某些警告出现
+# 
+#-ignorewarnings  #不要忽略警告，风险太大                  
+# 指定代码的压缩级别
+-optimizationpasses 5
+# 不使用大小写混合，混淆后的类名为小写
+-dontusemixedcaseclassnames
+#指定不去忽略非公共的库的类
+-dontskipnonpubliclibraryclasses
+#指定不去忽略非公共的库的类的成
+-dontskipnonpubliclibraryclassmembers
+# 不做预校验，preverify是proguard的4个步骤之一
+# Android不需要preverify，去掉这一步可加快混淆速度
+-dontpreverify
+# 有了verbose这句话，混淆后就会生成映射文件
+# 包含有类名-&gt;混淆后类名的映射关系
+# 然后使用printmapping指定映射文件的名称
+-verbose
+-printmapping proguardMapping.txt
+
+# 指定混淆时采用的算法，后面的参数是一个过滤器
+# 这个过滤器是谷歌推荐的算法，一般不改变
+#-optimizations !code/simplification/cast,!field/*,!class/merging/*
+
+#避免混淆注解和内部类，对json解析重要
+-keepattributes *Annotation*,InnerClasses
+# 避免混淆泛型，这在JSON实体映射时非常重要，比如fastJson
+-keepattributes Signature
+#报错后方便恢复堆栈信息
+-keepattributes SourceFile,LineNumberTable 
+-keepattributes EnclosingMethod 
+# 指定混淆时采用的算法，后面的参数是一个过滤器
+# 这个过滤器是谷歌推荐的算法，一般不改变
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+</code></pre><h2 id="需要保留的东西"><a href="#需要保留的东西" class="headerlink" title="需要保留的东西"></a>需要保留的东西</h2><p>这个不需要动的，要全部添加上</p>
+<pre><code># 保留所有的本地native方法不被混淆
+-keepclasseswithmembernames class * {
+    native &lt;methods&gt;;
+}
+
+# 保留了继承自Activity、Application这些类的子类
+# 因为这些子类，都有可能被外部调用
+# 比如说，第一行就保证了所有Activity的子类不要被混淆
+-keep class android.os.**{*;} 
+-keep public class * extends android.app.Activity
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.support.v7.**    
+-keep public class * extends android.app.Fragment 
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.view.View
+-keep public class com.android.vending.licensing.ILicensingService
+-keep class android.app.Notification { *;}
+
+# 如果有引用android-support-v4.jar包，可以添加下面这行
+#-keep public class com.xxxx.app.ui.fragment.** {*;}
+
+# 保留在Activity中的方法参数是view的方法，
+# 从而我们在layout里面编写onClick就不会被影响
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+# 枚举类不能被混淆
+-keepclassmembers enum * {
+public static **[] values();
+public static ** valueOf(java.lang.String);
+}
+
+# 保留自定义控件（继承自View）不被混淆
+-keep public class * extends android.view.View {
+    *** get*();
+    void set*(***);
+    public &lt;init&gt;(android.content.Context);
+    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);
+    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);
+}
+#Design包下的Beheviar
+-keepclasseswithmembers class * {
+public &lt;init&gt;(android.content.Context, android.util.AttributeSet);
+public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);
+}
+
+# 保留Parcelable序列化的类不被混淆
+-keep class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+#需要序列化和反序列化的类不能被混淆（注：Java反射用到的类也不能被混淆）  
+-keepnames class * implements java.io.Serializable  
+
+# 保留Serializable序列化的类不被混淆
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# 对于R（资源）下的所有类及其方法，都不能被混淆
+-keep class **.R$* {
+    *;
+}
+
+# 对于带有回调函数onXXEvent的，不能被混淆
+-keepclassmembers class * {
+    void *(**On*Event);
+}
+#webView
+-keepattributes *JavascriptInterface*
+-keepclassmembers class * extends android.webkit.WebViewClient {
+    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
+    public boolean *(android.webkit.WebView, java.lang.String);
+}
+-keepclassmembers class * extends android.webkit.WebViewClient {
+    public void *(android.webkit.WebView, java.lang.String);
+}
+-keep public class android.net.http.SslError
+#v4
+-dontwarn android.support.v4.**
+-dontwarn android.app.Notification
+-dontwarn android.net.SSLCertificateSocketFactory
+-dontwarn android.util.FloatMath
+-dontwarn android.test.**
+-dontwarn org.junit.**
+-dontwarn android.utils.imagecache.*
+-dontwarn android.utils.*
+-dontwarn android.view.*
+#-----------------------------------
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+        public static int v(...);
+        public static int i(...);
+        public static int w(...);
+        public static int d(...);
+        public static int e(...);
+    }
+</code></pre><h2 id="保留model中的实体类和成员不被混淆"><a href="#保留model中的实体类和成员不被混淆" class="headerlink" title="保留model中的实体类和成员不被混淆"></a>保留model中的实体类和成员不被混淆</h2><p>将下面的包名（com.android4package.model）替换你自己的</p>
+<pre><code>-keep public class com.android4package.model.**{  
+    *; 
+}
+</code></pre><h2 id="反射的处理"><a href="#反射的处理" class="headerlink" title="反射的处理"></a>反射的处理</h2><p>在程序中使用SomeClass.class.method这样的静态方法，在ProGuard中是在压缩过程中被保留的，那么对于Class.forName(“SomeClass”)呢，SomeClass不会被压缩过程中移除，它会检查程序中使用的Class.forName方法，对参数SomeClass法外开恩，不会被移除。但是在混淆过程中，无论是Class.forName(“SomeClass”)，还是SomeClass.class，都不能蒙混过关，SomeClass这个类名称会被混淆，因此，我们要在ProGuard文件中保留这个类名称。</p>
+<ul>
+<li>Class.forName(“SomeClass”)</li>
+<li>SomeClass.class</li>
+<li>SomeClass.class.getField(“someField”)</li>
+<li>SomeClass.class.getDeclaredField(“someField”)</li>
+<li>SomeClass.class.getMethod(“someMethod”, new Class[] {})</li>
+<li>SomeClass.class.getMethod(“someMethod”, new Class[] { A.class })</li>
+<li>SomeClass.class.getMethod(“someMethod”, new Class[] { A.class, B.class })</li>
+<li>SomeClass.class.getDeclaredMethod(“someMethod”, new Class[] {})</li>
+<li>SomeClass.class.getDeclaredMethod(“someMethod”, new Class[] { A.class })</li>
+<li>SomeClass.class.getDeclaredMethod(“someMethod”, new Class[] { A.class, B.class })</li>
+<li>AtomicIntegerFieldUpdater.newUpdater(SomeClass.class, “someField”)</li>
+<li>AtomicLongFieldUpdater.newUpdater(SomeClass.class, “someField”)</li>
+<li>AtomicReferenceFieldUpdater.newUpdater(SomeClass.class, SomeType.class, “someField”)<br>在混淆的时候，要在项目中搜索一下上述方法，将相应的类或者方法的名称进行保留而不被混淆。</li>
+</ul>
+<h2 id="第三方包的处理"><a href="#第三方包的处理" class="headerlink" title="第三方包的处理"></a>第三方包的处理</h2><p>第三方包可以去库的官网查看混淆规则,没什么难点，复制粘贴就ok。<br>这里推荐两个开源项目，里面收集了一些第三方库的混淆规则</p>
+<ul>
+<li><a href="https://github.com/krschultz/android-proguard-snippets">android-proguard-snippets</a></li>
+<li><a href="https://github.com/msdx/android-proguard-cn">android-proguard-cn</a></li>
+</ul>
+<blockquote>
+</blockquote>
+<pre><code>#---------------------------------2.第三方包-------------------------------
+#eventBus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe &lt;methods&gt;;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    &lt;init&gt;(java.lang.Throwable);
+}
+
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#-------------------------------------------------------------------------
+</code></pre><h2 id="Android-Studio中使用方法"><a href="#Android-Studio中使用方法" class="headerlink" title="Android Studio中使用方法"></a>Android Studio中使用方法</h2><p>按照上面的语法规则编写proguard-rules.pro后，需要在build.gradle中配置，需要混淆的时候，设置minifyEnabled为true即可</p>
+<pre><code>buildTypes {
+    debug {
+        minifyEnabled true
+        //proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+        proguardFiles &apos;proguard-rules.pro&apos;
+
+    }
+    release {
+        signingConfig signingConfigs.release
+        minifyEnabled true
+        proguardFiles &apos;proguard-rules.pro&apos;
+    }
+}
+</code></pre><h2 id="android混淆之后文件"><a href="#android混淆之后文件" class="headerlink" title="android混淆之后文件"></a>android混淆之后文件</h2><p>优化结果文件会输出到<module-name>/build/outputs/mapping/release/目录.</module-name></p>
+<ul>
+<li>dump.txt : 描述APK中所有类文件的内部结构(internal structure)</li>
+<li>mapping.txt : 提供混淆前后类(class)名, 方法(method)名和成员变量(field)名的对应关系。表示混淆前后代码的对照表，这个文件非常重要。如果你的代码混淆后会产生bug的话，log提示中是混淆后的代码，希望定位到源代码的话就可以根据mapping.txt反推。</li>
+<li>seeds.txt : 列出没有被混淆的类和成员(classes and members)</li>
+<li>usage.txt : 列出从APK中移除的代码(code)</li>
+</ul>
+<h2 id="如何恢复混淆之后堆栈信息"><a href="#如何恢复混淆之后堆栈信息" class="headerlink" title="如何恢复混淆之后堆栈信息?"></a>如何恢复混淆之后堆栈信息?</h2><p>使用方法如下：</p>
+<h3 id="GUI"><a href="#GUI" class="headerlink" title="GUI"></a>GUI</h3><ol>
+<li>打开/tools/proguard/bin/proguardgui.bat</li>
+<li>选择左边栏的ReTrace选项</li>
+<li>添加你的mapping文件和混淆过的堆栈信息</li>
+<li>点击ReTrace!</li>
+</ol>
+<p><img src="http://ww1.sinaimg.cn/large/c1ff19eagy1feyppq0yusj20o106baab.jpg" alt=""></p>
+<h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p>1.需要你的ProGuard的mapping文件和你想要还原的堆栈信息（如stacktrace.txt）<br>2.最简单的方法就是将这些文件拷贝到/tools/proguard/bin/目录<br>3.运行以下命令<br>//Windows<br>retrace.bat -verbose mapping.txt stacktrace.txt &gt; out.txt</p>
+<p>//Mac/Linux<br>retrace.sh -verbose mapping.txt stacktrace.txt &gt; out.txt</p>
+<p>所以我们每次打包版本都需要保存最新的mapping.txt文件。如果要使用到第三方的crash统计平台，比如bugly，还需要我们上传APP版本对应的mapping.txt.每次都要保存最新的mapping文件，那不就很麻烦？放心，gradle会帮到你，只需要在bulid.gradle加入下面的一句。每次我们编译的时候，都会自动帮你保存mapping文件到本地的。</p>
+<pre><code>android {
+applicationVariants.all { variant -&gt;
+        variant.outputs.each { output -&gt;
+            if (variant.getBuildType().isMinifyEnabled()) {
+                variant.assemble.doLast{
+                        copy {
+                            from variant.mappingFile
+                            into &quot;${projectDir}/mappings&quot;
+                            rename { String fileName -&gt;
+                                &quot;mapping-${variant.name}.txt&quot;
+                            }
+                        }
+                }
+            }
+        }
+        ......
+    }
+}
+</code></pre><h2 id="混淆成中文"><a href="#混淆成中文" class="headerlink" title="混淆成中文"></a>混淆成中文</h2><p>原始的混淆功能是把类名方法名混淆成a、b、c、d、e,改造后也可以混淆成中文，参考<a href="http://blog.csdn.net/jiangwei0910410003/article/details/61618945" target="_blank" rel="noopener">这篇文章</a><br>和github上的这个库<br><a href="https://github.com/heruoxin/proguard-elder-dictionary">https://github.com/heruoxin/proguard-elder-dictionary</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>建议开发和测试阶段都要开启混淆，如果嫌开发阶段恢复堆栈信息麻烦，必须保证测试阶段是开启的，可以尽早发现问题。</li>
+<li>打包生成的mapping文件一定要保存好，bug收集网站如腾讯bugly和友盟bug统计还原堆栈的时候都需要对应版本的mapping文件。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>官方文档<a href="https://www.guardsquare.com/en/proguard/manual/usage" target="_blank" rel="noopener">https://www.guardsquare.com/en/proguard/manual/usage</a></li>
+<li>官方examples<a href="https://www.guardsquare.com/en/proguard/manual/examples#androidapplication" target="_blank" rel="noopener">https://www.guardsquare.com/en/proguard/manual/examples#androidapplication</a></li>
+<li><a href="http://www.jianshu.com/p/f3455ecaa56e" target="_blank" rel="noopener">http://www.jianshu.com/p/f3455ecaa56e</a></li>
+<li><a href="https://segmentfault.com/a/1190000004461614" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004461614</a></li>
+<li><a href="http://www.cnblogs.com/cr330326/p/5534915.html" target="_blank" rel="noopener">http://www.cnblogs.com/cr330326/p/5534915.html</a></li>
+<li>混淆成中文<a href="http://blog.csdn.net/jiangwei0910410003/article/details/61618945" target="_blank" rel="noopener">http://blog.csdn.net/jiangwei0910410003/article/details/61618945</a></li>
+<li>Proguard Elder Dictionary,使用中文作为字典可以略微提升二次打包的难度<a href="https://github.com/heruoxin/proguard-elder-dictionary">https://github.com/heruoxin/proguard-elder-dictionary</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android混淆/" rel="tag"><i class="fa fa-tag"></i> android混淆</a>
+          
+            <a href="/tags/Proguard/" rel="tag"><i class="fa fa-tag"></i> Proguard</a>
+          
+            <a href="/tags/android-Proguard/" rel="tag"><i class="fa fa-tag"></i> android Proguard</a>
+          
+            <a href="/tags/恢复堆栈/" rel="tag"><i class="fa fa-tag"></i> 恢复堆栈</a>
+          
+            <a href="/tags/Unknown-Source/" rel="tag"><i class="fa fa-tag"></i> Unknown Source</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/Travis-CI自动更新Hexo博客到Github Page/" rel="next" title="Travis-CI自动更新Hexo博客到Github Page">
+                <i class="fa fa-chevron-left"></i> Travis-CI自动更新Hexo博客到Github Page
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/安卓开发规范/" rel="prev" title="安卓开发规范">
+                安卓开发规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ytjojo</p>
+              <p class="site-description motion-element" itemprop="description">一万年太久，只争朝夕</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ytjojo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ytjojo@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ProGuard工作原理"><span class="nav-number">1.</span> <span class="nav-text">ProGuard工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Entry-points官方介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Entry points官方介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-混淆配置原则"><span class="nav-number">2.</span> <span class="nav-text">Android 混淆配置原则:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">3.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#保留"><span class="nav-number">3.1.</span> <span class="nav-text">保留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩"><span class="nav-number">3.2.</span> <span class="nav-text">压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">3.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混淆"><span class="nav-number">3.4.</span> <span class="nav-text">混淆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符"><span class="nav-number">3.5.</span> <span class="nav-text">通配符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共配置选项"><span class="nav-number">4.</span> <span class="nav-text">公共配置选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要保留的东西"><span class="nav-number">5.</span> <span class="nav-text">需要保留的东西</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保留model中的实体类和成员不被混淆"><span class="nav-number">6.</span> <span class="nav-text">保留model中的实体类和成员不被混淆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射的处理"><span class="nav-number">7.</span> <span class="nav-text">反射的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三方包的处理"><span class="nav-number">8.</span> <span class="nav-text">第三方包的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-Studio中使用方法"><span class="nav-number">9.</span> <span class="nav-text">Android Studio中使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android混淆之后文件"><span class="nav-number">10.</span> <span class="nav-text">android混淆之后文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何恢复混淆之后堆栈信息"><span class="nav-number">11.</span> <span class="nav-text">如何恢复混淆之后堆栈信息?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GUI"><span class="nav-number">11.1.</span> <span class="nav-text">GUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行"><span class="nav-number">11.2.</span> <span class="nav-text">命令行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混淆成中文"><span class="nav-number">12.</span> <span class="nav-text">混淆成中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">13.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">14.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ytjojo</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共52.7k字</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+

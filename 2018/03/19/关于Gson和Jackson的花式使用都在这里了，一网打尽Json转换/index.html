@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="json,Gson,Jackson,json转换," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简单配置Gson12345GsonBuilder builder = new GsonBuilder();builder.enableComplexMapKeySerialization()        .serializeNulls();builder.setDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);Gson gson = builder.create(); Jack">
+<meta name="keywords" content="json,Gson,Jackson,json转换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换">
+<meta property="og:url" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/19/关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换/index.html">
+<meta property="og:site_name" content="ytjojo&#39;s blog">
+<meta property="og:description" content="简单配置Gson12345GsonBuilder builder = new GsonBuilder();builder.enableComplexMapKeySerialization()        .serializeNulls();builder.setDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);Gson gson = builder.create(); Jack">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-09T01:55:50.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换">
+<meta name="twitter:description" content="简单配置Gson12345GsonBuilder builder = new GsonBuilder();builder.enableComplexMapKeySerialization()        .serializeNulls();builder.setDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);Gson gson = builder.create(); Jack">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/ytjojo/ytjojo.github.io/2018/03/19/关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换/"/>
+
+
+
+
+
+  <title>关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换 | ytjojo's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ytjojo's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">杨腾蛟</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/ytjojo/ytjojo.github.io/2018/03/19/关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ytjojo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ytjojo's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T20:11:45+00:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/json/" itemprop="url" rel="index">
+                    <span itemprop="name">json</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,789
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简单配置"><a href="#简单配置" class="headerlink" title="简单配置"></a>简单配置</h3><p>Gson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">builder.enableComplexMapKeySerialization()</span><br><span class="line">        .serializeNulls();</span><br><span class="line">builder.setDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">Gson gson = builder.create();</span><br></pre></td></tr></table></figure></p>
+<p>Jackson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">      SimpleDateFormat fmt = <span class="keyword">new</span> SimpleDateFormat(</span><br><span class="line">              <span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">      objectMapper.setDateFormat(fmt);</span><br><span class="line">      objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, <span class="keyword">true</span>);</span><br><span class="line">      objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, <span class="keyword">true</span>);<span class="comment">//字段和值加引号</span></span><br><span class="line">      objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, <span class="keyword">true</span>);<span class="comment">//允许转义字符</span></span><br><span class="line">      objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, <span class="keyword">true</span>);<span class="comment">//允许单引号</span></span><br><span class="line">      objectMapper.configure(JsonParser.Feature. ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, <span class="keyword">true</span>);<span class="comment">//允许反斜杠</span></span><br><span class="line">      objectMapper.configure(JsonParser.Feature. ALLOW_NUMERIC_LEADING_ZEROS, <span class="keyword">true</span>);<span class="comment">//允许数字00005 赋值为5；</span></span><br><span class="line">      objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, <span class="keyword">true</span>);</span><br><span class="line">      objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, <span class="keyword">false</span>);</span><br><span class="line">      objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);</span><br><span class="line">      objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,<span class="keyword">true</span>);</span><br><span class="line">      objectMapper.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, <span class="keyword">true</span>);</span><br><span class="line">      objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, <span class="keyword">false</span>);</span><br><span class="line">      <span class="comment">//该特性可以允许JSON空字符串转换为POJO对象为null,否则抛异常。空字符串不是标准的pojo对应的json</span></span><br><span class="line">      objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT,<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="字段值为null系列化输出为null"><a href="#字段值为null系列化输出为null" class="headerlink" title="字段值为null系列化输出为null"></a>字段值为null系列化输出为null</h3><p>Gson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">   builder.serializeNulls();</span><br><span class="line">Gson gson = builder.create();</span><br></pre></td></tr></table></figure></p>
+<p>Jackson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">  objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置默认日期格式"><a href="#设置默认日期格式" class="headerlink" title="设置默认日期格式"></a>设置默认日期格式</h3><p>Gson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">builder.setDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>Jackson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SimpleDateFormat fmt = <span class="keyword">new</span> SimpleDateFormat(</span><br><span class="line">            <span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">    objectMapper.setDateFormat(fmt);</span><br></pre></td></tr></table></figure></p>
+<h3 id="类级别上处理部分字段序列化和反序列化忽略"><a href="#类级别上处理部分字段序列化和反序列化忽略" class="headerlink" title="类级别上处理部分字段序列化和反序列化忽略"></a>类级别上处理部分字段序列化和反序列化忽略</h3><p>两个框架都支持用transient修饰的字段忽略。</p>
+<p>Gson处理方式，使用@Expose注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123; </span><br><span class="line">    <span class="meta">@Expose</span> </span><br><span class="line">	<span class="keyword">public</span> String firstName; </span><br><span class="line">    <span class="meta">@Expose</span>(serialize = <span class="keyword">false</span>) </span><br><span class="line">	<span class="keyword">public</span> String lastName;</span><br><span class="line">    <span class="meta">@Expose</span> (serialize = <span class="keyword">false</span>, deserialize = <span class="keyword">false</span>) </span><br><span class="line">    <span class="keyword">public</span> emailAddress; </span><br><span class="line">    <span class="keyword">public</span> String password;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">transient</span> <span class="keyword">boolean</span> isDeveloper</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>Jackson 用@JsonIgnore用与字段 get Set方法， @JsonIgnoreProperties用于类<br>json 、msg、status都会被忽略<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonIgnoreProperties</span>(&#123;<span class="string">"msg"</span>,<span class="string">"status"</span>&#125;)</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Body</span> </span>&#123;</span><br><span class="line">     <span class="meta">@JsonIgnore</span></span><br><span class="line">     <span class="keyword">private</span> String json;</span><br><span class="line">	<span class="keyword">public</span> String msg;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">int</span> status;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">Body</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">     <span class="meta">@JsonIgnoreProperties</span></span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">long</span> meetingNumber;</span><br><span class="line">     <span class="keyword">public</span> String password;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改系列化字段名称"><a href="#修改系列化字段名称" class="headerlink" title="修改系列化字段名称"></a>修改系列化字段名称</h3><p>服务器给json字段有可能跟Entity类字段不一致，如何修改呢；</p>
+<p>Gson，可以为同一个字段映射两个json字段，如下文中name字段，json中如果只有fullName,name值为fullname字段的值，只有username则name值为username字段值，两者都有的话是对应alternate配置的字段值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeClassWithFields</span> </span>&#123;</span><br><span class="line">   <span class="meta">@SerializedName</span>(<span class="string">"name"</span>)</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">final</span> String someField;  </span><br><span class="line">   <span class="meta">@SerializedName</span>(value = <span class="string">"fullName"</span>, alternate = <span class="string">"username"</span>)    </span><br><span class="line">   <span class="keyword">private</span> String name; </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> clsss RequestMsg&#123;</span><br><span class="line"><span class="keyword">private</span> String osType;</span><br><span class="line"><span class="meta">@JsonProperty</span>(<span class="string">"os_type"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getOs_Type</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">this</span>.osType;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@JsonProperty</span>(value=<span class="string">"osType"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOsType</span><span class="params">(String osType)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>.osType= osType;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="map的序列化对比"><a href="#map的序列化对比" class="headerlink" title="map的序列化对比"></a>map的序列化对比</h3><p>key简单对象序列化<br>Gson</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  HashMap&lt;String,String&gt; stringmap =<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        stringmap.put(<span class="string">"2"</span>,<span class="string">"sss"</span>);</span><br><span class="line">        stringmap.put(<span class="string">"511"</span>,<span class="string">"sss"</span>);</span><br><span class="line">        json = mapper.writeValueAsString(stringmap);</span><br><span class="line">        System.out.println(json);</span><br><span class="line">        GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">        builder.serializeNulls();</span><br><span class="line"><span class="comment">//        builder.enableComplexMapKeySerialization();</span></span><br><span class="line">        Gson gson =  builder.create();</span><br><span class="line">         json =  gson.toJson(stringmap);</span><br><span class="line">        System.out.println(json);</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<blockquote>
+<p>{“2”:”sss”,”511”:”sss”}<br>{“2”:”sss”,”511”:”sss”}</p>
+</blockquote>
+<p>Key为复杂对象的系列化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">int</span> x;</span><br><span class="line">       <span class="keyword">public</span> <span class="keyword">int</span> y;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="title">Point</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="title">Point</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.x = x;</span><br><span class="line">           <span class="keyword">this</span>.y = y;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">	String json = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">final</span>  ObjectMapper mapper =<span class="keyword">new</span> ObjectMapper();</span><br><span class="line">   HashMap&lt;Point,String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">       map.put(<span class="keyword">new</span> Point(<span class="number">3</span>,<span class="number">5</span>),<span class="string">"sdw"</span>);</span><br><span class="line">       map.put(<span class="keyword">new</span> Point(<span class="number">6</span>,<span class="number">2</span>),<span class="string">"fasow"</span>);</span><br><span class="line"></span><br><span class="line">       json = mapper.writeValueAsString(map);</span><br><span class="line">       System.out.println(json);</span><br><span class="line">       GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">       builder.serializeNulls();</span><br><span class="line">       Gson gson =  builder.create();</span><br><span class="line">        json =  gson.toJson(map);</span><br><span class="line">       System.out.println(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果为</p>
+<blockquote>
+<p>{“com.ytjojo.practice.Jackson$Point@f6c48ac”:”sdw”,”com.ytjojo.practice.Jackson$Point@13deb50e”:”fasow”}<br>{“com.ytjojo.practice.Jackson$Point@f6c48ac”:”sdw”,”com.ytjojo.practice.Jackson$Point@13deb50e”:”fasow”}</p>
+</blockquote>
+<p>可以发现直接调用的key.toString()方法，Point并没有序列化为json，最外层为{,如果GsonBuilde加上enableComplexMapKeySerialization()结果就不一样了，Gson序列化结果</p>
+<blockquote>
+<p>[[{“x”:3,”y”:5},”sdw”],[{“x”:6,”y”:2},”fasow”]]</p>
+</blockquote>
+<p>可以发现整个map就是jsonArray，key和value组成的JsonArray是Array的子项目。<br>很遗憾，目前为止未发现Jackson原生支持这种序列化方式，如何让Jackson支持这种呢？看代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">final</span>  ObjectMapper mapper =<span class="keyword">new</span> ObjectMapper();</span><br><span class="line">      SimpleModule simpleModule =  <span class="keyword">new</span> SimpleModule();</span><br><span class="line">      simpleModule.addSerializer(Map.class, <span class="keyword">new</span> JsonSerializer&lt;Map&gt;() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Map value, JsonGenerator gen, SerializerProvider serializers)</span> <span class="keyword">throws</span> IOException, JsonProcessingException </span>&#123;</span><br><span class="line">              <span class="keyword">if</span>(value != <span class="keyword">null</span>)&#123;</span><br><span class="line">                  gen.writeStartArray();</span><br><span class="line">                  <span class="keyword">for</span>(Object item: value.entrySet())&#123;</span><br><span class="line">                      Map.Entry entry = (Map.Entry) item;</span><br><span class="line">                      gen.writeStartArray();</span><br><span class="line">                      gen.writeObject(entry.getKey());</span><br><span class="line">                      gen.writeObject(entry.getValue());</span><br><span class="line">                      gen.writeEndArray();</span><br><span class="line">                  &#125;</span><br><span class="line">                  gen.writeEndArray();</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      mapper.registerModule(simpleModule);</span><br></pre></td></tr></table></figure>
+<p>最后输出结果和Gson一样了</p>
+<h3 id="map反序列化"><a href="#map反序列化" class="headerlink" title="map反序列化"></a>map反序列化</h3><h4 id="简单key反序列化"><a href="#简单key反序列化" class="headerlink" title="简单key反序列化"></a>简单key反序列化</h4><p>Gson和jackson都是统一的，不用做比较</p>
+<h4 id="复杂key反序列化比较"><a href="#复杂key反序列化比较" class="headerlink" title="复杂key反序列化比较"></a>复杂key反序列化比较</h4><p>Gson</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String json = <span class="string">"[[&#123;\"x\":10,\"y\":10&#125;,\"Ten\"],[&#123;\"x\":20,\"y\":20&#125;,\"Twenty\"]]"</span>;</span><br><span class="line">       GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">       builder.serializeNulls();</span><br><span class="line"></span><br><span class="line">       Gson gson =  builder.create();</span><br><span class="line">     HashMap&lt;Point,String&gt; map = <span class="keyword">null</span>;</span><br><span class="line">        map =  gson.fromJson(json,<span class="keyword">new</span> TypeToken&lt;HashMap&lt;Point,String&gt;&gt;()&#123;&#125;.getType());</span><br><span class="line"></span><br><span class="line">       System.out.println(map.entrySet().iterator().next().getKey().x);</span><br></pre></td></tr></table></figure>
+<p>此时Gson能正常解析；<br>看看Jackson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String json = <span class="string">"[[&#123;\"x\":10,\"y\":10&#125;,\"Ten\"],[&#123;\"x\":20,\"y\":20&#125;,\"Twenty\"]]"</span>;</span><br><span class="line"><span class="keyword">final</span>  ObjectMapper mapper =<span class="keyword">new</span> ObjectMapper();</span><br><span class="line">HashMap&lt;Point,String&gt; map = <span class="keyword">null</span>;</span><br><span class="line">map = mapper.readValue(json, <span class="keyword">new</span> TypeReference&lt;HashMap&lt;Point,String&gt;&gt;() &#123;&#125;);</span><br><span class="line">      System.out.println(map.keySet().size()+<span class="string">""</span> +map);</span><br></pre></td></tr></table></figure></p>
+<p>发现报错了</p>
+<blockquote>
+<p>com.fasterxml.jackson.databind.JsonMappingException: Can not find a (Map) Key deserializer for type [simple type, class com.ytjojo.practice.Jackson$Point]<br>at [Source: [[{“x”:10,”y”:10},”Ten”],[{“x”:20,”y”:20},”Twenty”]]; line: 1, column: 1]<br>at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:244)<br>at com.fasterxml.jackson.databind.deser.DeserializerCache._handleUnknownKeyDeserializer(DeserializerCache.java:587)<br>at com.fasterxml.jackson.databind.deser.DeserializerCache.findKeyDeserializer(DeserializerCache.java:168)<br>at com.fasterxml.jackson.databind.DeserializationContext.findKeyDeserializer(DeserializationContext.java:500)<br>at com.fasterxml.jackson.databind.deser.std.MapDeserializer.createContextual(MapDeserializer.java:231)<br>at com.fasterxml.jackson.databind.DeserializationContext.handleSecondaryContextualization(DeserializationContext.java:685)<br>at com.fasterxml.jackson.databind.DeserializationContext.findRootValueDeserializer(DeserializationContext.java:482)<br>at com.fasterxml.jackson.databind.ObjectMapper._findRootDeserializer(ObjectMapper.java:3889)<br>at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:3784)<br>at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:2798)</p>
+</blockquote>
+<p>Jackson默认是不支持解析key复杂对象的。<br>用ObjectMapper注册SimpleModule，SimpleModule加上自定义HashMap的JsonDeserializer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String json = <span class="string">"[[&#123;\"x\":10,\"y\":10&#125;,\"Ten\"],[&#123;\"x\":20,\"y\":20&#125;,\"Twenty\"]]"</span>;</span><br><span class="line"><span class="keyword">final</span>  ObjectMapper mapper =<span class="keyword">new</span> ObjectMapper();</span><br><span class="line">SimpleModule simpleModule =  <span class="keyword">new</span> SimpleModule();</span><br><span class="line"><span class="comment">//注册一定是HashMap.class不能是Map.class不然走不到自定义的JsonDeserializer里面去</span></span><br><span class="line">simpleModule.addDeserializer(HashMap.class,<span class="keyword">new</span> Key());</span><br><span class="line">mapper.registerModule(simpleModule);</span><br><span class="line"> HashMap&lt;Point,String&gt; map = <span class="keyword">null</span>;</span><br><span class="line"> map = mapper.readValue(json, <span class="keyword">new</span> TypeReference&lt;HashMap&lt;Point,String&gt;&gt;() &#123;&#125;);</span><br><span class="line">System.out.println(map.keySet().size()+<span class="string">""</span> +map);</span><br></pre></td></tr></table></figure>
+<p>最关键的就是Key这个类了继承自JsonDeserializer，源码在此：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Key</span> <span class="keyword">extends</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">HashMap</span>&lt;<span class="title">Object</span>, <span class="title">Object</span>&gt;&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">ContextualDeserializer</span> </span>&#123;</span><br><span class="line">    JavaType mJavaType;</span><br><span class="line">    JavaType mKeyJavaType;<span class="comment">//key对应的JavaType</span></span><br><span class="line">    JavaType mValueJavaType;<span class="comment">//Value对应的JavaType</span></span><br><span class="line">    JsonDeserializer&lt;Object&gt; _valueDeserializer;</span><br><span class="line">    JsonDeserializer&lt;Object&gt; _keyDeserializer;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HashMap&lt;Object, Object&gt; <span class="title">deserialize</span><span class="params">(JsonParser p, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException, JsonProcessingException </span>&#123;</span><br><span class="line">        HashMap hashMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">if</span> (p.getCurrentToken() == JsonToken.START_ARRAY) &#123;</span><br><span class="line">            JsonToken next = p.nextToken();</span><br><span class="line">            <span class="keyword">while</span> (p.nextToken() != JsonToken.END_ARRAY)</span><br><span class="line">                <span class="keyword">if</span> (next != <span class="keyword">null</span> &amp;&amp; next == JsonToken.START_ARRAY) &#123;</span><br><span class="line">                    p.nextToken();</span><br><span class="line">					<span class="comment">//反序列化key</span></span><br><span class="line">                    Object key = _keyDeserializer.deserialize(p, ctxt);</span><br><span class="line">                    p.nextToken();</span><br><span class="line">	              <span class="comment">//反序列化Value</span></span><br><span class="line">                    Object value = _valueDeserializer.deserialize(p, ctxt);</span><br><span class="line">                    hashMap.put(key, value);</span><br><span class="line">                    p.nextToken();</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hashMap;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> JsonDeserializer&lt;?&gt; createContextual(DeserializationContext ctxt, BeanProperty property) <span class="keyword">throws</span> JsonMappingException &#123;</span><br><span class="line">        <span class="keyword">if</span> (property != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//如果当前Hashmap是类的属性property不为null，如果根就是hashmap，就会为null；</span></span><br><span class="line">            mJavaType = property.getType();  <span class="comment">// -&gt; beanProperty is null when the StringConvertible type is a root value</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mJavaType = ctxt.getContextualType();</span><br><span class="line">        &#125;</span><br><span class="line">        mKeyJavaType = mJavaType.getKeyType();</span><br><span class="line">        mValueJavaType = mJavaType.getContentType();</span><br><span class="line">        _keyDeserializer = ctxt.findContextualValueDeserializer(mKeyJavaType, property);</span><br><span class="line">        _valueDeserializer = ctxt.findContextualValueDeserializer(mValueJavaType, property);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总体流程就是获得Key和value的javaType，然后找到对应的序列化类，根据JsonParser的token值在适当的位置进行反序列话，然后加如HashMap</p>
+<h3 id="服务器返回json字段是转义后的，带有反斜杠"><a href="#服务器返回json字段是转义后的，带有反斜杠" class="headerlink" title="服务器返回json字段是转义后的，带有反斜杠"></a>服务器返回json字段是转义后的，带有反斜杠</h3><p>比如下面这种json</p>
+<blockquote>
+<p>{“code”:200,”body”: “{\”meetingNumber\”:\”2\”,\”password\”:\”sdwsdwsdw\”}”}<br>这种json ，body字段被转义了，带有反斜杠\，估计后台的同学是直接用String类型赋值给body的，然后过json转换就会有转义字符。<br>body对应的实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Response</span> </span>&#123;</span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">int</span> code;</span><br><span class="line">      <span class="keyword">public</span> Body body;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Body</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Body</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">long</span> meetingNumber;</span><br><span class="line">      <span class="keyword">public</span> String password;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>不管用gson还是Jackson解析都是失败的。<br>gson报的错为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line <span class="number">1</span> column <span class="number">22</span> path $.body</span><br><span class="line"></span><br><span class="line">at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:<span class="number">224</span>)</span><br><span class="line">at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$<span class="number">1</span>.read(ReflectiveTypeAdapterFactory.java:<span class="number">129</span>)</span><br><span class="line">at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:<span class="number">220</span>)</span><br></pre></td></tr></table></figure></p>
+<p>Jackson报的错误为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">com.fasterxml.jackson.databind.JsonMappingException: Can not instantiate value of type [simple type, class com.ytjojo.practice.JsonTest$Body] from String value ('&#123;"meetingNumber":"2","password":"sdwsdwsdw"&#125;'); no single-String constructor/factory method</span><br><span class="line"> at [Source: &#123;<span class="string">"code"</span>:<span class="number">200</span>,<span class="string">"body"</span>: <span class="string">"&#123;\"meetingNumber\":\"2\",\"password\":\"sdwsdwsdw\"&#125;"</span>&#125;; line: <span class="number">1</span>, column: <span class="number">21</span>] (through reference chain: com.ytjojo.practice.Response[<span class="string">"body"</span>])</span><br><span class="line"></span><br><span class="line">	at com.fasterxml.jackson.databind.JsonMappingException.from(JsonMappingException.java:<span class="number">216</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.DeserializationContext.mappingException(DeserializationContext.java:<span class="number">894</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.ValueInstantiator._createFromStringFallbacks(ValueInstantiator.java:<span class="number">316</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromString(StdValueInstantiator.java:<span class="number">288</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromString(BeanDeserializerBase.java:<span class="number">1200</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:<span class="number">144</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:<span class="number">135</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.SettableBeanProperty.deserialize(SettableBeanProperty.java:<span class="number">490</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.impl.FieldProperty.deserializeAndSet(FieldProperty.java:<span class="number">101</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.BeanDeserializer.vanillaDeserialize(BeanDeserializer.java:<span class="number">260</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:<span class="number">125</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:<span class="number">3788</span>)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:<span class="number">2779</span>)</span><br></pre></td></tr></table></figure></p>
+<p>怎么解决这个问题呢，显看Jackson的处理方式</p>
+<h4 id="Jackson有两种处理方式"><a href="#Jackson有两种处理方式" class="headerlink" title="Jackson有两种处理方式"></a>Jackson有两种处理方式</h4><p>方法1 用在字段上注解@JsonDeserialize</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Response</span> </span>&#123;</span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">int</span> code;</span><br><span class="line">      <span class="meta">@JsonDeserialize</span>(using = StringToObjectDeserializer.class)</span><br><span class="line">      <span class="keyword">public</span> Body body;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Body</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Body</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">long</span> meetingNumber;</span><br><span class="line">      <span class="keyword">public</span> String password;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>StringToObjectDeserializer的源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToObjectDeserializer</span> <span class="keyword">extends</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">Object</span>&gt; <span class="keyword">implements</span> <span class="title">ContextualDeserializer</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> JavaType valueType;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> JsonDeserializer&lt;?&gt; createContextual(DeserializationContext ctxt, BeanProperty property) <span class="keyword">throws</span> JsonMappingException &#123;</span><br><span class="line"><span class="comment">//            JavaType wrapperType = property.getType();</span></span><br><span class="line"><span class="comment">//            JavaType valueType = wrapperType.containedType(0);</span></span><br><span class="line">			<span class="comment">//</span></span><br><span class="line">            <span class="keyword">if</span> (property != <span class="keyword">null</span>)</span><br><span class="line">                valueType = property.getType();  <span class="comment">// -&gt; beanProperty is null when the StringConvertible type is a root value</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                valueType = ctxt.getContextualType();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">deserialize</span><span class="params">(JsonParser parser, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            String json =parser.getValueAsString();</span><br><span class="line">			<span class="comment">//ObjectMapper一般需要配置成单例，这里直接新建，不做配置了</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ObjectMapper().readValue(json,valueType);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">getNullValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="comment">//可以直接返回null也可生成一个空对象</span></span><br><span class="line">            Class&lt;?&gt; clazz=valueType.getRawClass();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> clazz.newInstance();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.getNullValue();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>方法2用于全局配置，一劳永逸<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  SimpleModule simleModule = <span class="keyword">new</span> SimpleModule().setDeserializerModifier(<span class="keyword">new</span> StringToObjectDeserializerModifier());</span><br><span class="line">  ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper().registerModule(simleModule);</span><br><span class="line"><span class="comment">//配置 和解析代码不贴了。</span></span><br></pre></td></tr></table></figure></p>
+<p>StringToObjectDeserializerModifier源码很简单</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToObjectDeserializerModifier</span> <span class="keyword">extends</span> <span class="title">BeanDeserializerModifier</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> JsonDeserializer&lt;?&gt; modifyDeserializer(DeserializationConfig config,</span><br><span class="line">                                                      BeanDescription beanDesc, JsonDeserializer&lt;?&gt; deserializer) &#123;</span><br><span class="line">            <span class="keyword">if</span> (deserializer.getClass() == BeanDeserializer.class) &#123;</span><br><span class="line">                JavaType valueType = beanDesc.getType();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> StringToBeanDeserializer((BeanDeserializerBase) deserializer);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> deserializer;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StringToBeanDeserializer</span> <span class="keyword">extends</span> <span class="title">BeanDeserializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Copy-constructor that can be used by sub-classes to allow</span></span><br><span class="line"><span class="comment">         * copy-on-write style copying of settings of an existing instance.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">StringToBeanDeserializer</span><span class="params">(BeanDeserializerBase src)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(src, <span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      </span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">deserializeFromString</span><span class="params">(JsonParser p, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">            <span class="comment">// First things first: id Object Id is used, most likely that's it</span></span><br><span class="line">            <span class="keyword">if</span> (_objectIdReader != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> deserializeFromObjectId(p, ctxt);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Bit complicated if we have delegating creator; may need to use it,</span></span><br><span class="line"><span class="comment">         * or might not...</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">            <span class="keyword">if</span> (_delegateDeserializer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!_valueInstantiator.canCreateFromString()) &#123;</span><br><span class="line">                    Object bean = _valueInstantiator.createUsingDelegate(ctxt, _delegateDeserializer.deserialize(p, ctxt));</span><br><span class="line">                    <span class="keyword">if</span> (_injectables != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        injectValues(ctxt, bean);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> bean;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            String json = p.getValueAsString();</span><br><span class="line">            JavaType javatype = getValueType();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ObjectMapper().readValue(json, javatype);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Gson中的处理"><a href="#Gson中的处理" class="headerlink" title="Gson中的处理"></a>Gson中的处理</h4><p>gson中用到大杀器 @JsonAdapter。@JsonAdapter作用于字段可以自定义序列化方式，也可以自定反序列化。<br>其中class是继承com.google.gson.JsonDeserializer自定义反序列化;或者继承自JsonSerializer自定义系列化<br>本例的源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Response</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> code;</span><br><span class="line">         <span class="meta">@JsonAdapter</span>(GsonStringToObjectDeserializer.class)</span><br><span class="line">        <span class="keyword">public</span> Body body;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Body</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Body</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">long</span> meetingNumber;</span><br><span class="line">        <span class="keyword">public</span> String password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>GsonStringToObjectDeserializer的源码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GsonStringToObjectDeserializer</span> <span class="keyword">implements</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">Object</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">deserialize</span><span class="params">(JsonElement json, Type typeOfT, JsonDeserializationContext context)</span> <span class="keyword">throws</span> JsonParseException </span>&#123;</span><br><span class="line">        String jsonValue = json.getAsString();</span><br><span class="line">       <span class="keyword">return</span>  <span class="keyword">new</span> Gson().fromJson(jsonValue,typeOfT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样我们的Jackson 和Gson都支持带有转义字段json解析成对应java实体对象了。</p>
+<h3 id="打造万能的Date解析方案"><a href="#打造万能的Date解析方案" class="headerlink" title="打造万能的Date解析方案"></a>打造万能的Date解析方案</h3><p>服务器返回的日期格式有时候不太规范，目前服务器返回的有一下四种</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String yyyyMMdd = <span class="string">"yyyy-MM-dd"</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String YYYMMDDHHMM = <span class="string">"yyyy-MM-dd HH:mm"</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String YYMMDDHHMMSS = <span class="string">"yyyy-MM-dd HH:mm:ss"</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String ENGLISH_MMMddYYYY= <span class="string">"MMM dd, yyyy"</span>;<span class="comment">//Apr 25, 2016</span></span><br></pre></td></tr></table></figure>
+<p>Jackson中这种差异处理方式是Date字段上加上@JsonFormat注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@JsonFormat</span>(timezone = <span class="string">"GMT+8"</span>, pattern = <span class="string">"yyyy-MM-dd HH:mm"</span></span><br><span class="line"><span class="keyword">private</span> Date startTime;</span><br><span class="line"> <span class="meta">@JsonFormat</span>(timezone = <span class="string">"GMT+8"</span>, pattern = <span class="string">"yyyy-MM-dd HH:mm:ss"</span></span><br><span class="line"><span class="keyword">private</span> Date endTime;</span><br></pre></td></tr></table></figure>
+<p>Gson处理方式还是用大杀器@JsonAdapter<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Bean</span></span>&#123;</span><br><span class="line">	 <span class="meta">@JsonAdapter</span>(GsonDateDeserializer.class)</span><br><span class="line">	<span class="keyword">private</span> Date startTime;</span><br><span class="line">	 <span class="meta">@JsonAdapter</span>(GsonDateDeserializer.class)</span><br><span class="line">	<span class="keyword">private</span> Date endTime;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GsonDateDeserializer</span> <span class="keyword">implements</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">Date</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">deserialize</span><span class="params">(JsonElement json, Type typeOfT, JsonDeserializationContext context)</span> <span class="keyword">throws</span> JsonParseException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DateTimeHelper.getDateFromString(json.getAsString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是上面Jackson和gson各自处理方式还是不太方便，类的字段加上注解才管用，如过全局生效，只需要配置Gson 或者ObjectMapper就完美了<br>现在开撸，先上Gson代码<br>配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GsonBuilder builder = <span class="keyword">new</span> GsonBuilder();</span><br><span class="line">    builder.enableComplexMapKeySerialization()</span><br><span class="line">            .serializeNulls();</span><br><span class="line">    builder.registerTypeAdapterFactory(DateTypeAdapter.FACTORY);</span><br><span class="line">    Gson gson =builder.create();</span><br></pre></td></tr></table></figure>
+<p>DateTypeAdapter源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTypeAdapter</span> <span class="keyword">extends</span> <span class="title">TypeAdapter</span>&lt;<span class="title">Date</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> TypeAdapterFactory FACTORY = <span class="keyword">new</span> TypeAdapterFactory() &#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) <span class="comment">// we use a runtime check to make sure the 'T's equal</span></span><br><span class="line">    <span class="meta">@Override</span> <span class="keyword">public</span> &lt;T&gt; <span class="function">TypeAdapter&lt;T&gt; <span class="title">create</span><span class="params">(Gson gson, TypeToken&lt;T&gt; typeToken)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> typeToken.getRawType() == Date.class ? (TypeAdapter&lt;T&gt;) <span class="keyword">new</span> DateTypeAdapter() : <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> DateFormat enUsFormat</span><br><span class="line">      = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, Locale.US);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> DateFormat localFormat</span><br><span class="line">      = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> SimpleDateFormat FORMAT_YYYMMDDHHMM =<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm"</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> SimpleDateFormat FORMAT_GMT =<span class="keyword">new</span> SimpleDateFormat(<span class="string">"EEE MMM ddHH:mm:ss 'GMT' yyyy"</span>,Locale.US);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> SimpleDateFormat FORMAT_UTC =<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd'T'HH:mm:ss'Z'"</span>);</span><br><span class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Date <span class="title">read</span><span class="params">(JsonReader in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (in.peek() == JsonToken.NULL) &#123;</span><br><span class="line">      in.nextNull();</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> deserializeToDate(in.nextString());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> Date <span class="title">deserializeToDate</span><span class="params">(String json)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> localFormat.parse(json);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException ignored) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(json.length() ==<span class="number">16</span>)&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> FORMAT_YYYMMDDHHMM.parse(json);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> JsonSyntaxException(json, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(json.contains(<span class="string">"GMT"</span>))&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> FORMAT_GMT.parse(json);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span>&#123;</span><br><span class="line">        Date date =<span class="keyword">new</span> Date();</span><br><span class="line">        date.setTime(GMTDateUtils.parseDate(json,<span class="number">0</span>,json.length()));</span><br><span class="line">        <span class="keyword">return</span> date;</span><br><span class="line">      &#125;<span class="keyword">catch</span> (IllegalArgumentException e)&#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> FORMAT_UTC.parse(json);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> enUsFormat.parse(json);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException ignored) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    ParseException parseException;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> ISO8601Utils.parse(json, <span class="keyword">new</span> ParsePosition(<span class="number">0</span>));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">      parseException = e;</span><br><span class="line">    &#125;</span><br><span class="line">    Date result= UTCDateUtils.parseDate(json);</span><br><span class="line">    <span class="keyword">if</span>(result == <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> JsonSyntaxException(json, parseException);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(JsonWriter out, Date value)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</span><br><span class="line">      out.nullValue();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    String dateFormatAsString = FORMAT_YYYMMDDHHMM.format(value);</span><br><span class="line">    out.value(dateFormatAsString);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Gson 处理方式就是自定义Date 的TypeAdapter，然后在GsonBuilder中注册该TypeAdapter.<br>其中utc格式处理和Gmt解析源码我就补贴了</p>
+<p>Jackson全局配置源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"><span class="comment">//忽略其他各种配置</span></span><br><span class="line"> SuperDateDeserializer.regist(objectMapper);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * SuperDateDeserializer</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuperDateDeserializer</span> <span class="keyword">extends</span> <span class="title">DateDeserializers</span>.<span class="title">DateDeserializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">regist</span><span class="params">(ObjectMapper mapper)</span> </span>&#123;</span><br><span class="line">        mapper.registerModule(<span class="keyword">new</span> SimpleModule().addDeserializer(Date.class, <span class="keyword">new</span> SuperDateDeserializer()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SuperDateDeserializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SuperDateDeserializer</span><span class="params">(SuperDateDeserializer base, DateFormat df, String formatString)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(base, df, formatString);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> SuperDateDeserializer <span class="title">withDateFormat</span><span class="params">(DateFormat df, String formatString)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SuperDateDeserializer(<span class="keyword">this</span>, df, formatString);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Date <span class="title">_parseDate</span><span class="params">(JsonParser p, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (_customFormat != <span class="keyword">null</span>) &#123;</span><br><span class="line">            JsonToken t = p.getCurrentToken();</span><br><span class="line">            <span class="keyword">if</span> (t == JsonToken.VALUE_STRING) &#123;</span><br><span class="line">                String str = p.getText().trim();</span><br><span class="line">                <span class="keyword">if</span> (str.length() == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (Date) getEmptyValue(ctxt);</span><br><span class="line">                &#125;</span><br><span class="line">                SimpleDateFormat simpleDateFormat = (SimpleDateFormat) _customFormat;</span><br><span class="line">                String patten = simpleDateFormat.toPattern();</span><br><span class="line">                <span class="keyword">if</span> (patten.length() != str.length()) &#123;</span><br><span class="line">                    <span class="keyword">return</span> getDateFromString(str);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">synchronized</span> (_customFormat) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">return</span> _customFormat.parse(str);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Failed to parse Date value '"</span> + str</span><br><span class="line">                                + <span class="string">"' (format: \""</span> + _formatString + <span class="string">"\"): "</span> + e.getMessage());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Issue#381</span></span><br><span class="line">            <span class="keyword">if</span> (t == JsonToken.START_ARRAY &amp;&amp; ctxt.isEnabled(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS)) &#123;</span><br><span class="line">                p.nextToken();</span><br><span class="line">                <span class="keyword">final</span> Date parsed = _parseDate(p, ctxt);</span><br><span class="line">                t = p.nextToken();</span><br><span class="line">                <span class="keyword">if</span> (t != JsonToken.END_ARRAY) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> ctxt.wrongTokenException(p, JsonToken.END_ARRAY,</span><br><span class="line">                            <span class="string">"Attempted to unwrap single value array for single 'java.util.Date' "</span></span><br><span class="line">                                    + <span class="string">"value but there was more than a single value in the array"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> parsed;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        JsonToken t = p.getCurrentToken();</span><br><span class="line">        <span class="keyword">if</span> (t == JsonToken.VALUE_STRING) &#123;</span><br><span class="line">            String str = p.getText().trim();</span><br><span class="line">            <span class="keyword">return</span> getDateFromString(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>._parseDate(p, ctxt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回Date类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dateStr 支持三种格式的输入字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Date值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDateFromString</span><span class="params">(String dateStr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (TextUtils.isEmpty(dateStr)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> String trimStr = dateStr.trim();</span><br><span class="line">        SimpleDateFormat df = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (trimStr.length()) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">19</span>:</span><br><span class="line">                df = <span class="keyword">new</span> SimpleDateFormat(YYMMDDHHMMSS);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> df.parse(trimStr);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="number">16</span>:</span><br><span class="line">                df = <span class="keyword">new</span> SimpleDateFormat(YYYMMDDHHMM);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> df.parse(trimStr);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">                df = <span class="keyword">new</span> SimpleDateFormat(YYYYMMDD);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> df.parse(trimStr);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">12</span>:</span><br><span class="line">                df = <span class="keyword">new</span> SimpleDateFormat(ENGLISH_MMMDDYYYY, Locale.ENGLISH);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> df.parse(trimStr);</span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">			<span class="comment">//如果想添加Uct和gmt格式处理就在这里添加</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String YYYYMMDD = <span class="string">"yyyy-MM-dd"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String YYYMMDDHHMM = <span class="string">"yyyy-MM-dd HH:mm"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String YYMMDDHHMMSS = <span class="string">"yyyy-MM-dd HH:mm:ss"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ENGLISH_MMMDDYYYY = <span class="string">"MMM dd, yyyy"</span>;<span class="comment">//Apr 25, 2016</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Jackson处理方式还是ObjectMapper.registerModule,注册SimpleModule，在SimplModule中添加Date类型DateDeserializer<br>这样再也不用担心服务器返回各种奇怪日期格式造成解析失败了</p>
+<h3 id="手动调用Api生成json"><a href="#手动调用Api生成json" class="headerlink" title="手动调用Api生成json"></a>手动调用Api生成json</h3><p>Gson中<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">StringWriter stringWriter = <span class="keyword">new</span> StringWriter();</span><br><span class="line">JsonWriter jsonWriter =  gson.newJsonWriter(stringWriter);</span><br><span class="line">jsonWriter.beginObject();</span><br><span class="line">jsonWriter.name(<span class="string">"name"</span>)</span><br><span class="line">        .value(<span class="string">"张三"</span>)</span><br><span class="line">        .name(<span class="string">"emails"</span>)</span><br><span class="line">        .beginArray()</span><br><span class="line">        .value(<span class="string">"ytjojo@163.com"</span>)</span><br><span class="line">        .value(<span class="string">"ytjojo@qq.com"</span>)</span><br><span class="line">        .endArray()</span><br><span class="line">        .name(<span class="string">"age"</span>)</span><br><span class="line">        .value(<span class="number">20</span>)</span><br><span class="line">        .endObject();</span><br><span class="line">jsonWriter.flush();</span><br><span class="line">jsonWriter.close();</span><br><span class="line">String json = stringWriter.toString();</span><br><span class="line">System.out.println(json);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>输出结果{“name”:”张三”,”emails”:[“<a href="mailto:ytjojo@163.com" target="_blank" rel="noopener">ytjojo@163.com</a>“,”<a href="mailto:ytjojo@qq.com" target="_blank" rel="noopener">ytjojo@qq.com</a>“],”age”:20}</p>
+</blockquote>
+<p>Jackson生成json方法如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">StringWriter stringWriter = <span class="keyword">new</span> StringWriter();</span><br><span class="line">        JsonGenerator generator = <span class="keyword">new</span> ObjectMapper().getFactory().createGenerator(stringWriter);</span><br><span class="line">        generator.writeStartObject();</span><br><span class="line">        generator.writeStringField(<span class="string">"name"</span>, <span class="string">"张三"</span>);</span><br><span class="line">        generator.writeNumberField(<span class="string">"age"</span>, <span class="number">20</span>);</span><br><span class="line">        generator.writeFieldName(<span class="string">"emails"</span>);</span><br><span class="line">        generator.writeStartArray();</span><br><span class="line"></span><br><span class="line">        generator.writeString(<span class="string">"ytjojo@163.com"</span>);</span><br><span class="line">        generator.writeString(<span class="string">"ytjojo@qq.com"</span>);</span><br><span class="line"></span><br><span class="line">        generator.writeEndArray();</span><br><span class="line">        generator.writeFieldName(<span class="string">"bean"</span>);</span><br><span class="line">        generator.writeEndObject();</span><br><span class="line">        generator.flush();</span><br><span class="line">        generator.close();</span><br><span class="line"></span><br><span class="line">        String json = stringWriter.toString();</span><br><span class="line">        System.out.println(json);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>输出结果{“name”:”张三”,”age”:20,”emails”:[“<a href="mailto:ytjojo@163.com" target="_blank" rel="noopener">ytjojo@163.com</a>“,”<a href="mailto:ytjojo@qq.com" target="_blank" rel="noopener">ytjojo@qq.com</a>“]}<br>generator中还有个writeObject(Object pojo)方法，直接将pojo类写入json中，Gson貌似没这个功能</p>
+</blockquote>
+<h3 id="手动解析Json，Gson中为JsonElement，Jackson为JsonNode"><a href="#手动解析Json，Gson中为JsonElement，Jackson为JsonNode" class="headerlink" title="手动解析Json，Gson中为JsonElement，Jackson为JsonNode"></a>手动解析Json，Gson中为JsonElement，Jackson为JsonNode</h3><p>Gson<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line"> String json = <span class="string">"&#123;\"name\":\"张三\",\"age\":20,\"emails\":[\"ytjojo@163.com\",\"ytjojo@qq.com\"]&#125;"</span>;</span><br><span class="line"> JsonElement rootEl = gson.fromJson(json, JsonElement.class);</span><br><span class="line"> <span class="keyword">if</span> (rootEl.isJsonObject()) &#123;</span><br><span class="line">     JsonObject jsonObject = rootEl.getAsJsonObject();</span><br><span class="line">     JsonElement nameEl = jsonObject.get(<span class="string">"name"</span>);</span><br><span class="line">     <span class="keyword">if</span> (nameEl.isJsonPrimitive()) &#123;</span><br><span class="line">         String name = nameEl.getAsString();</span><br><span class="line">         System.out.println(name);</span><br><span class="line">     &#125;</span><br><span class="line">      JsonElement emailsEl = jsonObject.get(<span class="string">"emails"</span>);</span><br><span class="line">     <span class="keyword">if</span>(emailsEl.isJsonArray())&#123;</span><br><span class="line">         JsonArray jsonArray = emailsEl.getAsJsonArray();</span><br><span class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i= <span class="number">0</span> ;i&lt; jsonArray.size() ;i++)&#123;</span><br><span class="line">             String email =jsonArray.get(i).getAsString();</span><br><span class="line">             System.out.println(email);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     JsonElement ageEl = jsonObject.get(<span class="string">"age"</span>);</span><br><span class="line">     <span class="keyword">if</span>(ageEl.isJsonPrimitive())&#123;</span><br><span class="line">         JsonPrimitive agePmt= ageEl.getAsJsonPrimitive();</span><br><span class="line">         <span class="keyword">if</span>(agePmt.isNumber())&#123;</span><br><span class="line">             <span class="keyword">int</span> age = agePmt.getAsInt();</span><br><span class="line">             System.out.println(age+<span class="string">""</span>);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>张三<br><a href="mailto:ytjojo@163.com" target="_blank" rel="noopener">ytjojo@163.com</a><br><a href="mailto:ytjojo@qq.com" target="_blank" rel="noopener">ytjojo@qq.com</a><br>20<br>Jackson手动解析JsonNode<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">String json = <span class="string">"&#123;\"name\":\"张三\",\"age\":20,\"emails\":[\"ytjojo@163.com\",\"ytjojo@qq.com\"]&#125;"</span>;</span><br><span class="line"></span><br><span class="line">      ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">      JsonNode node = objectMapper.readTree(json);</span><br><span class="line">      <span class="keyword">if</span>(node.isObject())&#123;</span><br><span class="line">          JsonNode nameNode = node.path(<span class="string">"name"</span>);<span class="comment">//path和get方法功能类似，具体可以看文档</span></span><br><span class="line">          <span class="keyword">if</span>(nameNode.isTextual())&#123;</span><br><span class="line">              String name = nameNode.asText();</span><br><span class="line">              System.out.println(name);</span><br><span class="line">          &#125;</span><br><span class="line">          JsonNode ageNode = node.path(<span class="string">"age"</span>);</span><br><span class="line">          <span class="keyword">if</span>(ageNode.isNumber())&#123;</span><br><span class="line">              <span class="keyword">int</span> age = ageNode.asInt();</span><br><span class="line">              System.out.println(age+<span class="string">""</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          JsonNode emailsNode = node.path(<span class="string">"emails"</span>);</span><br><span class="line">          <span class="keyword">if</span>(emailsNode.isArray())&#123;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; emailsNode.size(); i++) &#123;</span><br><span class="line">                 JsonNode emailNode =  emailsNode.get(i);</span><br><span class="line">                  <span class="keyword">if</span>(emailNode.isTextual())&#123;</span><br><span class="line">                      String email = emailNode.asText();</span><br><span class="line">                      System.out.println(email);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="构建泛型类得Type-JacksonJavaType，"><a href="#构建泛型类得Type-JacksonJavaType，" class="headerlink" title="构建泛型类得Type JacksonJavaType，"></a>构建泛型类得Type JacksonJavaType，</h3><p>如何反序列化泛型类如ArrayList就需要生成Type或者JavaType，传给Gson和ObjectMapper进行反序列化。Gson和Jackson都有自己的Api来进程处理，代码入下：<br>Gson</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">      Type type = <span class="keyword">new</span> TypeToken&lt;ArrayList&lt;String&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line">Primitives.isWrapperType()</span><br><span class="line">       <span class="comment">//等同于以下下代码</span></span><br><span class="line">     type = $Gson$Types.newParameterizedTypeWithOwner(<span class="keyword">null</span>,ArrayList.class,String.class);</span><br><span class="line">	还可以判断是不是基本数据类型和包装类</span><br><span class="line">       <span class="keyword">boolean</span> isWrapperType =   Primitives.isWrapperType(Integer.class);<span class="comment">//true</span></span><br><span class="line">       <span class="keyword">boolean</span> isPrimitive =   Primitives.isPrimitive(String.class);<span class="comment">//false</span></span><br><span class="line">       <span class="keyword">boolean</span> isintPrimitive =   Primitives.isPrimitive(<span class="keyword">int</span>.class);<span class="comment">//true</span></span><br><span class="line">       <span class="keyword">boolean</span> isIntegerPrimitive =   Primitives.isPrimitive(Integer.class);<span class="comment">//false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//判断是不是泛型类行</span></span><br><span class="line">     <span class="keyword">if</span>(type <span class="keyword">instanceof</span> ParameterizedType)&#123;</span><br><span class="line">           System.out.println(<span class="string">"ParameterizedType"</span>);<span class="comment">//Arraylist属于泛型类</span></span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<p>Jackson生成泛型type<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Type  type = <span class="keyword">new</span> TypeReference&lt;ArrayList&lt;String&gt;&gt;()&#123;&#125;.getType();</span><br><span class="line"> JavaType javaType  = <span class="keyword">new</span> ObjectMapper().getTypeFactory().constructParametricType(ArrayList.class,String.class);</span><br><span class="line"> <span class="keyword">boolean</span> isTypeOrSubTypeOf = javaType.isTypeOrSubTypeOf(List.class);<span class="comment">//是不是List子类，true</span></span><br></pre></td></tr></table></figure></p>
+<p>有了Type和JavaType我们就可以解析出具体实体类。</p>
+<h3 id="完结"><a href="#完结" class="headerlink" title="完结"></a>完结</h3><p>关于Gson 和Jackson的使用目前就介绍到这里，如果在项目新get的使用技巧会继续补充。Thanks to read！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/json/" rel="tag"><i class="fa fa-tag"></i> json</a>
+          
+            <a href="/tags/Gson/" rel="tag"><i class="fa fa-tag"></i> Gson</a>
+          
+            <a href="/tags/Jackson/" rel="tag"><i class="fa fa-tag"></i> Jackson</a>
+          
+            <a href="/tags/json转换/" rel="tag"><i class="fa fa-tag"></i> json转换</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/16/lint工作流程研究/" rel="next" title="lint工作流程研究">
+                <i class="fa fa-chevron-left"></i> lint工作流程研究
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/30/Gson、Jackson与retrofit的结合，用泛型优雅处理服务器返回数据/" rel="prev" title="Gson、Jackson与retrofit的结合，用泛型优雅处理服务器返回数据">
+                Gson、Jackson与retrofit的结合，用泛型优雅处理服务器返回数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ytjojo</p>
+              <p class="site-description motion-element" itemprop="description">一万年太久，只争朝夕</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ytjojo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ytjojo@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置"><span class="nav-number">1.</span> <span class="nav-text">简单配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字段值为null系列化输出为null"><span class="nav-number">2.</span> <span class="nav-text">字段值为null系列化输出为null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置默认日期格式"><span class="nav-number">3.</span> <span class="nav-text">设置默认日期格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类级别上处理部分字段序列化和反序列化忽略"><span class="nav-number">4.</span> <span class="nav-text">类级别上处理部分字段序列化和反序列化忽略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改系列化字段名称"><span class="nav-number">5.</span> <span class="nav-text">修改系列化字段名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map的序列化对比"><span class="nav-number">6.</span> <span class="nav-text">map的序列化对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map反序列化"><span class="nav-number">7.</span> <span class="nav-text">map反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单key反序列化"><span class="nav-number">7.1.</span> <span class="nav-text">简单key反序列化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂key反序列化比较"><span class="nav-number">7.2.</span> <span class="nav-text">复杂key反序列化比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器返回json字段是转义后的，带有反斜杠"><span class="nav-number">8.</span> <span class="nav-text">服务器返回json字段是转义后的，带有反斜杠</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Jackson有两种处理方式"><span class="nav-number">8.1.</span> <span class="nav-text">Jackson有两种处理方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gson中的处理"><span class="nav-number">8.2.</span> <span class="nav-text">Gson中的处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打造万能的Date解析方案"><span class="nav-number">9.</span> <span class="nav-text">打造万能的Date解析方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动调用Api生成json"><span class="nav-number">10.</span> <span class="nav-text">手动调用Api生成json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动解析Json，Gson中为JsonElement，Jackson为JsonNode"><span class="nav-number">11.</span> <span class="nav-text">手动解析Json，Gson中为JsonElement，Jackson为JsonNode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建泛型类得Type-JacksonJavaType，"><span class="nav-number">12.</span> <span class="nav-text">构建泛型类得Type JacksonJavaType，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完结"><span class="nav-number">13.</span> <span class="nav-text">完结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ytjojo</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共52.7k字</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+

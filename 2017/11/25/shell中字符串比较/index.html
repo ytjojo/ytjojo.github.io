@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="shell,shell数组," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="判断字符串相等不相等方法123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384#测试各种字符串比较操作。#shell中对变量的值添加单引">
+<meta name="keywords" content="shell,shell数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell中字符串比较">
+<meta property="og:url" content="https://github.com/ytjojo/ytjojo.github.io/2017/11/25/shell中字符串比较/index.html">
+<meta property="og:site_name" content="ytjojo&#39;s blog">
+<meta property="og:description" content="判断字符串相等不相等方法123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384#测试各种字符串比较操作。#shell中对变量的值添加单引">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-09T01:55:50.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell中字符串比较">
+<meta name="twitter:description" content="判断字符串相等不相等方法123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384#测试各种字符串比较操作。#shell中对变量的值添加单引">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/ytjojo/ytjojo.github.io/2017/11/25/shell中字符串比较/"/>
+
+
+
+
+
+  <title>shell中字符串比较 | ytjojo's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ytjojo's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">杨腾蛟</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/ytjojo/ytjojo.github.io/2017/11/25/shell中字符串比较/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ytjojo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ytjojo's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shell中字符串比较</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T10:10:20+00:00">
+                2017-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shell/" itemprop="url" rel="index">
+                    <span itemprop="name">shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,068
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="判断字符串相等不相等方法"><a href="#判断字符串相等不相等方法" class="headerlink" title="判断字符串相等不相等方法"></a>判断字符串相等不相等方法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>测试各种字符串比较操作。</span><br><span class="line"><span class="meta">#</span>shell中对变量的值添加单引号，爽引号和不添加的区别：对类型来说是无关的，即不是添加了引号就变成了字符串类型，</span><br><span class="line"><span class="meta">#</span>单引号不对相关量进行替换，如不对$符号解释成变量引用，从而用对应变量的值替代，双引号则会进行替代</span><br><span class="line"><span class="meta">#</span>author:tenfyguo</span><br><span class="line"> </span><br><span class="line">A="$1"</span><br><span class="line">B="$2"</span><br><span class="line"> </span><br><span class="line">echo "输入的原始值：A=$A,B=$B"</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>判断字符串是否相等</span><br><span class="line">if [ "$A" = "$B" ];then</span><br><span class="line">echo "[ = ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>判断字符串是否相等，与上面的=等价</span><br><span class="line">if [ "$A" == "$B" ];then</span><br><span class="line">echo "[ == ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>注意:==的功能在[[]]和[]中的行为是不同的，如下</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>如果$a以”a”开头(模式匹配)那么将为true </span><br><span class="line">if [[ "$A" == a* ]];then</span><br><span class="line">echo "[[ ==a* ]]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>如果$a等于a*(字符匹配),那么结果为true</span><br><span class="line">if [[ "$A" == "a*" ]];then</span><br><span class="line">echo "==/"a*/""</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>File globbing(通配) 和word splitting将会发生, 此时的a*会自动匹配到对应的当前以a开头的文件</span><br><span class="line"><span class="meta">#</span>如在当前的目录中有个文件：add_crontab.sh,则下面会输出ok</span><br><span class="line"><span class="meta">#</span>if [ "add_crontab.sh" == a* ];then </span><br><span class="line"><span class="meta">#</span>echo "ok"</span><br><span class="line"><span class="meta">#</span>fi</span><br><span class="line">if [ "$A" == a* ];then</span><br><span class="line">echo "[ ==a* ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>如果$a等于a*(字符匹配),那么结果为true</span><br><span class="line">if [ "$A" == "a*" ];then</span><br><span class="line">echo "==/"a*/""</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>字符串不相等</span><br><span class="line">if [ "$A" != "$B" ];then</span><br><span class="line">echo "[ != ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>字符串不相等</span><br><span class="line">if [[ "$A" != "$B" ]];then</span><br><span class="line">echo "[[ != ]]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>字符串不为空，长度不为0</span><br><span class="line">if [ -n "$A" ];then</span><br><span class="line">echo "[ -n ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>字符串为空.就是长度为0.</span><br><span class="line">if [ -z "$A" ];then</span><br><span class="line">echo "[ -z ]"</span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>需要转义&lt;，否则认为是一个重定向符号</span><br><span class="line">if [ $A /&lt; $B ];then</span><br><span class="line">echo "[ &lt; ]" </span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ $A &lt; $B ]];then</span><br><span class="line">echo "[[ &lt; ]]" </span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>需要转义&gt;，否则认为是一个重定向符号</span><br><span class="line">if [ $A /&gt; $B ];then</span><br><span class="line">echo "[ &gt; ]" </span><br><span class="line">fi</span><br><span class="line"> </span><br><span class="line">if [[ $A &gt; $B ]];then</span><br><span class="line">echo "[[ &gt; ]]" </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h2 id="字符串包含关系"><a href="#字符串包含关系" class="headerlink" title="字符串包含关系"></a>字符串包含关系</h2><p>方法一：利用grep查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">strA=&quot;long string&quot;</span><br><span class="line">strB=&quot;string&quot;</span><br><span class="line">result=$(echo $strA | grep &quot;$&#123;strB&#125;&quot;)</span><br><span class="line">if [[ &quot;$result&quot; != &quot;&quot; ]]</span><br><span class="line">then</span><br><span class="line">  echo &quot;包含&quot;</span><br><span class="line">else</span><br><span class="line">  echo &quot;不包含&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>先打印长字符串，然后在长字符串中 grep 查找要搜索的字符串，用变量result记录结果</p>
+<p>如果结果不为空，说明strA包含strB。如果结果为空，说明不包含。</p>
+<p>这个方法充分利用了grep 的特性，最为简洁。</p>
+<p>方法二：利用字符串运算符</p>
+<p>复制代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">strA=&quot;helloworld&quot;</span><br><span class="line">strB=&quot;low&quot;</span><br><span class="line">if [[ $strA =~ $strB ]]</span><br><span class="line">then</span><br><span class="line">    echo &quot;包含&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;不包含&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<p>利用字符串运算符 =~ 直接判断strA是否包含strB。（这不是比第一个方法还要简洁吗摔！）</p>
+<p>方法三：利用通配符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">A=&quot;helloworld&quot;</span><br><span class="line">B=&quot;low&quot;</span><br><span class="line">if [[ $A == *$B* ]]</span><br><span class="line">then</span><br><span class="line">    echo &quot;包含&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;不包含&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>这个也很easy，用通配符*号代理strA中非strB的部分，如果结果相等说明包含，反之不包含。</p>
+<p>方法四：利用case in 语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">thisString=&quot;1 2 3 4 5&quot; # 源字符串</span><br><span class="line">searchString=&quot;1 2&quot; # 搜索字符串</span><br><span class="line">case $thisString in </span><br><span class="line">    *&quot;$searchString&quot;*) echo Enemy Spot ;;</span><br><span class="line">    *) echo nope ;;</span><br><span class="line">esa</span><br></pre></td></tr></table></figure></p>
+<p>这个就比较复杂了，case in 我还没有接触到，不过既然有比较简单的方法何必如此</p>
+<p>方法五：利用替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">STRING_A=$1</span><br><span class="line">STRING_B=$2</span><br><span class="line">if [[ $&#123;STRING_A/$&#123;STRING_B&#125;//&#125; == $STRING_A ]]</span><br><span class="line">    then</span><br><span class="line">        ## is not substring.</span><br><span class="line">        echo N</span><br><span class="line">        return 0</span><br><span class="line">    else</span><br><span class="line">        ## is substring.</span><br><span class="line">        echo Y</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br></pre></td></tr></table></figure>
+<h2 id="判断字符串是否以cn开头"><a href="#判断字符串是否以cn开头" class="headerlink" title="判断字符串是否以cn开头"></a>判断字符串是否以cn开头</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if [[ $&#123;var:0:2&#125; -eq &quot;cn&quot; ]]</span><br><span class="line">then</span><br><span class="line">echo sub is  chinese $&#123;var:0:2&#125;</span><br><span class="line">else</span><br><span class="line">echo sub is english $&#123;var:0:2&#125;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h2 id="逻辑运算符、逻辑表达式详解"><a href="#逻辑运算符、逻辑表达式详解" class="headerlink" title="逻辑运算符、逻辑表达式详解"></a>逻辑运算符、逻辑表达式详解</h2><p>shell的逻辑运算符 涉及有以下几种类型，因此只要适当选择，可以解决我们很多复杂的判断，达到事半功倍效果。</p>
+<p><strong>一、逻辑运算符</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>逻辑卷标</strong></th>
+<th style="text-align:left"><strong>表示意思</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.</td>
+<td style="text-align:left"><strong>关于档案与目录的侦测逻辑卷标！</strong></td>
+</tr>
+<tr>
+<td>-f</td>
+<td style="text-align:left">常用！侦测『档案』是否存在 eg: if [ -f filename ]</td>
+</tr>
+<tr>
+<td>-d</td>
+<td style="text-align:left">常用！侦测『目录』是否存在</td>
+</tr>
+<tr>
+<td>-b</td>
+<td style="text-align:left">侦测是否为一个『 block 档案』</td>
+</tr>
+<tr>
+<td>-c</td>
+<td style="text-align:left">侦测是否为一个『 character 档案』</td>
+</tr>
+<tr>
+<td>-S</td>
+<td style="text-align:left">侦测是否为一个『 socket 标签档案』</td>
+</tr>
+<tr>
+<td>-L</td>
+<td style="text-align:left">侦测是否为一个『 symbolic link 的档案』</td>
+</tr>
+<tr>
+<td>-e</td>
+<td style="text-align:left">侦测『某个东西』是否存在！</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>2.</th>
+<th style="text-align:left"><strong>关于程序的逻辑卷标！</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-G</td>
+<td style="text-align:left">侦测是否由 GID 所执行的程序所拥有</td>
+</tr>
+<tr>
+<td>-O</td>
+<td style="text-align:left">侦测是否由 UID 所执行的程序所拥有</td>
+</tr>
+<tr>
+<td>-p</td>
+<td style="text-align:left">侦测是否为程序间传送信息的 name pipe 或是 FIFO （老实说，这个不太懂！）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>3.</th>
+<th style="text-align:left"><strong>关于档案的属性侦测！</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-r</td>
+<td style="text-align:left">侦测是否为可读的属性</td>
+</tr>
+<tr>
+<td>-w</td>
+<td style="text-align:left">侦测是否为可以写入的属性</td>
+</tr>
+<tr>
+<td>-x</td>
+<td style="text-align:left">侦测是否为可执行的属性</td>
+</tr>
+<tr>
+<td>-s</td>
+<td style="text-align:left">侦测是否为『非空白档案』</td>
+</tr>
+<tr>
+<td>-u</td>
+<td style="text-align:left">侦测是否具有『 SUID 』的属性</td>
+</tr>
+<tr>
+<td>-g</td>
+<td style="text-align:left">侦测是否具有『 SGID 』的属性</td>
+</tr>
+<tr>
+<td>-k</td>
+<td style="text-align:left">侦测是否具有『 sticky bit 』的属性</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>4.</th>
+<th style="text-align:left"><strong>两个档案之间的判断与比较</strong> ；例如[ test file1 -nt file2 ]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-nt</td>
+<td style="text-align:left">第一个档案比第二个档案新</td>
+</tr>
+<tr>
+<td>-ot</td>
+<td style="text-align:left">第一个档案比第二个档案旧</td>
+</tr>
+<tr>
+<td>-ef</td>
+<td style="text-align:left">第一个档案与第二个档案为同一个档案（ link 之类的档案）</td>
+</tr>
+<tr>
+<td>5.</td>
+<td style="text-align:left">逻辑的『和(and)』『或(or)』</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td style="text-align:left">逻辑的 AND 的意思</td>
+</tr>
+<tr>
+<td>&#124;&#124;</td>
+<td style="text-align:left">逻辑的 OR 的意思</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th style="text-align:left">代表意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td style="text-align:left">等于 应用于：整型或字符串比较 如果在[] 中，只能是字符串</td>
+</tr>
+<tr>
+<td>!=</td>
+<td style="text-align:left">不等于 应用于：整型或字符串比较 如果在[] 中，只能是字符串</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td style="text-align:left">小于 应用于：整型比较 在[] 中，不能使用 表示字符串</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td style="text-align:left">大于 应用于：整型比较 在[] 中，不能使用 表示字符串</td>
+</tr>
+<tr>
+<td>-eq</td>
+<td style="text-align:left">等于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-ne</td>
+<td style="text-align:left">不等于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-lt</td>
+<td style="text-align:left">小于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-gt</td>
+<td style="text-align:left">大于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-le</td>
+<td style="text-align:left">小于或等于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-ge</td>
+<td style="text-align:left">大于或等于 应用于：整型比较</td>
+</tr>
+<tr>
+<td>-a</td>
+<td style="text-align:left">双方都成立（and） 逻辑表达式 –a 逻辑表达式</td>
+</tr>
+<tr>
+<td>-o</td>
+<td style="text-align:left">单方成立（or） 逻辑表达式 –o 逻辑表达式</td>
+</tr>
+<tr>
+<td>-z</td>
+<td style="text-align:left">空字符串</td>
+</tr>
+<tr>
+<td>-n</td>
+<td style="text-align:left">非空字符串</td>
+</tr>
+</tbody>
+</table>
+<p><strong>二、逻辑表达式</strong></p>
+<ul>
+<li><strong>test 命令</strong></li>
+</ul>
+<blockquote>
+<p><strong>使用方法：</strong>test EXPRESSION</p>
+<p>如：</p>
+<p>[root@localhost ~]# test 1 = 1 &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]# test -d /etc/ &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]# test 1 -eq 1 &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]# if test 1 = 1 ; then echo ‘ok’; fi<br>ok</p>
+</blockquote>
+<blockquote>
+<p><strong>注意：所有字符 与逻辑运算符直接用“空格”分开，不能连到一起。</strong></p>
+</blockquote>
+<ul>
+<li><strong>精简表达式</strong></li>
+</ul>
+<blockquote>
+<ul>
+<li><strong>[] 表达式</strong></li>
+</ul>
+<p>[root@localhost ~]# [ 1 -eq 1 ] &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]# [ 2 &lt; 1 ] &amp;&amp; echo ‘ok’<br>-bash: 2: No such file or directory</p>
+<p>[root@localhost ~]# [ 2 \&lt; 1 ] &amp;&amp; echo ‘ok’</p>
+<p>[root@localhost ~]# [ 2 -gt 1 -a 3 -lt 4 ] &amp;&amp; echo ‘ok’</p>
+<p>ok    </p>
+<p>[root@localhost ~]# [ 2 -gt 1 &amp;&amp; 3 -lt 4 ] &amp;&amp; echo ‘ok’<br>-bash: [: missing `]’ 注意：在[] 表达式中，常见的&gt;,&lt;需要加转义字符，表示字符串大小比较，以acill码 位置作为比较。 不直接支持&lt;&gt;运算符，还有逻辑运算符|| &amp;&amp; 它需要用-a[and] –o[or]表示</p>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>[[]] 表达式</strong></li>
+</ul>
+<p>[root@localhost ~]# [ 1 -eq 1 ] &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]$ [[ 2 &lt; 3 ]] &amp;&amp; echo ‘ok’<br>ok</p>
+<p>[root@localhost ~]$ [[ 2 &lt; 3 &amp;&amp; 4 &gt; 5 ]] &amp;&amp; echo ‘ok’<br>ok</p>
+</blockquote>
+<blockquote>
+<p>注意：[[]] 运算符只是[]运算符的扩充。能够支持&lt;,&gt;符号运算不需要转义符，它还是以字符串比较大小。里面支持逻辑运算符：|| &amp;&amp;</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;========= 逻辑表达式 test =========&quot;</span><br><span class="line">#注意：所有字符与逻辑运算符直接用“空格”分开，不能连到一起。</span><br><span class="line">if test 3 -eq 3 -a 3 == 3 ;then echo &quot;true&quot; ;fi</span><br><span class="line"></span><br><span class="line">#当3 大于 2 或 4 大于 3 并且 bxp 不等于 bixiaopeng  或 变量website不为空时,为真</span><br><span class="line">if test 3 &gt; 2 -a 4 -gt 2 -a &quot;bxp&quot; != &quot;bixiaopeng&quot; -o -n &quot;$website&quot; ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">#判断文件是否存在</span><br><span class="line">if test -f &quot;/Users/bixiaopeng/justtest.txt&quot; ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line">#判断目录是否存在</span><br><span class="line">if test -d &quot;/Users/bixiaopeng&quot; ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">echo &quot;========= 逻辑表达式 [] =========&quot;</span><br><span class="line"></span><br><span class="line">#在[] 表达式中，常见的&gt;,&lt;需要加转义字符，表示字符串大小比较，以acill码位置作为比较。</span><br><span class="line">#不直接支持&lt;&gt;运算符，还有逻辑运算符 || 和 &amp;&amp; 它需要用-a[and] –o[or]表示。</span><br><span class="line">if [ 3 -eq 3 -a 3 == 3 ];then echo &quot;true&quot; ;fi</span><br><span class="line"></span><br><span class="line">#当3 大于 2 或 4 大于 3 并且 bxp 不等于 bixiaopeng  或 变量website不为空时,为真</span><br><span class="line">if [ 3 \&gt; 2 -a 4 -gt 2 -a &quot;bxp&quot; != &quot;bixiaopeng&quot; -o -n &quot;$website&quot; ] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">#判断文件是否存在</span><br><span class="line">if [ -f &quot;/Users/bixiaopeng/justtest.txt&quot; ] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line">#判断目录是否存在</span><br><span class="line">if [ -d &quot;/Users/bixiaopeng&quot; ] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">echo &quot;========= 逻辑表达式 [[]] =========&quot;</span><br><span class="line"></span><br><span class="line">#[[]] 运算符只是[]运算符的扩充。能够支持&lt;,&gt;符号运算不需要转义符，它还是以字符串比较大小。里面支持逻辑运算符 || 和 &amp;&amp;</span><br><span class="line">if [[ 3 -eq 3 &amp;&amp; 3 == 3 ]];then echo &quot;true&quot; ;fi</span><br><span class="line"></span><br><span class="line">#当3 大于 2 或 4 大于 3 并且 bxp 不等于 bixiaopeng  或 变量website不为空时,为真</span><br><span class="line">if [[ 3 &gt; 2 &amp;&amp; 4 -gt 2 &amp;&amp; &quot;bxp&quot; != &quot;bixiaopeng&quot; || -n &quot;$website&quot; ]] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">#判断文件是否存在</span><br><span class="line">if [[ -f &quot;/Users/bixiaopeng/justtest.txt&quot; ]] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line">#判断目录是否存在</span><br><span class="line">if [[ -d &quot;/Users/bixiaopeng&quot; ]] ;then echo &quot;true&quot;; else echo &quot;false&quot;; fi</span><br><span class="line"></span><br><span class="line">#[[]] 中可以使用通配符,不需要引号</span><br><span class="line">[[ $myname = b*peng ]] &amp;&amp; echo &quot;true&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>三、性能比较</strong></p>
+<p>bash的条件表达式中有三个几乎等效的符号和命令：test，[]和[[]]。通常，大家习惯用if [];then这样的形式。而[[]]的出现，根据ABS所说，是为了兼容&gt;&lt;之类的运算符。以下是比较它们性能，发现[[]]是最快的。</p>
+<p>$ time (for m in {1..100000}; do test -d .;done;)<br>real    0m0.658s<br>user    0m0.558s<br>sys     0m0.100s</p>
+<p>$ time (for m in {1..100000}; do [ -d . ];done;)<br>real    0m0.609s<br>user    0m0.524s<br>sys     0m0.085s</p>
+<p>$ time (for m in {1..100000}; do [[ -d . ]];done;)<br>real    0m0.311s<br>user    0m0.275s<br>sys     0m0.036s</p>
+<p>不考虑对低版本bash和对sh的兼容的情况下，用[[]]是兼容性强，而且性能比较快，在做条件运算时候，可以使用该运算符。</p>
+<h2 id="Shell脚本中判断输入变量或者参数是否为空的方法"><a href="#Shell脚本中判断输入变量或者参数是否为空的方法" class="headerlink" title="Shell脚本中判断输入变量或者参数是否为空的方法"></a>Shell脚本中判断输入变量或者参数是否为空的方法</h2><ol>
+<li><p>判断变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read -p &quot;input a word :&quot; word</span><br><span class="line">if  [ ! -n &quot;$word&quot; ] ;then</span><br><span class="line">    echo &quot;you have not input a word!&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;the word you input is $word&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断输入参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">if [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">    echo &quot;you have not input a word!&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;the word you input is $1&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接通过变量判断</p>
+</li>
+</ol>
+<p>如下所示:得到的结果为: IS NULL<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">para1=</span><br><span class="line">if [ ! $para1 ]; then</span><br><span class="line">  echo &quot;IS NULL&quot;</span><br><span class="line">else</span><br><span class="line">  echo &quot;NOT NULL&quot;</span><br><span class="line">fi </span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<ol start="4">
+<li>使用test判断</li>
+</ol>
+<p>得到的结果就是: dmin is not set!<br>    ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">dmin=</span><br><span class="line">if test -z &quot;$dmin&quot;</span><br><span class="line">then</span><br><span class="line">  echo &quot;dmin is not set!&quot;</span><br><span class="line">else  </span><br><span class="line">  echo &quot;dmin is set !&quot;</span><br><span class="line">fi</span><br><span class="line">​</span><br></pre></td></tr></table></figure></p>
+<ol start="5">
+<li>使用””判断<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh </span><br><span class="line">dmin=</span><br><span class="line">if [ &quot;$dmin&quot; = &quot;&quot; ]</span><br><span class="line">then</span><br><span class="line">  echo &quot;dmin is not set!&quot;</span><br><span class="line">else  </span><br><span class="line">  echo &quot;dmin is set !&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>zhezhelin<br>linux shell 中判断字符串为空的正确方法<br>help命令可以查看帮助</p>
+<p>help test</p>
+<p>正确做法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">STRING=</span><br><span class="line"></span><br><span class="line">if [ -z &quot;$STRING&quot; ]; then </span><br><span class="line">    echo &quot;STRING is empty&quot; </span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ -n &quot;$STRING&quot; ]; then </span><br><span class="line">    echo &quot;STRING is not empty&quot; </span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">root@james-desktop:~# ./zerostring.sh </span><br><span class="line">STRING is empty</span><br><span class="line"></span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<hr>
+<p>错误做法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">STRING=</span><br><span class="line"></span><br><span class="line">if [ -z $STRING ]; then </span><br><span class="line">    echo &quot;STRING is empty&quot; </span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ -n $STRING ]; then </span><br><span class="line">    echo &quot;STRING is not empty&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<h2 id="Linux命令之exit-退出当前shell【返回值状态】"><a href="#Linux命令之exit-退出当前shell【返回值状态】" class="headerlink" title="Linux命令之exit - 退出当前shell【返回值状态】"></a>Linux命令之exit - 退出当前shell【返回值状态】</h2><p>使用示例<br>示例一 退出当前shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@new55 ~]# [root@new55 ~]# exit logout</span><br></pre></td></tr></table></figure></p>
+<p>示例二 在脚本中，进入脚本所在目录，否则退出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd $(dirname $0) || exit 1 </span><br><span class="line">cd $(dirname $0) || exit 1</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">示例三 在脚本中，判断参数数量，不匹配就打印使用方式，退出</span><br></pre></td></tr></table></figure></p>
+<p>if [ “$#” -ne “2” ]; then<br>    echo “usage: $0 <area> <hours>“<br>    exit 2<br>fi<br>if [ “$#” -ne “2” ]; then<br>    echo “usage: $0 <area> <hours>“<br>    exit 2<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">示例四 在脚本中，退出时删除临时文件</span><br></pre></td></tr></table></figure></hours></hours></p>
+<p>trap “rm -f tmpfile; echo Bye.” EXIT<br>trap “rm -f tmpfile; echo Bye.” EXIT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">示例五 检查上一命令的退出码</span><br></pre></td></tr></table></figure></p>
+<p>./mycommand.sh<br>EXCODE=$?<br>if [ “$EXCODE” == “0” ]; then<br>    echo “O.K”<br>fi<br>./mycommand.sh<br>EXCODE=$?<br>if [ “$EXCODE” == “0” ]; then<br>    echo “O.K”<br>fi<br><code>`</code></p>
+<h3 id="使用trap和kill退出整个脚本"><a href="#使用trap和kill退出整个脚本" class="headerlink" title="使用trap和kill退出整个脚本"></a>使用trap和kill退出整个脚本</h3><p>cat &gt;test.sh&lt;&lt;EOF’’</p>
+<p>#!/bin/bash</p>
+<p>export TOP_PID=$$<br>trap ‘exit 1’ TERM</p>
+<p>exit_script(){<br>    kill -s TERM $TOP_PID<br>}</p>
+<p>echo “before exit”<br>:|exit_script<br>echo “after exit”<br>EOF</p>
+<p>chmod a+x test.sh<br>./test.sh<br>echo $?</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          
+            <a href="/tags/shell数组/" rel="tag"><i class="fa fa-tag"></i> shell数组</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/20/正则表达式/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/一看要懂的http简介/" rel="prev" title="一看要懂的http简介">
+                一看要懂的http简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ytjojo</p>
+              <p class="site-description motion-element" itemprop="description">一万年太久，只争朝夕</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ytjojo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ytjojo@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符串相等不相等方法"><span class="nav-number">1.</span> <span class="nav-text">判断字符串相等不相等方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串包含关系"><span class="nav-number">2.</span> <span class="nav-text">字符串包含关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符串是否以cn开头"><span class="nav-number">3.</span> <span class="nav-text">判断字符串是否以cn开头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑运算符、逻辑表达式详解"><span class="nav-number">4.</span> <span class="nav-text">逻辑运算符、逻辑表达式详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell脚本中判断输入变量或者参数是否为空的方法"><span class="nav-number">5.</span> <span class="nav-text">Shell脚本中判断输入变量或者参数是否为空的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux命令之exit-退出当前shell【返回值状态】"><span class="nav-number">6.</span> <span class="nav-text">Linux命令之exit - 退出当前shell【返回值状态】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用trap和kill退出整个脚本"><span class="nav-number">6.1.</span> <span class="nav-text">使用trap和kill退出整个脚本</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ytjojo</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共52.7k字</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+

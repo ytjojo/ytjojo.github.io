@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/25/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</loc>
+    <lastmod>2018-04-09T01:55:50.973Z</lastmod>
+    <data>
+        <display>
+        <title>安卓开发规范</title>
+        <pubTime>2017-04-25T16:19:20.000Z</pubTime>
+        
+        <tag>开发规范</tag>
+         
+        <tag>开发约束</tag>
+         
+         
+           
+             
+              <breadCrumb title="安卓开发规范" url="https://github.com/ytjojo/ytjojo.github.io/categories/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/21/%E6%9C%80%E8%AF%A6%E7%BB%86%E7%9A%84android-Proguard-%E6%B7%B7%E6%B7%86%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2018-04-09T01:55:50.973Z</lastmod>
+    <data>
+        <display>
+        <title>最详细的android Proguard 混淆教程</title>
+        <pubTime>2017-04-21T17:43:00.000Z</pubTime>
+        
+        <tag>android混淆</tag>
+         
+        <tag>Proguard</tag>
+         
+        <tag>android Proguard</tag>
+         
+        <tag>恢复堆栈</tag>
+         
+        <tag>Unknown Source</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android Proguard" url="https://github.com/ytjojo/ytjojo.github.io/categories/Android-Proguard/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/11/20/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
+    <lastmod>2018-04-09T01:55:50.973Z</lastmod>
+    <data>
+        <display>
+        <title>正则表达式</title>
+        <pubTime>2017-11-20T16:19:20.000Z</pubTime>
+        
+        <tag>正则表达式</tag>
+         
+        <tag>正则</tag>
+         
+        <tag>java正则表达式</tag>
+         
+        <tag>java正则表达</tag>
+         
+         
+           
+             
+              <breadCrumb title="正则表达式" url="https://github.com/ytjojo/ytjojo.github.io/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%A0%94%E7%A9%B6/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>lint工作流程研究</title>
+        <pubTime>2018-03-16T16:48:20.000Z</pubTime>
+        
+        <tag>lint</tag>
+         
+        <tag>源码分析，androidLint</tag>
+         
+         
+           
+             
+              <breadCrumb title="lint" url="https://github.com/ytjojo/ytjojo.github.io/categories/lint/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/15/markdown%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>Markdown学习笔记</title>
+        <pubTime>2017-04-15T15:58:15.000Z</pubTime>
+        
+        <tag>markdown</tag>
+         
+        <tag>markdown编辑器</tag>
+         
+        <tag>markdown语法</tag>
+         
+        <tag>图床</tag>
+         
+         
+           
+             
+              <breadCrumb title="markdown" url="https://github.com/ytjojo/ytjojo.github.io/categories/markdown/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/04/04/retrofitex%E4%B8%ADhttps%E7%9A%84%E5%A4%84%E7%90%86%E4%BB%A5%E5%8F%8A4.4%E4%B8%80%E4%B8%8B%E6%89%8B%E6%9C%BA%E4%B8%8D%E6%94%AF%E6%8C%81TLS%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>retrofitex中https的处理以及4.4一下手机不支持TLS的解决办法</title>
+        <pubTime>2018-04-04T12:12:20.000Z</pubTime>
+        
+        <tag>https</tag>
+         
+        <tag>TSL</tag>
+         
+        <tag>SSLHandshakeException</tag>
+         
+        <tag>SSLSocketFactory</tag>
+         
+         
+           
+             
+              <breadCrumb title="https" url="https://github.com/ytjojo/ytjojo.github.io/categories/https/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/04/04/retrofitex%E4%B8%AD%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%8C%E5%88%A9%E7%94%A8Rxjava2%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%88%87%E6%8D%A2%EF%BC%8C%E5%A4%B1%E8%B4%A5%E9%87%8D%E8%AF%95%EF%BC%8C%E9%94%99%E8%AF%AF%E5%8C%85%E8%A3%85%EF%BC%8C%E5%9C%A8onDestroy%E5%8F%8D%E6%B3%A8%E5%86%8CObservable/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>retrofitex中错误处理，利用Rxjava2一行代码实现线程切换，失败重试，错误包装，在onDestroy反注册Observable</title>
+        <pubTime>2018-04-04T14:26:10.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>错误处理</tag>
+         
+        <tag>失败重试</tag>
+         
+        <tag>线程切换</tag>
+         
+        <tag>compose操作符</tag>
+         
+        <tag>ObservableTransformer</tag>
+         
+         
+           
+             
+              <breadCrumb title="http" url="https://github.com/ytjojo/ytjojo.github.io/categories/http/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/11/25/shell%E4%B8%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>shell中字符串比较</title>
+        <pubTime>2017-11-25T10:10:20.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+        <tag>shell数组</tag>
+         
+         
+           
+             
+              <breadCrumb title="shell" url="https://github.com/ytjojo/ytjojo.github.io/categories/shell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/20/Travis-CI%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0Hexo%E5%8D%9A%E5%AE%A2%E5%88%B0Github%20Page/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>Travis-CI自动更新Hexo博客到Github Page</title>
+        <pubTime>2017-04-20T17:34:15.000Z</pubTime>
+        
+        <tag>Travis-CI</tag>
+         
+        <tag>自动更新Hexo</tag>
+         
+        <tag>多端同步</tag>
+         
+        <tag>持续集成</tag>
+         
+         
+           
+             
+              <breadCrumb title="hexo" url="https://github.com/ytjojo/ytjojo.github.io/categories/hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/12/25/%E4%B8%80%E7%9C%8B%E8%A6%81%E6%87%82%E7%9A%84http%E7%AE%80%E4%BB%8B/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>一看要懂的http简介</title>
+        <pubTime>2017-12-25T20:18:20.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>缓存</tag>
+         
+         
+           
+             
+              <breadCrumb title="http" url="https://github.com/ytjojo/ytjojo.github.io/categories/http/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/03/19/%E5%85%B3%E4%BA%8EGson%E5%92%8CJackson%E7%9A%84%E8%8A%B1%E5%BC%8F%E4%BD%BF%E7%94%A8%E9%83%BD%E5%9C%A8%E8%BF%99%E9%87%8C%E4%BA%86%EF%BC%8C%E4%B8%80%E7%BD%91%E6%89%93%E5%B0%BDJson%E8%BD%AC%E6%8D%A2/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换</title>
+        <pubTime>2018-03-19T20:11:45.000Z</pubTime>
+        
+        <tag>json</tag>
+         
+        <tag>Gson</tag>
+         
+        <tag>Jackson</tag>
+         
+        <tag>json转换</tag>
+         
+         
+           
+             
+              <breadCrumb title="json" url="https://github.com/ytjojo/ytjojo.github.io/categories/json/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/04/09/%E5%90%8C%E4%B8%80%E5%8F%B0%E7%94%B5%E8%84%91%E4%B8%BAgitlab%E5%92%8Cgithub%E6%B7%BB%E5%8A%A0ssh%20key/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2018-04-09T01:55:50.969Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/04/04/%E5%9C%A8subModule%E7%9A%84%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E4%B8%8Bbuild.gradle%E5%BC%A0%E6%89%A7%E8%A1%8Cshell%E7%BB%93%E6%9E%9C%E6%98%AF%E5%A4%96%E5%B1%82%E4%BB%93%E5%BA%93%E7%9A%84%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>在subModule的仓库目录下build.gradle执行shell结果是外层仓库的错误解决方法</title>
+        <pubTime>2018-04-04T17:06:20.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>build.gradle</tag>
+         
+         
+           
+             
+              <breadCrumb title="build.gradle执行shell" url="https://github.com/ytjojo/ytjojo.github.io/categories/build-gradle%E6%89%A7%E8%A1%8Cshell/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/03/30/Gson%E3%80%81Jackson%E4%B8%8Eretrofit%E7%9A%84%E7%BB%93%E5%90%88%EF%BC%8C%E7%94%A8%E6%B3%9B%E5%9E%8B%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>Gson、Jackson与retrofit的结合，用泛型优雅处理服务器返回数据</title>
+        <pubTime>2018-03-30T15:37:20.000Z</pubTime>
+        
+        <tag>gson</tag>
+         
+        <tag>json</tag>
+         
+        <tag>jackson</tag>
+         
+        <tag>retrofit</tag>
+         
+        <tag>Converter</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="https://github.com/ytjojo/ytjojo.github.io/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2018/04/08/git%E5%88%A9%E7%94%A8sparsecheckout%E4%B8%8A%E4%BC%A0apk%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>git利用sparsecheckout上传apk文件</title>
+        <pubTime>2018-04-08T10:18:00.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>shell</tag>
+         
+        <tag>sparsecheckout</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="https://github.com/ytjojo/ytjojo.github.io/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/25/git%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%9C%BA%E6%99%AF%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>git命令与场景使用</title>
+        <pubTime>2017-04-25T16:19:20.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>git命令</tag>
+         
+        <tag>git教程</tag>
+         
+        <tag>git详解</tag>
+         
+        <tag>git学习笔记</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="https://github.com/ytjojo/ytjojo.github.io/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/04/18/hexo%E5%92%8Cgithubpage%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo和GitHub Pages建立个人博客</title>
+        <pubTime>2017-04-18T17:32:15.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>Hexo</tag>
+         
+        <tag>git配置</tag>
+         
+        <tag>ssh</tag>
+         
+        <tag>github page</tag>
+         
+        <tag>建立个人博客</tag>
+         
+         
+           
+             
+              <breadCrumb title="hexo" url="https://github.com/ytjojo/ytjojo.github.io/categories/hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://github.com/ytjojo/ytjojo.github.io/2017/08/25/shell%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84/</loc>
+    <lastmod>2018-04-09T01:55:50.969Z</lastmod>
+    <data>
+        <display>
+        <title>shell中的数组</title>
+        <pubTime>2017-08-25T16:19:20.000Z</pubTime>
+        
+        <tag>shell</tag>
+         
+        <tag>shell数组</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="https://github.com/ytjojo/ytjojo.github.io/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+</urlset>

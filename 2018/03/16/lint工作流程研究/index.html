@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="lint,源码分析，androidLint," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章会试图解答如下问题  lintOptions如何获取 系统定义Issues如何被加载进来的 用户自定lint.jar如何被找到的 Detector如何加载的   lint总体流程 创建AndroidProject 获得LintOptions配置信息 获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类) 获得所有lint.jar 获得所有定义的Issue">
+<meta name="keywords" content="lint,源码分析，androidLint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lint工作流程研究">
+<meta property="og:url" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/index.html">
+<meta property="og:site_name" content="ytjojo&#39;s blog">
+<meta property="og:description" content="文章会试图解答如下问题  lintOptions如何获取 系统定义Issues如何被加载进来的 用户自定lint.jar如何被找到的 Detector如何加载的   lint总体流程 创建AndroidProject 获得LintOptions配置信息 获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类) 获得所有lint.jar 获得所有定义的Issue">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/lintoptions.png">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/lintxml.png">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/edit_configuratiosn.png">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/remote.png">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/debug_unnamed.png">
+<meta property="og:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/sudio_teminal.png">
+<meta property="og:updated_time" content="2018-04-09T01:55:50.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lint工作流程研究">
+<meta name="twitter:description" content="文章会试图解答如下问题  lintOptions如何获取 系统定义Issues如何被加载进来的 用户自定lint.jar如何被找到的 Detector如何加载的   lint总体流程 创建AndroidProject 获得LintOptions配置信息 获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类) 获得所有lint.jar 获得所有定义的Issue">
+<meta name="twitter:image" content="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/pic/lintoptions.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/"/>
+
+
+
+
+
+  <title>lint工作流程研究 | ytjojo's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ytjojo's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">杨腾蛟</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/ytjojo/ytjojo.github.io/2018/03/16/lint工作流程研究/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ytjojo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ytjojo's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">lint工作流程研究</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T16:48:20+00:00">
+                2018-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lint/" itemprop="url" rel="index">
+                    <span itemprop="name">lint</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,822
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>文章会试图解答如下问题</p>
+<ol>
+<li>lintOptions如何获取</li>
+<li>系统定义Issues如何被加载进来的</li>
+<li>用户自定lint.jar如何被找到的</li>
+<li>Detector如何加载的</li>
+</ol>
+</blockquote>
+<h3 id="lint总体流程"><a href="#lint总体流程" class="headerlink" title="lint总体流程"></a>lint总体流程</h3><ol>
+<li>创建AndroidProject</li>
+<li>获得LintOptions配置信息</li>
+<li>获得系统定义的IssueRegistry(为BuiltinIssueRegistry的子类)</li>
+<li>获得所有lint.jar</li>
+<li>获得所有定义的Issues，包括系统和用户定义的</li>
+<li>获得检测范围Scope</li>
+<li>获得Detectors，获取lint.xml配置信息</li>
+<li>checkProject检查当前工程和所有依赖工程</li>
+<li>runFileDetectors</li>
+</ol>
+<h3 id="lint入口"><a href="#lint入口" class="headerlink" title="lint入口"></a>lint入口</h3><p>gradle 任务的入口<br>入口类为com.android.build.gradle.tasks.Lint.groovy</p>
+<h3 id="获得project"><a href="#获得project" class="headerlink" title="获得project"></a>获得project</h3><p>lint()方法中,先创建AndroidProject对象<br>首先判断是单个变体还是所有变体<br>如果命令gradle app:lint则是所有变体<br>如果命令是radle app:lintDebug则值检查debug变体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@TaskAction</span><br><span class="line">    public void lint() throws IOException &#123;</span><br><span class="line">        AndroidProject modelProject = createAndroidProject(getProject());</span><br><span class="line">        if (getVariantName() != null &amp;&amp; !getVariantName().isEmpty()) &#123;</span><br><span class="line">            for (Variant variant : modelProject.getVariants()) &#123;</span><br><span class="line">                if (variant.getName().equals(getVariantName())) &#123;</span><br><span class="line">                    lintSingleVariant(modelProject, variant);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            lintAllVariants(modelProject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如何获得变体呢，这就是createAndroidProject的作用了。进入该方法，方法内部又调用ToolingModelBuilder的buildAll（）方法<br>buildAll调用buildAndroidProject（），在这里会根据buildType和productFlavors生成各种变体，获得各种配置信息，特别是LintOptions<br>为后来lint检查做准备。这信息最终保存在DefaultAndroidProject中，DefaultAndroidProject最终赋值给lint()方法的临时变量modelProject中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"> private Object buildAndroidProject(Project project) &#123;</span><br><span class="line">        Integer modelLevelInt = AndroidGradleOptions.buildModelOnlyVersion(project);</span><br><span class="line">        if (modelLevelInt != null) &#123;</span><br><span class="line">            modelLevel = modelLevelInt;</span><br><span class="line">        &#125;</span><br><span class="line">        modelWithFullDependency = AndroidGradleOptions.buildModelWithFullDependencies(project);</span><br><span class="line"></span><br><span class="line">        // Get the boot classpath. This will ensure the target is configured.</span><br><span class="line">        List&lt;String&gt; bootClasspath = androidBuilder.getBootClasspathAsStrings(false);</span><br><span class="line"></span><br><span class="line">        List&lt;File&gt; frameworkSource = Collections.emptyList();</span><br><span class="line"></span><br><span class="line">        // List of extra artifacts, with all test variants added.</span><br><span class="line">        List&lt;ArtifactMetaData&gt; artifactMetaDataList = Lists.newArrayList(</span><br><span class="line">                extraModelInfo.getExtraArtifacts());</span><br><span class="line"></span><br><span class="line">        for (VariantType variantType : VariantType.getTestingTypes()) &#123;</span><br><span class="line">            artifactMetaDataList.add(new ArtifactMetaDataImpl(</span><br><span class="line">                    variantType.getArtifactName(),</span><br><span class="line">                    true /*isTest*/,</span><br><span class="line">                    variantType.getArtifactType()));</span><br><span class="line">        &#125;</span><br><span class="line">		//根据gradle文件中配置的lintOptions获得配置结果，保存在LintOptions这个类中</span><br><span class="line">        LintOptions lintOptions = com.android.build.gradle.internal.dsl.LintOptions.create(</span><br><span class="line">                config.getLintOptions());</span><br><span class="line"></span><br><span class="line">        AaptOptions aaptOptions = AaptOptionsImpl.create(config.getAaptOptions());</span><br><span class="line"></span><br><span class="line">        List&lt;SyncIssue&gt; syncIssues = Lists.newArrayList(extraModelInfo.getSyncIssues().values());</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; flavorDimensionList = config.getFlavorDimensionList() != null ?</span><br><span class="line">                config.getFlavorDimensionList() : Lists.newArrayList();</span><br><span class="line"></span><br><span class="line">        toolchains = createNativeToolchainModelMap(ndkHandler);</span><br><span class="line"></span><br><span class="line">        ProductFlavorContainer defaultConfig = ProductFlavorContainerImpl</span><br><span class="line">                .createProductFlavorContainer(</span><br><span class="line">                        variantManager.getDefaultConfig(),</span><br><span class="line">                        extraModelInfo.getExtraFlavorSourceProviders(</span><br><span class="line">                                variantManager.getDefaultConfig().getProductFlavor().getName()));</span><br><span class="line"></span><br><span class="line">        Collection&lt;BuildTypeContainer&gt; buildTypes = Lists.newArrayList();</span><br><span class="line">        Collection&lt;ProductFlavorContainer&gt; productFlavors = Lists.newArrayList();</span><br><span class="line">        Collection&lt;Variant&gt; variants = Lists.newArrayList();</span><br><span class="line"></span><br><span class="line">		//获取配置的buildType</span><br><span class="line">        for (BuildTypeData btData : variantManager.getBuildTypes().values()) &#123;</span><br><span class="line">            buildTypes.add(BuildTypeContainerImpl.create(</span><br><span class="line">                    btData,</span><br><span class="line">                    extraModelInfo.getExtraBuildTypeSourceProviders(btData.getBuildType().getName())));</span><br><span class="line">        &#125;</span><br><span class="line">  //获取配置的ProductFlavors</span><br><span class="line">        for (ProductFlavorData pfData : variantManager.getProductFlavors().values()) &#123;</span><br><span class="line">            productFlavors.add(ProductFlavorContainerImpl.createProductFlavorContainer(</span><br><span class="line">                    pfData,</span><br><span class="line">                    extraModelInfo.getExtraFlavorSourceProviders(pfData.getProductFlavor().getName())));</span><br><span class="line">        &#125;</span><br><span class="line">//生成所有组合后的变体，如ProductFlavors 为feature1 则变体为feature1Debug 和feature1Release</span><br><span class="line">        for (BaseVariantData&lt;? extends BaseVariantOutputData&gt; variantData : variantManager.getVariantDataList()) &#123;</span><br><span class="line">            if (!variantData.getType().isForTesting()) &#123;</span><br><span class="line">                variants.add(createVariant(variantData));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return new DefaultAndroidProject(</span><br><span class="line">                Version.ANDROID_GRADLE_PLUGIN_VERSION,</span><br><span class="line">                project.getName(),</span><br><span class="line">                defaultConfig,</span><br><span class="line">                flavorDimensionList,</span><br><span class="line">                buildTypes,</span><br><span class="line">                productFlavors,</span><br><span class="line">                variants,</span><br><span class="line">                androidBuilder.getTarget() != null ? androidBuilder.getTarget().hashString() : &quot;&quot;,</span><br><span class="line">                bootClasspath,</span><br><span class="line">                frameworkSource,</span><br><span class="line">                cloneSigningConfigs(config.getSigningConfigs()),</span><br><span class="line">                aaptOptions,</span><br><span class="line">                artifactMetaDataList,</span><br><span class="line">                findUnresolvedDependencies(syncIssues),</span><br><span class="line">                syncIssues,</span><br><span class="line">                config.getCompileOptions(),</span><br><span class="line">                lintOptions,</span><br><span class="line">                project.getBuildDir(),</span><br><span class="line">                config.getResourcePrefix(),</span><br><span class="line">                ImmutableList.copyOf(toolchains.values()),</span><br><span class="line">                config.getBuildToolsVersion(),</span><br><span class="line">                projectType,</span><br><span class="line">                Version.BUILDER_MODEL_API_VERSION,</span><br><span class="line">                generation);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="./pic/lintoptions.png" alt="lintOptions"></p>
+<p>获得androidProject后进入runLint()这个方法，进入下一个环节</p>
+<h3 id="获取系统定义IssueRegistry，"><a href="#获取系统定义IssueRegistry，" class="headerlink" title="获取系统定义IssueRegistry，"></a>获取系统定义IssueRegistry，</h3><p>在此方法中主要功能是做配置和初始化核心类</p>
+<p>在runlint方法中首先通过createIssueRegistry获得系统的IssueRegistry<br>该类为LintGradleIssueRegistry 继承自BuiltinIssueRegistry<br>BuiltinIssueRegistry的静态代码块添加所有系统定义好的Issues，总共293个<br>并在getIssues()方法中返回Issues集合，这就是系统定义Issue来源<br>再次回到runLint方法中</p>
+<h3 id="初始化LintGradleClient，并执行client-run"><a href="#初始化LintGradleClient，并执行client-run" class="headerlink" title="初始化LintGradleClient，并执行client.run()"></a>初始化LintGradleClient，并执行client.run()</h3><p>该方法主要是四个功能<br>初始化IssueRegistry，<br>syncOptions同步LintOptions<br>初始化LintGradleClient<br>执行client.run(registry)<br>最关键的是client.run(registry)，最终调用lintDrver的analysis方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Pair&lt;List&lt;Warning&gt;,LintBaseline&gt; runLint(</span><br><span class="line"> 		 IssueRegistry registry = createIssueRegistry();</span><br><span class="line">         LintCliFlags flags = <span class="keyword">new</span> LintCliFlags();</span><br><span class="line">         LintGradleClient client = <span class="keyword">new</span> LintGradleClient(registry, flags, getProject(), modelProject,</span><br><span class="line">                sdkHome, variant, getBuildTools());</span><br><span class="line"></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line"> 		<span class="keyword">try</span> &#123;</span><br><span class="line">            warnings = client.run(registry);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> GradleException(<span class="string">"Invalid arguments."</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>client.run(registry)方法最终走到<code>public int run(@NonNull IssueRegistry registry, @NonNull List&lt;File&gt; files)</code>这个方法</p>
+<h3 id="初始化LintDriver"><a href="#初始化LintDriver" class="headerlink" title="初始化LintDriver"></a>初始化LintDriver</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  public int run(@NonNull IssueRegistry registry, @NonNull List&lt;File&gt; files) throws IOException &#123;</span><br><span class="line">      assert !flags.getReporters().isEmpty();</span><br><span class="line">      this.registry = registry;</span><br><span class="line">      driver = new LintDriver(registry, this);</span><br><span class="line"></span><br><span class="line">      driver.setAbbreviating(!flags.isShowEverything());</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">//调用driver启动分析</span><br><span class="line">      driver.analyze(createLintRequest(files));</span><br><span class="line"></span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      return flags.isSetExitCode() ? (hasErrors ? ERRNO_ERRORS : ERRNO_SUCCESS) : ERRNO_SUCCESS;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>在这个方法中可以看到初始化LintDriver,并调用driver.analyze(createLintRequest(files))<br>其中还有个关键方法createLintRequest(files)</p>
+<h3 id="创建LintRequest类"><a href="#创建LintRequest类" class="headerlink" title="创建LintRequest类"></a>创建LintRequest类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">protected LintRequest createLintRequest(@NonNull List&lt;File&gt; files) &#123;</span><br><span class="line">       LintRequest lintRequest = new LintRequest(this, files);</span><br><span class="line">       if (Lint.MODEL_LIBRARIES) &#123;</span><br><span class="line">           LintGradleProject.ProjectSearch search = new LintGradleProject.ProjectSearch();</span><br><span class="line">           Project project = search.getProject(this, gradleProject, variant.getName());</span><br><span class="line">           lintRequest.setProjects(Collections.singletonList(project));</span><br><span class="line">           setCustomRules(search.customViewRuleJars);</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           Pair&lt;LintGradleProject,List&lt;File&gt;&gt; result = LintGradleProject.create(</span><br><span class="line">                   this, modelProject, variant, gradleProject);</span><br><span class="line">           lintRequest.setProjects(Collections.singletonList(result.getFirst()));</span><br><span class="line">           setCustomRules(result.getSecond());</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return lintRequest;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>此方法有三个作用</p>
+<ol>
+<li>org.gradle.api.Project转换为com.android.tools.lint.detector.api.Project,并赋值给lintRequest</li>
+<li>搜集放在工程或者第三方依赖的lint.jar</li>
+<li>将搜集的lint.jar集合复制给lintClient的customRules</li>
+<li>生成LintRequest对象</li>
+</ol>
+<p>如何搜集lint.jar</p>
+<ol>
+<li>先检查当前Project的build目录<br>如果/build/lint/lint.jar存在则将File保存在customViewRuleJars中</li>
+<li>从依赖的项目获取lint.jar可以是工程，也可以是第三方库中aar中lint.jar<br>第三方库lint.jar一般会放入build-cache中<br>如C:\Users\Administrator.android\build-cache\0c1baf206b683783b1aeb51ee8d63025f569746d\output\jars\lint.jar<br>依赖的工程的lint.jar地址E:\github\LintRulesForAndroid\module_news\build\intermediates\bundles\default\lint.jar</li>
+</ol>
+<p>在createLintRequest方法中 创建LintGradleProject.ProjectSearch对象，调用其getProject方法<br>在此方法把找到lint.jar放入customViewRuleJars这个数组中然后调用LintGradleClient的setCustomRules把lint.jar数组赋值给 给customRules，进入getProject()查看获得lint.jar的源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public Project getProject(</span><br><span class="line">                @NonNull LintGradleClient client,</span><br><span class="line">                @NonNull AndroidProject project,</span><br><span class="line">                @NonNull Variant variant,</span><br><span class="line">                @NonNull org.gradle.api.Project gradleProject) &#123;</span><br><span class="line">            Project cached = appProjects.get(project);</span><br><span class="line">            if (cached != null) &#123;</span><br><span class="line">                return cached;</span><br><span class="line">            &#125;</span><br><span class="line">            mSeen.add(project);</span><br><span class="line">            File dir = gradleProject.getProjectDir();</span><br><span class="line">            AppGradleProject lintProject = new AppGradleProject(client, dir, dir, project, variant);</span><br><span class="line">            appProjects.put(project, lintProject);</span><br><span class="line">			//build/lint/lint.jar判断是否存在，存在就保存到customViewRuleJars</span><br><span class="line">            File appLintJar = new File(gradleProject.getBuildDir(),</span><br><span class="line">                    &quot;lint&quot; + separatorChar + &quot;lint.jar&quot;);</span><br><span class="line">            if (appLintJar.exists()) &#123;</span><br><span class="line">                customViewRuleJars.add(appLintJar);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // DELIBERATELY calling getDependencies here (and Dependencies#getProjects() below) :</span><br><span class="line">            // the new hierarchical model is not working yet.</span><br><span class="line">            Dependencies dependencies = variant.getMainArtifact().getDependencies();</span><br><span class="line">            for (AndroidLibrary library : dependencies.getLibraries()) &#123;</span><br><span class="line">                if (library.getProject() != null) &#123;</span><br><span class="line">                    // Handled below</span><br><span class="line"></span><br><span class="line">                    // ...except in that case we don&apos;t find custom rule jars (since those are</span><br><span class="line">                    // tied to the AndroidLibrary); include those here.</span><br><span class="line">                    File ruleJar = library.getLintJar();</span><br><span class="line">					// 第三方库lint.jar是否存在</span><br><span class="line">					//C:\Users\Administrator\.android\build-cache\0c1baf206b683783b1aeb51ee8d63025f569746d\output\jars\lint.jar</span><br><span class="line">                    //E:\github\LintRulesForAndroid\module_news\build\intermediates\bundles\default\lint.jar</span><br><span class="line">                    if (ruleJar.exists()) &#123;</span><br><span class="line">                        customViewRuleJars.add(ruleJar);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">                lintProject.addDirectLibrary(getLibrary(client, library, gradleProject, variant));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">          </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            return lintProject;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="lintDriver-analyze"><a href="#lintDriver-analyze" class="headerlink" title="lintDriver.analyze()"></a>lintDriver.analyze()</h3><p>创建完LintRequet，此后开始进入LintDriver的analyze()方法，这才是真正lint启动的地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">private void analyze() &#123;</span><br><span class="line"></span><br><span class="line">       scope = request.getScope();</span><br><span class="line">       assert scope == null || !scope.contains(Scope.ALL_RESOURCE_FILES) ||</span><br><span class="line">               scope.contains(Scope.RESOURCE_FILE);</span><br><span class="line">       Collection&lt;Project&gt; projects;</span><br><span class="line">       try &#123;</span><br><span class="line">		//获得需要检测的Project</span><br><span class="line">           projects = request.getProjects();</span><br><span class="line">           if (projects == null) &#123;</span><br><span class="line">               projects = computeProjects(request.getFiles());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; catch (CircularDependencyException e) &#123;</span><br><span class="line">           </span><br><span class="line">       &#125;</span><br><span class="line">       if (projects.isEmpty()) &#123;</span><br><span class="line">           client.log(null, &quot;No projects found for %1$s&quot;, request.getFiles().toString());</span><br><span class="line">           return;</span><br><span class="line">       &#125;</span><br><span class="line">       if (canceled) &#123;</span><br><span class="line">           return;</span><br><span class="line">       &#125;</span><br><span class="line">	//找到所有的lint.jar并获得系统和用户自定义ISsues</span><br><span class="line">       registerCustomDetectors(projects);</span><br><span class="line"></span><br><span class="line">       if (scope == null) &#123;</span><br><span class="line">           scope = Scope.infer(projects);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       for (Project project : projects) &#123;</span><br><span class="line">           phase = 1;</span><br><span class="line"></span><br><span class="line">           Project main = request.getMainProject(project);</span><br><span class="line"></span><br><span class="line">           // The set of available detectors varies between projects</span><br><span class="line">		//根据ISsues获得所有Detectors</span><br><span class="line">           computeDetectors(project);</span><br><span class="line"></span><br><span class="line">           if (applicableDetectors.isEmpty()) &#123;</span><br><span class="line">               // No detectors enabled in this project: skip it</span><br><span class="line">               continue;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           checkProject(project, main);</span><br><span class="line">           if (canceled) &#123;</span><br><span class="line">               break;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           runExtraPhases(project, main);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后从LintRequest对象获取分析的project，如果为空通过computeProjects这个方法来找到需要扫描的Projet<br>什么时候为空呢？ 如果直接输入命令 gradle lint 此时获得的projects为空，如果命令是gradle app:lint 则Projects为数组长度为1，仅包含app这个Project</p>
+<p>原理就是根据扫描File列表调用 client.getProject(projectDir, rootDir)来获得Project对象<br>如果发现循环依赖会报CircularDependencyException，例如 A 依赖B B依赖C,C又依赖A<br>如果发现projects列表为空或者被用户取消则终止分析</p>
+<h3 id="获得系统和用户定义Issues"><a href="#获得系统和用户定义Issues" class="headerlink" title="获得系统和用户定义Issues"></a>获得系统和用户定义Issues</h3><p>下一步是registerCustomDetectors，通过lint.jar获得用户自定义Issue。这也是为什么lint.jar要放在build\intermediates\lint目录下<br>或者用户目录下.android/lint目录会生效</p>
+<p>这段代码是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerCustomDetectors</span><span class="params">(Collection&lt;Project&gt; projects)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// Look at the various projects, and if any of them provide a custom</span></span><br><span class="line">       <span class="comment">// lint jar, "add" them (this will replace the issue registry with</span></span><br><span class="line">       <span class="comment">// a CompositeIssueRegistry containing the original issue registry</span></span><br><span class="line">       <span class="comment">// plus JarFileIssueRegistry instances for each lint jar</span></span><br><span class="line">       Set&lt;File&gt; jarFiles = Sets.newHashSet();</span><br><span class="line">       <span class="keyword">for</span> (Project project : projects) &#123;</span><br><span class="line">           jarFiles.addAll(client.findRuleJars(project));</span><br><span class="line">           <span class="keyword">for</span> (Project library : project.getAllLibraries()) &#123;</span><br><span class="line">               jarFiles.addAll(client.findRuleJars(library));</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//从用户目录.android/lint目录获取lint.jar</span></span><br><span class="line">	<span class="comment">//我电脑上路径是C:/Users/Administrator/.android/lint/lint.jar</span></span><br><span class="line">       jarFiles.addAll(client.findGlobalRuleJars());</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (!jarFiles.isEmpty()) &#123;</span><br><span class="line">           List&lt;IssueRegistry&gt; registries = Lists.newArrayListWithExpectedSize(jarFiles.size());</span><br><span class="line">           registries.add(registry);</span><br><span class="line">           <span class="keyword">for</span> (File jarFile : jarFiles) &#123;</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">//从lint.jar获取JarFileIssueRegistry</span></span><br><span class="line">                   JarFileIssueRegistry registry = JarFileIssueRegistry.get(client, jarFile);</span><br><span class="line">                   <span class="keyword">if</span> (registry.hasLegacyDetectors()) &#123;</span><br><span class="line">                       runCompatChecks = <span class="keyword">true</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">                   <span class="keyword">if</span> (myCustomIssues == <span class="keyword">null</span>) &#123;</span><br><span class="line">                       myCustomIssues = Sets.newHashSet();</span><br><span class="line">                   &#125;</span><br><span class="line">                   myCustomIssues.addAll(registry.getIssues());</span><br><span class="line">                   registries.add(registry);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">                   client.log(e, <span class="string">"Could not load custom rule jar file %1$s"</span>, jarFile);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (registries.size() &gt; <span class="number">1</span>) &#123; <span class="comment">// the first item is registry itself</span></span><br><span class="line">               registry = <span class="keyword">new</span> CompositeIssueRegistry(registries);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>demo中为jar地址<br>E:\github\LintRulesForAndroid\module_news\build\intermediates\bundles\default\lint.jar</p>
+<h3 id="获得全局lint-jar源码解析"><a href="#获得全局lint-jar源码解析" class="headerlink" title="获得全局lint.jar源码解析"></a>获得全局lint.jar源码解析</h3><p>client.findGlobalRuleJars()<br>这个方法有两种方式获取 全局lint.jar路径，一种是从路径C:/Users/Administrator/.android/lint/lint.jar获取<br>另外一种从系统环境变量ANDROID_LINT_JARS中获取。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;File&gt; <span class="title">findGlobalRuleJars</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">// Look for additional detectors registered by the user, via</span></span><br><span class="line">      <span class="comment">// (1) an environment variable (useful for build servers etc), and</span></span><br><span class="line">      <span class="comment">// (2) via jar files in the .android/lint directory</span></span><br><span class="line">      List&lt;File&gt; files = <span class="keyword">null</span>;</span><br><span class="line"><span class="comment">//获得androihome下的lintjar</span></span><br><span class="line"><span class="comment">//我电脑上为C:/Users/Administrator/.android/lint/lint.jar</span></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          String androidHome = AndroidLocation.getFolder();</span><br><span class="line">          File lint = <span class="keyword">new</span> File(androidHome + File.separator + <span class="string">"lint"</span>);</span><br><span class="line">          <span class="keyword">if</span> (lint.exists()) &#123;</span><br><span class="line">              File[] list = lint.listFiles();</span><br><span class="line">              <span class="keyword">if</span> (list != <span class="keyword">null</span>) &#123;</span><br><span class="line">                  <span class="keyword">for</span> (File jarFile : list) &#123;</span><br><span class="line">                      <span class="keyword">if</span> (endsWith(jarFile.getName(), DOT_JAR)) &#123;</span><br><span class="line">                          <span class="keyword">if</span> (files == <span class="keyword">null</span>) &#123;</span><br><span class="line">                              files = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                          &#125;</span><br><span class="line">                          files.add(jarFile);</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (AndroidLocation.AndroidLocationException e) &#123;</span><br><span class="line">          <span class="comment">// Ignore -- no android dir, so no rules to load.</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="comment">//从环境变量中获取lint.jar的路径</span></span><br><span class="line">      String lintClassPath = System.getenv(<span class="string">"ANDROID_LINT_JARS"</span>);</span><br><span class="line">      <span class="keyword">if</span> (lintClassPath != <span class="keyword">null</span> &amp;&amp; !lintClassPath.isEmpty()) &#123;</span><br><span class="line">          String[] paths = lintClassPath.split(File.pathSeparator);</span><br><span class="line">          <span class="keyword">for</span> (String path : paths) &#123;</span><br><span class="line">              File jarFile = <span class="keyword">new</span> File(path);</span><br><span class="line">              <span class="keyword">if</span> (jarFile.exists()) &#123;</span><br><span class="line">                  <span class="keyword">if</span> (files == <span class="keyword">null</span>) &#123;</span><br><span class="line">                      files = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (files.contains(jarFile)) &#123;</span><br><span class="line">                      <span class="keyword">continue</span>;</span><br><span class="line">                  &#125;</span><br><span class="line">                  files.add(jarFile);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> files != <span class="keyword">null</span> ? files : Collections.emptyList();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="根据所有的lint-jar获得JarFileIssueRegistry对象"><a href="#根据所有的lint-jar获得JarFileIssueRegistry对象" class="headerlink" title="根据所有的lint.jar获得JarFileIssueRegistry对象"></a>根据所有的lint.jar获得JarFileIssueRegistry对象</h3><p>该对象保存所有的IssueRegistry注册的所有Issues</p>
+<p>获取流程大致，是通过Mainfest找到属性值Lint-Registry-v2的变量<br>如果为空，则继续根据Lint-Registry这个key继续查找，找到注册的value之后反射生成IssueRegistry对象，然后将所有的ISSues保存在JarFileIssueRegistry的issues这个集合里，最终将系统定义和用户定义ISsue统一放在CompositeIssueRegistry中。至此获得所有Issue的流程已完成。</p>
+<p>所有的ISsue已经保存在CompositeIssueRegistry，下一步根据Issue获得定义所有Detectors</p>
+<h3 id="获取所有Detecotr"><a href="#获取所有Detecotr" class="headerlink" title="获取所有Detecotr"></a>获取所有Detecotr</h3><p>我们自定义检查都要继承Detector这个类，获取的地方是在analysis()中调用的computeDetectors()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private void computeDetectors(@NonNull Project project) &#123;</span><br><span class="line">    //....</span><br><span class="line">    Configuration configuration = project.getConfiguration(this);</span><br><span class="line">    scopeDetectors = new EnumMap&lt;&gt;(Scope.class);</span><br><span class="line">    applicableDetectors = registry.createDetectors(client, configuration,</span><br><span class="line">            scope, scopeDetectors);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="./pic/lintxml.png" alt="lintOptions"></p>
+<p>最终调用IssueRegistry的createDetectors(()方法</p>
+<h4 id="checkProject检查当前项目和所有依赖项目"><a href="#checkProject检查当前项目和所有依赖项目" class="headerlink" title="checkProject检查当前项目和所有依赖项目"></a>checkProject检查当前项目和所有依赖项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">  private void checkProject(@NonNull Project project, @NonNull Project main) &#123;</span><br><span class="line">     	//.....</span><br><span class="line"></span><br><span class="line">        for (Detector check : applicableDetectors) &#123;</span><br><span class="line">//回调Detector的beforeCheckProject方法</span><br><span class="line">            check.beforeCheckProject(projectContext);</span><br><span class="line">            if (canceled) &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">       //.....</span><br><span class="line">		//检查当前项目的java xml class gradle property等等</span><br><span class="line">        runFileDetectors(project, main);</span><br><span class="line"></span><br><span class="line">        if (!Scope.checkSingleFile(scope)) &#123;</span><br><span class="line">            List&lt;Project&gt; libraries = project.getAllLibraries();</span><br><span class="line">            for (Project library : libraries) &#123;</span><br><span class="line">                Context libraryContext = new Context(this, library, project, projectDir);</span><br><span class="line">                currentProject = library;</span><br><span class="line"></span><br><span class="line">                for (Detector check : applicableDetectors) &#123;</span><br><span class="line">//回调Detector的beforeCheckLibraryProject方法</span><br><span class="line">                    check.beforeCheckLibraryProject(libraryContext);</span><br><span class="line">                    if (canceled) &#123;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                //.....</span><br><span class="line"></span><br><span class="line">                runFileDetectors(library, main);</span><br><span class="line">             </span><br><span class="line"></span><br><span class="line">               //.....</span><br><span class="line"></span><br><span class="line">                for (Detector check : applicableDetectors) &#123;</span><br><span class="line">     //回调Detector的afterCheckLibraryProject方法</span><br><span class="line">                    check.afterCheckLibraryProject(libraryContext);</span><br><span class="line">                    if (canceled) &#123;</span><br><span class="line">                        return;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        currentProject = project;</span><br><span class="line"></span><br><span class="line">        for (Detector check : applicableDetectors) &#123;</span><br><span class="line">        //回调Detector的afterCheckProject方法</span><br><span class="line">            check.afterCheckProject(projectContext);</span><br><span class="line">            if (canceled) &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中一个关键方法,按找一下顺序检查ManifestFiles-&gt;xml-&gt;java-&gt;class-&gt;gradle-&gt;其他-&gt;PROGUARD_FILE-&gt;-&gt;property file</p>
+<p>一个关键方法getSubset，增量检测只检测部分文件或者文件夹的时候会有用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line">private void runFileDetectors(@NonNull Project project, @Nullable Project main) &#123;</span><br><span class="line">        // Look up manifest information (but not for library projects)</span><br><span class="line">        if (project.isAndroidProject()) &#123;</span><br><span class="line">            for (File manifestFile : project.getManifestFiles()) &#123;</span><br><span class="line">                XmlParser parser = client.getXmlParser();</span><br><span class="line">                if (parser != null) &#123;</span><br><span class="line">                    XmlContext context = new XmlContext(this, project, main, manifestFile, null,</span><br><span class="line">                            parser);</span><br><span class="line">                    context.document = parser.parseXml(context);</span><br><span class="line">                    if (context.document != null) &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            project.readManifest(context.document);</span><br><span class="line"></span><br><span class="line">                            if ((!project.isLibrary() || (main != null</span><br><span class="line">                                    &amp;&amp; main.isMergingManifests()))</span><br><span class="line">                                    &amp;&amp; scope.contains(Scope.MANIFEST)) &#123;</span><br><span class="line">                                List&lt;Detector&gt; detectors = scopeDetectors.get(Scope.MANIFEST);</span><br><span class="line">                                if (detectors != null) &#123;</span><br><span class="line">                                    ResourceVisitor v = new ResourceVisitor(parser, detectors,</span><br><span class="line">                                            null);</span><br><span class="line">                                    fireEvent(EventType.SCANNING_FILE, context);</span><br><span class="line">									//检查mainfest.xml</span><br><span class="line">                                    v.visitFile(context, manifestFile);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; finally &#123;</span><br><span class="line">                          if (context.document != null) &#123; // else: freed by XmlVisitor above</span><br><span class="line">                              parser.dispose(context, context.document);</span><br><span class="line">                          &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // Process both Scope.RESOURCE_FILE and Scope.ALL_RESOURCE_FILES detectors together</span><br><span class="line">            // in a single pass through the resource directories.</span><br><span class="line">            if (scope.contains(Scope.ALL_RESOURCE_FILES)</span><br><span class="line">                    || scope.contains(Scope.RESOURCE_FILE)</span><br><span class="line">                    || scope.contains(Scope.RESOURCE_FOLDER)</span><br><span class="line">                    || scope.contains(Scope.BINARY_RESOURCE_FILE)) &#123;</span><br><span class="line">                List&lt;Detector&gt; dirChecks = scopeDetectors.get(Scope.RESOURCE_FOLDER);</span><br><span class="line">                List&lt;Detector&gt; binaryChecks = scopeDetectors.get(Scope.BINARY_RESOURCE_FILE);</span><br><span class="line">                List&lt;Detector&gt; checks = union(scopeDetectors.get(Scope.RESOURCE_FILE),</span><br><span class="line">                        scopeDetectors.get(Scope.ALL_RESOURCE_FILES));</span><br><span class="line">                boolean haveXmlChecks = checks != null &amp;&amp; !checks.isEmpty();</span><br><span class="line">                List&lt;ResourceXmlDetector&gt; xmlDetectors;</span><br><span class="line">                if (haveXmlChecks) &#123;</span><br><span class="line">                    xmlDetectors = new ArrayList&lt;&gt;(checks.size());</span><br><span class="line">                    for (Detector detector : checks) &#123;</span><br><span class="line">                        if (detector instanceof ResourceXmlDetector) &#123;</span><br><span class="line">                            xmlDetectors.add((ResourceXmlDetector) detector);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    haveXmlChecks = !xmlDetectors.isEmpty();</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    xmlDetectors = Collections.emptyList();</span><br><span class="line">                &#125;</span><br><span class="line">                if (haveXmlChecks</span><br><span class="line">                        || dirChecks != null &amp;&amp; !dirChecks.isEmpty()</span><br><span class="line">                        || binaryChecks != null &amp;&amp; !binaryChecks.isEmpty()) &#123;</span><br><span class="line">                    List&lt;File&gt; files = project.getSubset();</span><br><span class="line">                    if (files != null) &#123;</span><br><span class="line">                        checkIndividualResources(project, main, xmlDetectors, dirChecks,</span><br><span class="line">                                binaryChecks, files);</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        List&lt;File&gt; resourceFolders = project.getResourceFolders();</span><br><span class="line">                        if (!resourceFolders.isEmpty()) &#123;</span><br><span class="line">                            for (File res : resourceFolders) &#123;</span><br><span class="line"></span><br><span class="line">						//检查文件夹、xml、二进制文件如png jpg webp</span><br><span class="line"></span><br><span class="line">                                checkResFolder(project, main, res, xmlDetectors, dirChecks,</span><br><span class="line">                                        binaryChecks);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (canceled) &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (scope.contains(Scope.JAVA_FILE) || scope.contains(Scope.ALL_JAVA_FILES)) &#123;</span><br><span class="line">            List&lt;Detector&gt; checks = union(scopeDetectors.get(Scope.JAVA_FILE),</span><br><span class="line">                    scopeDetectors.get(Scope.ALL_JAVA_FILES));</span><br><span class="line">            if (checks != null &amp;&amp; !checks.isEmpty()) &#123;</span><br><span class="line">                List&lt;File&gt; files = project.getSubset();</span><br><span class="line">                if (files != null) &#123;</span><br><span class="line">                    checkIndividualJavaFiles(project, main, checks, files);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    List&lt;File&gt; sourceFolders = project.getJavaSourceFolders();</span><br><span class="line">                    List&lt;File&gt; testFolders = scope.contains(Scope.TEST_SOURCES)</span><br><span class="line">                            ? project.getTestSourceFolders() : Collections.emptyList();</span><br><span class="line">                    checkJava(project, main, sourceFolders, testFolders, checks);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (canceled) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (scope.contains(Scope.CLASS_FILE)</span><br><span class="line">                || scope.contains(Scope.ALL_CLASS_FILES)</span><br><span class="line">                || scope.contains(Scope.JAVA_LIBRARIES)) &#123;</span><br><span class="line">            checkClasses(project, main);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (canceled) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (scope.contains(Scope.GRADLE_FILE)) &#123;</span><br><span class="line">            checkBuildScripts(project, main);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (canceled) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (scope.contains(Scope.OTHER)) &#123;</span><br><span class="line">            List&lt;Detector&gt; checks = scopeDetectors.get(Scope.OTHER);</span><br><span class="line">            if (checks != null) &#123;</span><br><span class="line">                OtherFileVisitor visitor = new OtherFileVisitor(checks);</span><br><span class="line">                visitor.scan(this, project, main);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (canceled) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (project == main &amp;&amp; scope.contains(Scope.PROGUARD_FILE) &amp;&amp;</span><br><span class="line">                project.isAndroidProject()) &#123;</span><br><span class="line">            checkProGuard(project, main);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (project == main &amp;&amp; scope.contains(Scope.PROPERTY_FILE)) &#123;</span><br><span class="line">            checkProperties(project, main);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打印和输出报告"><a href="#打印和输出报告" class="headerlink" title="打印和输出报告"></a>打印和输出报告</h3><p>回到LintCliClient.run(@NonNull IssueRegistry registry, @NonNull List<file> files)方法中<br>在driver.analyze(createLintRequest(files))之后，有如下代码</file></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   Collections.sort(warnings);</span><br><span class="line">...</span><br><span class="line">   boolean hasConsoleOutput = false;</span><br><span class="line">     for (Reporter reporter : flags.getReporters()) &#123;</span><br><span class="line">         reporter.write(stats, warnings);</span><br><span class="line">         if (reporter instanceof TextReporter &amp;&amp; ((TextReporter)reporter).isWriteToConsole()) &#123;</span><br><span class="line">             hasConsoleOutput = true;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     if (!flags.isQuiet() &amp;&amp; !hasConsoleOutput) &#123;</span><br><span class="line">         System.out.print(String.format(&quot;Lint found %1$s&quot;,</span><br><span class="line">                 LintUtils.describeCounts(errorCount, warningCount, true)));</span><br><span class="line">         if (baselineErrorCount &gt; 0 || baselineWarningCount &gt; 0) &#123;</span><br><span class="line">             System.out.print(String.format(&quot; (%1$s filtered by baseline %2$s)&quot;,</span><br><span class="line">                     LintUtils.describeCounts(stats.baselineErrorCount,</span><br><span class="line">                             stats.baselineWarningCount, true),</span><br><span class="line">                     flags.getBaselineFile().getName()));</span><br><span class="line">         &#125;</span><br><span class="line">         System.out.println();</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>driver将扫描的问题全部保存在warnings这个列表里,然后进行排序输出，输出方式有html，xml和控制台输出<br>到此基本上整个流程已分析完成</p>
+<h3 id="如何debug-Lint源码"><a href="#如何debug-Lint源码" class="headerlink" title="如何debug Lint源码"></a>如何debug Lint源码</h3><p>先找的Edit Configurations,<br><img src="./pic/edit_configuratiosn.png" alt="edit configuratiosns"><br>打开点加号添加一个remote类型<br><img src="./pic/remote.png" alt="remote"><br>切换到这个类型<br>在terminal 输入命令 参数要加上 <code>-Dorg.gradle.daemon=false -Dorg.gradle.debug=true</code><br>如<code>gradle app:lintDebug -Dorg.gradle.daemon=false -Dorg.gradle.debug=true</code><br>此时运行起来会一直等待，点击debug按钮<br><img src="./pic/debug_unnamed.png" alt="debug"><br>在点击terminal窗口就跑起来了<br><img src="./pic/sudio_teminal.png" alt="teminal"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/lint/" rel="tag"><i class="fa fa-tag"></i> lint</a>
+          
+            <a href="/tags/源码分析，androidLint/" rel="tag"><i class="fa fa-tag"></i> 源码分析，androidLint</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/25/一看要懂的http简介/" rel="next" title="一看要懂的http简介">
+                <i class="fa fa-chevron-left"></i> 一看要懂的http简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/19/关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换/" rel="prev" title="关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换">
+                关于Gson和Jackson的花式使用都在这里了，一网打尽Json转换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ytjojo</p>
+              <p class="site-description motion-element" itemprop="description">一万年太久，只争朝夕</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ytjojo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ytjojo@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lint总体流程"><span class="nav-number">1.</span> <span class="nav-text">lint总体流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lint入口"><span class="nav-number">2.</span> <span class="nav-text">lint入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获得project"><span class="nav-number">3.</span> <span class="nav-text">获得project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取系统定义IssueRegistry，"><span class="nav-number">4.</span> <span class="nav-text">获取系统定义IssueRegistry，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化LintGradleClient，并执行client-run"><span class="nav-number">5.</span> <span class="nav-text">初始化LintGradleClient，并执行client.run()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化LintDriver"><span class="nav-number">6.</span> <span class="nav-text">初始化LintDriver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建LintRequest类"><span class="nav-number">7.</span> <span class="nav-text">创建LintRequest类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lintDriver-analyze"><span class="nav-number">8.</span> <span class="nav-text">lintDriver.analyze()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获得系统和用户定义Issues"><span class="nav-number">9.</span> <span class="nav-text">获得系统和用户定义Issues</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获得全局lint-jar源码解析"><span class="nav-number">10.</span> <span class="nav-text">获得全局lint.jar源码解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据所有的lint-jar获得JarFileIssueRegistry对象"><span class="nav-number">11.</span> <span class="nav-text">根据所有的lint.jar获得JarFileIssueRegistry对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取所有Detecotr"><span class="nav-number">12.</span> <span class="nav-text">获取所有Detecotr</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#checkProject检查当前项目和所有依赖项目"><span class="nav-number">12.1.</span> <span class="nav-text">checkProject检查当前项目和所有依赖项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打印和输出报告"><span class="nav-number">13.</span> <span class="nav-text">打印和输出报告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何debug-Lint源码"><span class="nav-number">14.</span> <span class="nav-text">如何debug Lint源码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ytjojo</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共52.7k字</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
